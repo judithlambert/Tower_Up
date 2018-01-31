@@ -1,0 +1,7 @@
+Plateform
+angleDébut;amplitude;largeur;épaisseur;élévation;rugusité;material
+Obstacle
+angleDébut;amplitude;largeur;épaisseur;élévation;rugusité;hauteurPic;material
+
+// devrait etre tout la meme largeur et epaisseur
+// rayon est toujours rayonTour
