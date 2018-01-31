@@ -53,6 +53,8 @@ public class Platforme : MonoBehaviour
         Rayon = rayon;
         Rugosité = rugosité;
 
+        //CréationObject(material);
+
         Maillage = new Mesh
         {
             name = "Plateforme"
@@ -66,8 +68,27 @@ public class Platforme : MonoBehaviour
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<MeshCollider>().convex = true;
-        GetComponent<MeshCollider>().isTrigger = true;
+        //GetComponent<MeshCollider>().isTrigger = true;
+        GetComponent<Rigidbody>().isKinematic = true;
+    }
 
+    public void CréationObject(Material material)
+    {
+        Maillage = new Mesh
+        {
+            name = "Plateforme"
+        };
+
+        CalculerDonnéesDeBase();
+        GénérerTriangles();
+
+        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        gameObject.AddComponent<Rigidbody>().useGravity = false;
+        gameObject.AddComponent<MeshRenderer>().material = material;
+        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        GetComponent<MeshCollider>().convex = true;
+        //GetComponent<MeshCollider>().isTrigger = true;
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
 
@@ -189,5 +210,21 @@ public class Platforme : MonoBehaviour
     protected float RugositéAléatoire()
     {
         return Random.value * Rugosité * Épaisseur / 2;
+    }
+
+    public bool CollisionDessus(Collision collision)
+    {
+        bool auDessus = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointDessus(cp.point)) { auDessus = true; }
+        }
+        return auDessus;
+    }
+
+
+    public bool IsPointDessus(Vector3 point)
+    {
+        return ((point.y < Hauteur + 0.1) && (point.y > Hauteur - 0.1)); // marche par pour une platform avec inclinaison
     }
 }

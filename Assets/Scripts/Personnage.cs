@@ -35,10 +35,10 @@ public class Personnage : MonoBehaviour
     // ajout ailleur
     void Awake() // pt pas dans 
     {
-       
+
         //gameObject.AddComponent<Rigidbody>().useGravity = true;
         //gameObject.AddComponent<MeshRenderer>().material = material;
-        //gameObject.AddComponent<SphereCollider>().isTrigger=true;
+        //gameObject.AddComponent<SphereCollider>();
 
         origine = DataÉtage.Origine;
         // ne dois pas bouger lors du respawn
@@ -81,14 +81,14 @@ public class Personnage : MonoBehaviour
         float angle = déplacementVitesse / DataÉtage.RayonPersonnage;
         transform.RotateAround(Vector3.zero, Vector3.down, (avancer || reculer ? (reculer ? -angle : angle) : 0));
         //ridigbody.AddForce(new Vector3(0,0,avancer || reculer ? (reculer ? -(déplacementForce * 5) : déplacementForce * 5) : 0));
-        transform.Rotate(new Vector2(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse):0, 0)); 
+        transform.Rotate(new Vector3(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse):0, 0,0)); 
     }
 
+  
     void Jumper()
     {
         if (SautValide())
         {
-            isTouchingGround = false;
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce * 5));
             ++nbJumps;
@@ -101,14 +101,12 @@ public class Personnage : MonoBehaviour
         //if (transform.position.y <= transform.localScale.y / 2) { nbJumps = 0; }
         //Debug.Log("jump: " + nbJumps.ToString());
         ////---
+       
         DéterminerMouvement();
         if (Déplacement()) { EffectuerDéplacementEtRotation(); }
         if (jump) { Jumper(); }
-        //if ((transform.position - origine).magnitude != DataÉtage.RayonPersonnage)
-        //{
-        //    transform.Translate(0, 0, (transform.position - origine).magnitude - DataÉtage.RayonPersonnage);
-        //    transform.LookAt(new Vector3(origine.x, transform.position.y, origine.z));
-        //}
+
+       
     }
 
     bool SautValide()
@@ -117,19 +115,31 @@ public class Personnage : MonoBehaviour
         return (nbJumps < 2);
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision collision)
     {
-        isTouchingGround = true;
-        Debug.Log("touched ground");
+        if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Platforme>().CollisionDessus(collision)) { isTouchingGround = true; }
     }
 
-
-
-    bool isTouchingGround;
+    bool isTouchingGround=false;
 
     public void Die()
     {
         Debug.Log("Die");
         Awake();
+    }
+
+
+
+    Vector3 VecteurOrigineBalle
+    {
+        get { return transform.position - new Vector3(origine.x, transform.position.y, origine.z); }
+    }
+
+    public Vector3 VecteurPolaire(Vector3 vecteur)
+    {
+        return new Vector3(Mathf.Sqrt(Mathf.Pow(vecteur.x, 2) + Mathf.Pow(vecteur.y, 2) + Mathf.Pow(vecteur.z, 2)),
+                           Mathf.Acos(vecteur.z / Mathf.Sqrt(Mathf.Pow(vecteur.x, 2) + Mathf.Pow(vecteur.y, 2) + Mathf.Pow(vecteur.z, 2))),
+                           Mathf.Atan(vecteur.y / vecteur.x));
     }
 }

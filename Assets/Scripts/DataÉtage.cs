@@ -31,6 +31,8 @@ public class DataÉtage : MonoBehaviour
 
     List<GameObject> ListGameObject;
 
+    float largeurPlatforme;
+
 
     private void Awake()
     {
@@ -46,9 +48,11 @@ public class DataÉtage : MonoBehaviour
         Caméra = Camera.main;
 
         RayonTour = gameObject.transform.lossyScale.x/2;
-       
+
+        largeurPlatforme = 5;
+
         Plancher = new GameObject("Plancher");
-        Plancher.AddComponent<Platforme>().Initialisation(0, 360, 1, 1, 0, RayonTour, 0, MaterialPlatforme);
+        Plancher.AddComponent<Platforme>().Initialisation(0, 360, largeurPlatforme, 1, 0, RayonTour, 0, MaterialPlatforme);
 
         RayonPersonnage = RayonTour + Plancher.GetComponent<Platforme>().Largeur / 2;
         RayonCamera = RayonPersonnage + DISTANCE_CAMERA_PERSONNAGE;
@@ -66,9 +70,9 @@ public class DataÉtage : MonoBehaviour
     private void Start()
     {
         étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + NuméroÉtageToString(nbÉtage)+".txt");
-        saveWriter = new StreamWriter(Menu.CHEMIN_SAVE);
-        Save();
-        LoadÉtage();
+        //saveWriter = new StreamWriter(Menu.CHEMIN_SAVE);
+        //Save();
+
     }
 
     void LoadÉtage()
@@ -80,7 +84,7 @@ public class DataÉtage : MonoBehaviour
             string obj = étageReader.ReadLine();
             string[] line = étageReader.ReadLine().Split(SÉPARATEUR);
             float[] attributs = new float[line.Length];
-            for (int cpt = 0; cpt < line.Length - 1; ++cpt)
+            for (int cpt = 0; cpt < line.Length; ++cpt)
             {
                 attributs[cpt] = float.Parse(line[cpt]);
             }
@@ -92,14 +96,18 @@ public class DataÉtage : MonoBehaviour
             switch (obj)
             {
                 case "Platforme":
-                    ListGameObject.Last().AddComponent<Platforme>().Initialisation(attributs[0], attributs[1], attributs[2], attributs[3], attributs[4], RayonTour, attributs[5], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<Platforme>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3], RayonTour, attributs[4], MaterialPlatforme);
                     break;
                 case "PlatformeMobile":
-                    ListGameObject.Last().AddComponent<PlatformeMobile>().Initialisation(attributs[0], attributs[1], attributs[2], attributs[3], attributs[4], RayonTour, attributs[5], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<PlatformeMobile>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3], RayonTour, attributs[4], MaterialPlatforme);
+                    break;
+                case "PlatformeTemporaire":
+                    ListGameObject.Last().AddComponent<PlatformeTemporaire>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3], RayonTour, attributs[4], attributs[5], MaterialPlatforme);
                     break;
                 case "ObstaclePic":
-                    ListGameObject.Last().AddComponent<ObstaclePic>().Initialisation(attributs[0], attributs[1], attributs[2], attributs[3], attributs[4], RayonTour, attributs[5], attributs[6], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<ObstaclePic>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3], RayonTour, attributs[4], attributs[5], MaterialPlatforme);
                     break;
+
             }
 
         } while (!étageReader.EndOfStream);
@@ -114,7 +122,7 @@ public class DataÉtage : MonoBehaviour
 
     void Save()
     {
-        saveWriter.Write(nbÉtage);
+        //saveWriter.Write(nbÉtage);
     }
     string NuméroÉtageToString(int num)
     {
