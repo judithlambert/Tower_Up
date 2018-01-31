@@ -6,7 +6,6 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
-    int rayonPersonnage = 3; //temporaire
     int rayonCamera = 7;
 
 
@@ -31,6 +30,11 @@ public class Personnage : MonoBehaviour
          avancer;
 
     int nbJumps;
+
+    Vector3 VecteurOrigineBalle
+    {
+        get { return transform.position - new Vector3(origine.x, transform.position.y, origine.z); }
+    }
 
     // ajout ailleur
     void Awake() // pt pas dans 
@@ -81,7 +85,7 @@ public class Personnage : MonoBehaviour
         float angle = déplacementVitesse / DataÉtage.RayonPersonnage;
         transform.RotateAround(Vector3.zero, Vector3.down, (avancer || reculer ? (reculer ? -angle : angle) : 0));
         //ridigbody.AddForce(new Vector3(0,0,avancer || reculer ? (reculer ? -(déplacementForce * 5) : déplacementForce * 5) : 0));
-        transform.Rotate(new Vector2(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse):0, 0)); 
+        //transform.Rotate(new Vector2(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse) : 0, 0));
     }
 
     void Jumper()
@@ -104,11 +108,11 @@ public class Personnage : MonoBehaviour
         DéterminerMouvement();
         if (Déplacement()) { EffectuerDéplacementEtRotation(); }
         if (jump) { Jumper(); }
-        //if ((transform.position - origine).magnitude != DataÉtage.RayonPersonnage)
-        //{
-        //    transform.Translate(0, 0, (transform.position - origine).magnitude - DataÉtage.RayonPersonnage);
-        //    transform.LookAt(new Vector3(origine.x, transform.position.y, origine.z));
-        //}
+
+        Vector3 vecteurPolaireOrigine = VecteurPolaire(VecteurOrigineBalle);
+        transform.right = VecteurOrigineBalle;
+        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTour / DataÉtage.RayonPersonnage, 0, 0);
+        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTour), 0, 0);
     }
 
     bool SautValide()
@@ -131,5 +135,12 @@ public class Personnage : MonoBehaviour
     {
         Debug.Log("Die");
         Awake();
+    }
+
+    public Vector3 VecteurPolaire(Vector3 vecteur)
+    {
+        return new Vector3(Mathf.Sqrt(Mathf.Pow(vecteur.x, 2) + Mathf.Pow(vecteur.y, 2) + Mathf.Pow(vecteur.z, 2)),
+                           Mathf.Acos(vecteur.z / Mathf.Sqrt(Mathf.Pow(vecteur.x, 2) + Mathf.Pow(vecteur.y, 2) + Mathf.Pow(vecteur.z, 2))),
+                           Mathf.Atan(vecteur.y / vecteur.x));
     }
 }
