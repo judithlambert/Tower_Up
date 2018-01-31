@@ -31,7 +31,7 @@ public class Personnage : MonoBehaviour
 
     int nbJumps;
 
-
+    // ajout ailleur
     void Awake() // pt pas dans 
     {
         origine = DataÉtage.Origine;
