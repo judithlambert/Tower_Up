@@ -9,7 +9,8 @@ public class Personnage : MonoBehaviour
     int rayonPersonnage = 3; //temporaire
     int rayonCamera = 7;
 
-    //à changer mtfk
+
+    //***
     float déplacementVitesse;
     float déplacementForce;
     [SerializeField] float force;
