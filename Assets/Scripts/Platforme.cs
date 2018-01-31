@@ -64,13 +64,14 @@ public class Platforme : MonoBehaviour
         GénérerTriangles();
 
         gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        gameObject.AddComponent<Rigidbody>().useGravity = false;
+        //gameObject.AddComponent<Rigidbody>().useGravity = false;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<MeshCollider>().convex = true;
         //GetComponent<MeshCollider>().isTrigger = true;
-        GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.AddComponent<Rigidbody>().isKinematic = true;
     }
+
 
     public void CréationObject(Material material)
     {

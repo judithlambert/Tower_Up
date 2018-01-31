@@ -6,17 +6,9 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
-    int rayonPersonnage = 3; //temporaire
-    int rayonCamera = 7;
-
-
-    //***
-    float déplacementVitesse;
-    float déplacementForce;
-    [SerializeField] float force;
-    [SerializeField] float vitesse;
-    [SerializeField] float déplacement;
-
+    float déplacementVitesse = 3;
+    float déplacementForce = 50;
+  
     Vector3 origine;
 
 
@@ -32,10 +24,14 @@ public class Personnage : MonoBehaviour
 
     int nbJumps;
 
+    Vector3 VecteurOrigineBalle
+    {
+        get { return transform.position - new Vector3(origine.x, transform.position.y, origine.z); }
+    }
+
     // ajout ailleur
     void Awake() // pt pas dans 
     {
-
         //gameObject.AddComponent<Rigidbody>().useGravity = true;
         //gameObject.AddComponent<MeshRenderer>().material = material;
         //gameObject.AddComponent<SphereCollider>();
@@ -51,8 +47,6 @@ public class Personnage : MonoBehaviour
 
     void Start()
     {
-        déplacementVitesse = transform.localScale.x * vitesse;
-        déplacementForce = transform.localScale.x * force;
         nbJumps = 0;
     }
 
@@ -81,7 +75,7 @@ public class Personnage : MonoBehaviour
         float angle = déplacementVitesse / DataÉtage.RayonPersonnage;
         transform.RotateAround(Vector3.zero, Vector3.down, (avancer || reculer ? (reculer ? -angle : angle) : 0));
         //ridigbody.AddForce(new Vector3(0,0,avancer || reculer ? (reculer ? -(déplacementForce * 5) : déplacementForce * 5) : 0));
-        transform.Rotate(new Vector3(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse):0, 0,0)); 
+        //transform.Rotate(new Vector2(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse) : 0, 0));
     }
 
   
@@ -89,6 +83,7 @@ public class Personnage : MonoBehaviour
     {
         if (SautValide())
         {
+            isTouchingGround = false;
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce * 5));
             ++nbJumps;
@@ -97,16 +92,15 @@ public class Personnage : MonoBehaviour
 
     void Update()
     {
-        ////---
-        //if (transform.position.y <= transform.localScale.y / 2) { nbJumps = 0; }
-        //Debug.Log("jump: " + nbJumps.ToString());
-        ////---
-       
         DéterminerMouvement();
         if (Déplacement()) { EffectuerDéplacementEtRotation(); }
         if (jump) { Jumper(); }
 
-       
+        Vector3 vecteurPolaireOrigine = VecteurPolaire(VecteurOrigineBalle);
+        transform.right = VecteurOrigineBalle;
+        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonPersonnage / (transform.lossyScale.x/2), 0, 0);
+        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonPersonnage), 0, 0);
+
     }
 
     bool SautValide()
@@ -121,6 +115,11 @@ public class Personnage : MonoBehaviour
         if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Platforme>().CollisionDessus(collision)) { isTouchingGround = true; }
     }
 
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    isTouchingGround = false;
+    //}
+
     bool isTouchingGround=false;
 
     public void Die()
@@ -130,11 +129,6 @@ public class Personnage : MonoBehaviour
     }
 
 
-
-    Vector3 VecteurOrigineBalle
-    {
-        get { return transform.position - new Vector3(origine.x, transform.position.y, origine.z); }
-    }
 
     public Vector3 VecteurPolaire(Vector3 vecteur)
     {
