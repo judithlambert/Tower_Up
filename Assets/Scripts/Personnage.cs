@@ -35,6 +35,11 @@ public class Personnage : MonoBehaviour
     // ajout ailleur
     void Awake() // pt pas dans 
     {
+       
+        //gameObject.AddComponent<Rigidbody>().useGravity = true;
+        //gameObject.AddComponent<MeshRenderer>().material = material;
+        //gameObject.AddComponent<SphereCollider>().isTrigger=true;
+
         origine = DataÉtage.Origine;
         // ne dois pas bouger lors du respawn
         transform.rotation =rotationInitial= Quaternion.Euler(Vector3.zero);
@@ -83,6 +88,7 @@ public class Personnage : MonoBehaviour
     {
         if (SautValide())
         {
+            isTouchingGround = false;
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce * 5));
             ++nbJumps;
@@ -98,23 +104,28 @@ public class Personnage : MonoBehaviour
         DéterminerMouvement();
         if (Déplacement()) { EffectuerDéplacementEtRotation(); }
         if (jump) { Jumper(); }
-        if ((transform.position - origine).magnitude != DataÉtage.RayonPersonnage)
-        {
-            transform.Translate(0, 0, (transform.position - origine).magnitude - DataÉtage.RayonPersonnage);
-            transform.LookAt(new Vector3(origine.x, transform.position.y, origine.z));
-        }
+        //if ((transform.position - origine).magnitude != DataÉtage.RayonPersonnage)
+        //{
+        //    transform.Translate(0, 0, (transform.position - origine).magnitude - DataÉtage.RayonPersonnage);
+        //    transform.LookAt(new Vector3(origine.x, transform.position.y, origine.z));
+        //}
     }
 
     bool SautValide()
     {
-        if (TouchingGround()) { nbJumps = 0; }
+        if (isTouchingGround) { nbJumps = 0; }
         return (nbJumps < 2);
     }
 
-    bool TouchingGround()
+    private void OnTriggerEnter(Collider other)
     {
-        return transform.position.y == transform.lossyScale.y / 2;
+        isTouchingGround = true;
+        Debug.Log("touched ground");
     }
+
+
+
+    bool isTouchingGround;
 
     public void Die()
     {
