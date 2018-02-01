@@ -6,8 +6,10 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
+    public float RayonSphere { get { return transform.lossyScale.x / 2; } }
+
     float déplacementVitesse = 3;
-    float déplacementForce = 50;
+    float déplacementForce = 75;
   
     Vector3 origine;
 
@@ -39,7 +41,7 @@ public class Personnage : MonoBehaviour
         origine = DataÉtage.Origine;
         // ne dois pas bouger lors du respawn
         transform.rotation =rotationInitial= Quaternion.Euler(Vector3.zero);
-        transform.position=positionInitial = new Vector3(DataÉtage.RayonPersonnage, transform.lossyScale.y+1, 0);
+        transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         ArrêterMouvement();
     }
@@ -72,13 +74,13 @@ public class Personnage : MonoBehaviour
 
     void EffectuerDéplacementEtRotation()
     {
-        float angle = déplacementVitesse / DataÉtage.RayonPersonnage;
+        float angle = déplacementVitesse / DataÉtage.RayonTrajectoirePersonnage;
         transform.RotateAround(Vector3.zero, Vector3.down, (avancer || reculer ? (reculer ? -angle : angle) : 0));
         //ridigbody.AddForce(new Vector3(0,0,avancer || reculer ? (reculer ? -(déplacementForce * 5) : déplacementForce * 5) : 0));
         //transform.Rotate(new Vector2(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse) : 0, 0));
     }
 
-  
+    // tobe fixed
     void Jumper()
     {
         if (SautValide())
@@ -98,8 +100,8 @@ public class Personnage : MonoBehaviour
 
         Vector3 vecteurPolaireOrigine = VecteurPolaire(VecteurOrigineBalle);
         transform.right = VecteurOrigineBalle;
-        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonPersonnage / (transform.lossyScale.x/2), 0, 0);
-        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonPersonnage), 0, 0);
+        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x/2), 0, 0);
+        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
 
     }
 

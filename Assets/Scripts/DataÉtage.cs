@@ -14,7 +14,7 @@ public class DataÉtage : MonoBehaviour
     public static Platforme PlancherScript;
     //[SerializeField] public static int RAYON_TOUR, LARGUEUR_PLATFORM, DISTANCE_PERSONNAGE_CAMERA;
     public static float RayonTour; // si distance < rayon
-    public static float RayonPersonnage;
+    public static float RayonTrajectoirePersonnage;
     public static float RayonCamera;
     public static Vector3 Origine;
     const float DISTANCE_CAMERA_PERSONNAGE=10; // ratio avec tour
@@ -54,12 +54,17 @@ public class DataÉtage : MonoBehaviour
         Plancher = new GameObject("Plancher");
         Plancher.AddComponent<Platforme>().Initialisation(0, 360, largeurPlatforme, 1, 0, RayonTour, 0, MaterialPlatforme);
 
-        RayonPersonnage = RayonTour + Plancher.GetComponent<Platforme>().Largeur / 2;
-        RayonCamera = RayonPersonnage + DISTANCE_CAMERA_PERSONNAGE;
+        RayonTrajectoirePersonnage = RayonTour + Plancher.GetComponent<Platforme>().Largeur / 2;
+        RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
 
         Personnage = Instantiate(prefabPersonnage, new Vector3(0, 0.5f, 3), Quaternion.Euler(Vector3.zero));
 
         Caméra.gameObject.AddComponent<CameraControlleur>();
+
+
+        GameObject cubeLanceur = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cubeLanceur.AddComponent<LanceurProjectiles>();
+
 
         LoadÉtage();
 

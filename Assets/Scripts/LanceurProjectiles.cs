@@ -1,28 +1,66 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class LanceurProjectiles : MonoBehaviour {
+public class LanceurProjectiles : MonoBehaviour
+{
+    public static GameObject Lanceur;
 
-//    Vector3 positionInitial;
-//    GameObject proj;
-//	// Use this for initialization
-//	void Start () {
-        
-//        transform.position = positionInitial = new Vector3(0, transform.lossyScale.y/2, DataÉtage.RayonPersonnage);
-//        proj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-//            proj.transform.position = positionInitial;
-//    }
+    static public Vector3 positionInitial;
+    // Use this for initialization
+    void Start()
+    {
+        gameObject.AddComponent<Rigidbody>();
+        //GetComponent<BoxCollider>().isTrigger=true;
 
-//    // Update is called once per frame
-//    void Update()
-//    {
-        
-//        if ((Time.time > 2))
-//        {
-            
-//            proj.transform.RotateAround(Vector3.zero, Vector3.down, 3);
+        transform.position = positionInitial = new Vector3(0, transform.lossyScale.y / 2, DataÉtage.RayonTrajectoirePersonnage);
+        Lanceur = gameObject;
+    }
 
-//        }
-//    }
-//}
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+
+        if ((Time.time%5)==0)
+        {
+            GameObject proj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            proj.AddComponent<Projectile>();
+        }
+    }
+}
+
+public class Projectile : MonoBehaviour
+{
+
+    bool révolutionFinie=false;
+
+    private void Start()
+    {
+        transform.position = LanceurProjectiles.positionInitial;
+        //GetComponent<SphereCollider>().isTrigger=true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if (collision.gameObject == LanceurProjectiles.Lanceur) { révolutionFinie = true; }
+        Debug.Log("triggered");
+        Destroy(this);
+    }
+
+    private void onCollisionEnter(Collision collision)
+    {
+        //if (collision.gameObject == LanceurProjectiles.Lanceur) { révolutionFinie = true; }
+        Debug.Log("triggered");
+        Destroy(this);
+    }
+
+    private void Update()
+    {
+        transform.RotateAround(Vector3.zero, Vector3.up, 1);
+
+        //if (révolutionFinie)
+        //{
+        //    Destroy(this);
+        //}
+    }
+}
