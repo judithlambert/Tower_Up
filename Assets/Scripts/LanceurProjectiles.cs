@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         transform.position = LanceurProjectiles.positionInitial;
-        //GetComponent<SphereCollider>().isTrigger=true;
+        //  GetComponent<SphereCollider>().isTrigger=true;
     }
 
     private void OnTriggerEnter(Collider other)
