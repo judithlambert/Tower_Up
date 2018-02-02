@@ -6,16 +6,11 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
-    int rayonCamera = 7;
+    public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
-
-    //***
-    float déplacementVitesse;
-    float déplacementForce;
-    [SerializeField] float force;
-    [SerializeField] float vitesse;
-    [SerializeField] float déplacement;
-
+    float déplacementVitesse = 3;
+    float déplacementForce = 75;
+  
     Vector3 origine;
 
 
@@ -39,15 +34,14 @@ public class Personnage : MonoBehaviour
     // ajout ailleur
     void Awake() // pt pas dans 
     {
-       
         //gameObject.AddComponent<Rigidbody>().useGravity = true;
         //gameObject.AddComponent<MeshRenderer>().material = material;
-        //gameObject.AddComponent<SphereCollider>().isTrigger=true;
+        //gameObject.AddComponent<SphereCollider>();
 
         origine = DataÉtage.Origine;
         // ne dois pas bouger lors du respawn
         transform.rotation =rotationInitial= Quaternion.Euler(Vector3.zero);
-        transform.position=positionInitial = new Vector3(DataÉtage.RayonPersonnage, transform.lossyScale.y+1, 0);
+        transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         ArrêterMouvement();
     }
@@ -55,8 +49,6 @@ public class Personnage : MonoBehaviour
 
     void Start()
     {
-        déplacementVitesse = transform.localScale.x * vitesse;
-        déplacementForce = transform.localScale.x * force;
         nbJumps = 0;
     }
 
@@ -82,12 +74,13 @@ public class Personnage : MonoBehaviour
 
     void EffectuerDéplacementEtRotation()
     {
-        float angle = déplacementVitesse / DataÉtage.RayonPersonnage;
+        float angle = déplacementVitesse / DataÉtage.RayonTrajectoirePersonnage;
         transform.RotateAround(Vector3.zero, Vector3.down, (avancer || reculer ? (reculer ? -angle : angle) : 0));
         //ridigbody.AddForce(new Vector3(0,0,avancer || reculer ? (reculer ? -(déplacementForce * 5) : déplacementForce * 5) : 0));
         //transform.Rotate(new Vector2(avancer || reculer ? (reculer ? -déplacementVitesse : déplacementVitesse) : 0, 0));
     }
 
+    // tobe fixed
     void Jumper()
     {
         if (SautValide())
@@ -101,18 +94,15 @@ public class Personnage : MonoBehaviour
 
     void Update()
     {
-        ////---
-        //if (transform.position.y <= transform.localScale.y / 2) { nbJumps = 0; }
-        //Debug.Log("jump: " + nbJumps.ToString());
-        ////---
         DéterminerMouvement();
         if (Déplacement()) { EffectuerDéplacementEtRotation(); }
         if (jump) { Jumper(); }
 
         Vector3 vecteurPolaireOrigine = VecteurPolaire(VecteurOrigineBalle);
         transform.right = VecteurOrigineBalle;
-        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonPersonnage / (transform.lossyScale.x/2), 0, 0);
-        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonPersonnage), 0, 0);
+
+        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x/2), 0, 0);
+        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
     }
 
     bool SautValide()
@@ -121,21 +111,26 @@ public class Personnage : MonoBehaviour
         return (nbJumps < 2);
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision collision)
     {
-        isTouchingGround = true;
-        Debug.Log("touched ground");
+        if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Platforme>().CollisionDessus(collision)) { isTouchingGround = true; }
     }
 
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    isTouchingGround = false;
+    //}
 
-
-    bool isTouchingGround;
+    bool isTouchingGround=false;
 
     public void Die()
     {
         Debug.Log("Die");
         Awake();
     }
+
+
 
     public Vector3 VecteurPolaire(Vector3 vecteur)
     {

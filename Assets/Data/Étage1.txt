@@ -1,4 +1,4 @@
-Platforme
-0;90;1;0.5;3;0
+PlatformeTemporaire
+10;90;0.5;3;0;3
 ObstaclePic
-180;45;1;0.5;2;0;0,5
+180;45;0.5;5;0;1

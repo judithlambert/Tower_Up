@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlatformeMobile : Platforme
 {
+    
 
     float Temps, Distance, Vitesse;
     //public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, float vitesse, float distance, Material material)
@@ -15,23 +16,11 @@ public class PlatformeMobile : Platforme
     //    Hauteur = hauteur;
     //    Rayon = rayon;
     //    Rugosité = rugosité;
-    
+
     //    Vitesse = vitesse;
     //    Distance = distance;
 
-    //    Maillage = new Mesh
-    //    {
-    //        name = "Plateforme"
-    //    };
-
-    //    CalculerDonnéesDeBase();
-    //    GénérerTriangles();
-
-    //    gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-    //    //gameObject.AddComponent<Rigidbody>().useGravity = false;
-    //    gameObject.AddComponent<MeshRenderer>().material = material;
-    //    gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-    //    GetComponent<MeshCollider>().convex = true;
+    //    CréationObjet(material);
 
     //}
     void Start()
@@ -39,10 +28,23 @@ public class PlatformeMobile : Platforme
 
     }
 
+    bool touching=false;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+
+        if (collision.gameObject.name.Contains("Personnage") && CollisionDessus(collision))
+        touching = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Personnage"))
+            touching = false;
+    }
     void Update()
     {
-        transform.position = new Vector3(Origine.x * Mathf.Sin(Time.time),
-                                         Origine.y,
-                                         Origine.z * Mathf.Sin(Time.time));
+        transform.Rotate(Vector3.up, Mathf.Sin(Time.time*5)/2);
+        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up, Mathf.Sin(Time.time * 5) / 2); }
     }
 }
