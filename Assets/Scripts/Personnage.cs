@@ -111,8 +111,8 @@ public class Personnage : MonoBehaviour
 
         Vector3 vecteurPolaireOrigine = VecteurPolaire(VecteurOrigineBalle);
         transform.right = VecteurOrigineBalle;
-        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTour / DataÉtage.RayonPersonnage, 0, 0);
-        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTour), 0, 0);
+        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonPersonnage / (transform.lossyScale.x/2), 0, 0);
+        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonPersonnage), 0, 0);
     }
 
     bool SautValide()
