@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platforme : MonoBehaviour
+public class Plateforme : MonoBehaviour
 {
     protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 90, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
     protected const float FACTEUR_CONVERSION_DEGRÉ_RADIAN = 2 * Mathf.PI / 360, NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
@@ -53,23 +53,23 @@ public class Platforme : MonoBehaviour
         Rayon = rayon;
         Rugosité = rugosité;
 
-        //CréationObject(material);
+        CréationObject(material);
 
-        Maillage = new Mesh
-        {
-            name = "Plateforme"
-        };
+        //Maillage = new Mesh
+        //{
+        //    name = "Plateforme"
+        //};
 
-        CalculerDonnéesDeBase();
-        GénérerTriangles();
+        //CalculerDonnéesDeBase();
+        //GénérerTriangles();
 
-        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        //gameObject.AddComponent<Rigidbody>().useGravity = false;
-        gameObject.AddComponent<MeshRenderer>().material = material;
-        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        GetComponent<MeshCollider>().convex = true;
-        //GetComponent<MeshCollider>().isTrigger = true;
-        gameObject.AddComponent<Rigidbody>().isKinematic = true;
+        //gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        ////gameObject.AddComponent<Rigidbody>().useGravity = false;
+        //gameObject.AddComponent<MeshRenderer>().material = material;
+        //gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        //GetComponent<MeshCollider>().convex = true;
+        ////GetComponent<MeshCollider>().isTrigger = true;
+        //GetComponent<Rigidbody>().isKinematic = true;
     }
 
 

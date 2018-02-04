@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformeMobile : Platforme
+public class PlateformeMobile : Plateforme
 {
-    
-
-    float Temps, Distance, Vitesse;
+        float Temps, Distance, Vitesse;
     //public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, float vitesse, float distance, Material material)
     //{
     //    AngleDébut = angleDébut;
@@ -23,10 +21,6 @@ public class PlatformeMobile : Platforme
     //    CréationObjet(material);
 
     //}
-    void Start()
-    {
-
-    }
 
     bool touching=false;
 

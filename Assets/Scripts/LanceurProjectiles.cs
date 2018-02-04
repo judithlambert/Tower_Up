@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class LanceurProjectiles : MonoBehaviour
 {
-    public static GameObject Lanceur;
 
-    static public Vector3 positionInitial;
+    static public Vector3 Position { get; private set; }
+
+    public void Initialisation(Vector2 position, Material material)
+    {
+        Position = position;
+        gameObject.AddComponent<MeshRenderer>().material = material;
+    }
+
+
     // Use this for initialization
     void Start()
     {
-        gameObject.AddComponent<Rigidbody>();
-        //GetComponent<BoxCollider>().isTrigger=true;
+        gameObject.AddComponent<Rigidbody>().isKinematic = true;
+        gameObject.GetComponent<BoxCollider>();
 
-        transform.position = positionInitial = new Vector3(0, transform.lossyScale.y / 2, DataÉtage.RayonTrajectoirePersonnage);
-        Lanceur = gameObject;
+        transform.position = Position = new Vector3(0, transform.lossyScale.y / 2, DataÉtage.RayonTrajectoirePersonnage);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
 
-        if ((Time.time%5)==0)
+        if ((Time.time%5)==0 && Time.time>0)
         {
             GameObject proj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             proj.AddComponent<Projectile>();
@@ -31,36 +37,30 @@ public class LanceurProjectiles : MonoBehaviour
 
 public class Projectile : MonoBehaviour
 {
-
-    bool révolutionFinie=false;
+    bool revolutoinFni = false;
 
     private void Start()
     {
-        transform.position = LanceurProjectiles.positionInitial;
-        //  GetComponent<SphereCollider>().isTrigger=true;
+        Math.SetGlobalScale(transform,new Vector3(0.5f,0.5f,0.5f));
+        GetComponent<Renderer>().material.color = Color.red;
+        transform.position = LanceurProjectiles.Position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (collision.gameObject == LanceurProjectiles.Lanceur) { révolutionFinie = true; }
-        Debug.Log("triggered");
-        Destroy(this);
+        if (revolutoinFni)
+            Destroy(gameObject);
+        else
+            revolutoinFni = true;
     }
-
-    private void onCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject == LanceurProjectiles.Lanceur) { révolutionFinie = true; }
-        Debug.Log("triggered");
-        Destroy(this);
+        Destroy(gameObject);
     }
 
     private void Update()
     {
         transform.RotateAround(Vector3.zero, Vector3.up, 1);
 
-        //if (révolutionFinie)
-        //{
-        //    Destroy(this);
-        //}
     }
 }

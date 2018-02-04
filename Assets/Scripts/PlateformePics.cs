@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstaclePic : Obstacle {
+public class PlateformePics : Plateforme {
 
     protected float HauteurPic;
 
@@ -24,6 +24,8 @@ public class ObstaclePic : Obstacle {
     //}
 
 
+
+
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, float hauteurPic, Material material)
     {
         AngleDébut = angleDébut;
@@ -36,20 +38,22 @@ public class ObstaclePic : Obstacle {
 
         HauteurPic = hauteurPic;
 
-        Maillage = new Mesh
-        {
-            name = "ObstaclePic"
-        };
+        CréationObject(material);
 
-        CalculerDonnéesDeBase();
-        GénérerTriangles();
+        //Maillage = new Mesh
+        //{
+        //    name = "ObstaclePic"
+        //};
 
-        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        //gameObject.AddComponent<Rigidbody>().useGravity = false;
-        gameObject.AddComponent<MeshRenderer>().material = material;
-        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        GetComponent<MeshCollider>().convex = true;
-        GetComponent<MeshCollider>().isTrigger = true;
+        //CalculerDonnéesDeBase();
+        //GénérerTriangles();
+
+        //gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        ////gameObject.AddComponent<Rigidbody>().useGravity = false;
+        //gameObject.AddComponent<MeshRenderer>().material = material;
+        //gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        //GetComponent<MeshCollider>().convex = true;
+        //GetComponent<MeshCollider>().isTrigger = true;
 
     }
 

@@ -6,9 +6,11 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
+    // continue a rouler apres avoir ete en collison avec quelque chose
+
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
-    float déplacementVitesse = 3;
+    float déplacementVitesse = 6; // devrait etre proportionnele a quelque chose
     float déplacementForce = 75;
   
     Vector3 origine;
@@ -114,7 +116,7 @@ public class Personnage : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Platforme>().CollisionDessus(collision)) { isTouchingGround = true; }
+        if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision)) { isTouchingGround = true; }
     }
 
     //private void OnCollisionExit(Collision collision)

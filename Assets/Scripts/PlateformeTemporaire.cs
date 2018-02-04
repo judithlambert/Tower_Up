@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformeTemporaire : Platforme
+public class PlateformeTemporaire : Plateforme
 {
     bool isTouched=false;
     float timeTouched=0;
@@ -23,22 +23,22 @@ public class PlatformeTemporaire : Platforme
         Temps = temps;
         isInitialisé = true;
 
-        //CréationObject(material);
+        CréationObject(material);
 
-        Maillage = new Mesh
-        {
-            name = "Plateforme"
-        };
+        //Maillage = new Mesh
+        //{
+        //    name = "Plateforme"
+        //};
 
-        CalculerDonnéesDeBase();
-        GénérerTriangles();
+        //CalculerDonnéesDeBase();
+        //GénérerTriangles();
 
-        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        gameObject.AddComponent<Rigidbody>().useGravity = false;
-        gameObject.AddComponent<MeshRenderer>().material = material;
-        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        GetComponent<MeshCollider>().convex = true;
-        GetComponent<Rigidbody>().isKinematic = true;
+        //gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        //gameObject.AddComponent<Rigidbody>().useGravity = false;
+        //gameObject.AddComponent<MeshRenderer>().material = material;
+        //gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        //GetComponent<MeshCollider>().convex = true;
+        //GetComponent<Rigidbody>().isKinematic = true;
 
         color = GetComponent<Renderer>().material.color;
     }
