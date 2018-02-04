@@ -2,3 +2,7 @@ PlateformeTemporaire
 10;90;0.5;3;0;3
 PlateformePics
 180;45;0.5;5;0;1
+Pic
+0;0;-1;2;5
+LanceurProjectiles
+0;0;1

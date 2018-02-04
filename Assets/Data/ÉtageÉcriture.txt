@@ -11,4 +11,11 @@ ObstaclePlateformePic
 angleDébut;amplitude;épaisseur;élévation;rugusité;hauteurPic
 
 LanceurProjectiles
-position
+positionX;hauteur;positionX
+
+Pic
+positionX;élévationEnY;positionX;rayon;hauteur
+
+
+// les position sont placer comme si le rayon etait de 1
+// donc pour etre a 45degré i faudrait ecrire squrt(2)

@@ -15,10 +15,10 @@ public class Personnage : MonoBehaviour
   
     Vector3 origine;
 
-
     Quaternion rotationInitial;
     Vector3 positionInitial;
 
+    bool isTouchingGround=false;
     int nbÉtage = 0; int hauteurÉtage = 0; // devra faire le lien
 
     bool jump,
@@ -33,7 +33,6 @@ public class Personnage : MonoBehaviour
         get { return transform.position - new Vector3(origine.x, transform.position.y, origine.z); }
     }
 
-    // ajout ailleur
     void Awake() // pt pas dans 
     {
         //gameObject.AddComponent<Rigidbody>().useGravity = true;
@@ -48,7 +47,6 @@ public class Personnage : MonoBehaviour
         ArrêterMouvement();
     }
 
-
     void Start()
     {
         nbJumps = 0;
@@ -59,12 +57,10 @@ public class Personnage : MonoBehaviour
         jump = crouch = reculer = avancer = false;
     }
 
-
     bool Déplacement()
     {
         return reculer || avancer;
     }
-
 
     void DéterminerMouvement()
     {
@@ -113,7 +109,6 @@ public class Personnage : MonoBehaviour
         return (nbJumps < 2);
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision)) { isTouchingGround = true; }
@@ -124,15 +119,11 @@ public class Personnage : MonoBehaviour
     //    isTouchingGround = false;
     //}
 
-    bool isTouchingGround=false;
-
     public void Die()
     {
         Debug.Log("Die");
         Awake();
     }
-
-
 
     public Vector3 VecteurPolaire(Vector3 vecteur)
     {

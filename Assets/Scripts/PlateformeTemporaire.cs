@@ -43,7 +43,6 @@ public class PlateformeTemporaire : Plateforme
         color = GetComponent<Renderer>().material.color;
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision Enter");
@@ -65,6 +64,5 @@ public class PlateformeTemporaire : Plateforme
             float G = color.g - (deltaTime / Temps) * (color.g);
             GetComponent<Renderer>().material.color = new Color(R, G, B);
         }
-
     }
 }

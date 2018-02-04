@@ -114,7 +114,12 @@ public class DataÉtage : MonoBehaviour
                 case "PlateformePics":
                     ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3], RayonTour, attributs[4], attributs[5], MaterialPlatforme);
                     break;
-
+                case "Pic":
+                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1],attributs[2],attributs[3], attributs[4], MaterialPlatforme);
+                    break;
+                case "LanceurProjecteurs":
+                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1], attributs[2], MaterialPlatforme);
+                    break;
             }
 
         } while (!étageReader.EndOfStream);

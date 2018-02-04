@@ -6,7 +6,6 @@ public class PlateformePics : Plateforme {
 
     protected float HauteurPic;
 
-
     //public void Awake()
     //{
     //    AngleDébut = 0;
@@ -22,9 +21,6 @@ public class PlateformePics : Plateforme {
     //    CalculerDonnéesDeBase();
     //    GénérerTriangles();
     //}
-
-
-
 
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, float hauteurPic, Material material)
     {
@@ -54,7 +50,6 @@ public class PlateformePics : Plateforme {
         //gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         //GetComponent<MeshCollider>().convex = true;
         //GetComponent<MeshCollider>().isTrigger = true;
-
     }
 
     public void OnTriggerEnter(Collider other) // faire que seulement personnage trigger
@@ -118,9 +113,6 @@ public class PlateformePics : Plateforme {
         Maillage.vertices = Sommets;
     }
 
-   
-    
-
     protected override void GénérerCoordonnéesDeTextures()
     {
         Vector2[] CoordonnéesTexture = new Vector2[nbSommets];
@@ -131,7 +123,6 @@ public class PlateformePics : Plateforme {
         {
             int nièmeArrête = (n - n % (nbTranches + 1)) / (nbTranches + 1);
             CoordonnéesTexture[n] = new Vector2((n % (nbTranches + 1)) * DeltaTexture, nièmeArrête % 2 == 0 ? nièmeArrête / 2 * (1 + ratio) : (nièmeArrête - 1) / 2 * (1 + ratio) + 1);
-
         }
 
         for(int n = nbSommets - NB_SOMMETS_BOUTS - nbTranches; n < nbSommets - NB_SOMMETS_BOUTS; n++)
@@ -164,19 +155,14 @@ public class PlateformePics : Plateforme {
                     Triangles[cpt] = f * (nbTranches + 1) + t;
                     Triangles[cpt + 1] = Triangles[cpt] + nbTranches + 1;
 
-
                     Triangles[cpt + 3] = Triangles[cpt] + nbTranches + 1;
                     Triangles[cpt + 4] = Triangles[cpt + 1] + 1;
-
 
                     Triangles[cpt + 6] = Triangles[cpt + 1] + 1;
                     Triangles[cpt + 7] = Triangles[cpt] + 1;
 
-
                     Triangles[cpt + 9] = Triangles[cpt] + 1;
                     Triangles[cpt + 10] = f * (nbTranches + 1) + t;
-
-
 
                     Triangles[cpt + 2] = Triangles[cpt + 5] = Triangles[cpt + 8] = Triangles[cpt + 11] = nbSommets - NB_SOMMETS_BOUTS + (t - nbTranches);
                     cpt += NB_SOMMETS_PAR_TRIANGLE * 4;
@@ -207,6 +193,4 @@ public class PlateformePics : Plateforme {
         Maillage.triangles = Triangles;
         Maillage.RecalculateNormals();
     }
-
-   
 }

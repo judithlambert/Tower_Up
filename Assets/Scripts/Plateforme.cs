@@ -7,8 +7,6 @@ public class Plateforme : MonoBehaviour
     protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 90, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
     protected const float FACTEUR_CONVERSION_DEGRÉ_RADIAN = 2 * Mathf.PI / 360, NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
 
-
-
     //protected float AngleDébut, Amplitude, Épaisseur, Largeur, Rayon, Élévation, Rugosité;
     public float AngleDébut { get; protected set; }
     public float Amplitude { get; protected set; }
@@ -25,7 +23,6 @@ public class Plateforme : MonoBehaviour
     protected float DeltaAngle, DeltaTexture, DeltaÉlévation;
     protected int nbTranches, nbSommets, nbTriangles;
 
-
     //public void Awake()
     //{
     //    AngleDébut = 0;
@@ -41,7 +38,6 @@ public class Plateforme : MonoBehaviour
     //    CalculerDonnéesDeBase();
     //    GénérerTriangles();
     //}
-
 
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, Material material)
     {
@@ -71,7 +67,6 @@ public class Plateforme : MonoBehaviour
         ////GetComponent<MeshCollider>().isTrigger = true;
         //GetComponent<Rigidbody>().isKinematic = true;
     }
-
 
     public void CréationObject(Material material)
     {
@@ -222,7 +217,6 @@ public class Plateforme : MonoBehaviour
         }
         return auDessus;
     }
-
 
     public bool IsPointDessus(Vector3 point)
     {

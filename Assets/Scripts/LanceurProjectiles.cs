@@ -4,29 +4,21 @@ using UnityEngine;
 
 public class LanceurProjectiles : MonoBehaviour
 {
-
     static public Vector3 Position { get; private set; }
 
-    public void Initialisation(Vector2 position, Material material)
+    public void Initialisation(float positionX, float hauteur, float positionZ, Material material)
     {
-        Position = position;
+        Position = new Vector3(positionX * DataÉtage.RayonTrajectoirePersonnage, hauteur + transform.lossyScale.y / 2, positionZ * DataÉtage.RayonTrajectoirePersonnage);
+
         gameObject.AddComponent<MeshRenderer>().material = material;
-    }
-
-
-    // Use this for initialization
-    void Start()
-    {
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
         gameObject.GetComponent<BoxCollider>();
 
-        transform.position = Position = new Vector3(0, transform.lossyScale.y / 2, DataÉtage.RayonTrajectoirePersonnage);
+        transform.position = Position;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-
         if ((Time.time%5)==0 && Time.time>0)
         {
             GameObject proj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -34,6 +26,7 @@ public class LanceurProjectiles : MonoBehaviour
         }
     }
 }
+
 
 public class Projectile : MonoBehaviour
 {
@@ -61,6 +54,5 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         transform.RotateAround(Vector3.zero, Vector3.up, 1);
-
     }
 }

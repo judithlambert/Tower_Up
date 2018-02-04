@@ -2,32 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pic : MonoBehaviour
+public class Pic : Obstacle
 {
-    [SerializeField] int nbTranches;
-    [SerializeField] float rayon;
-    [SerializeField] float hauteur;
+    int nbTranches=20;
+    float Rayon=2;
+    float Hauteur=5;
+    Vector3 Position;
 
-    Mesh maillage;
-    Vector3 origine;
+    Mesh Maillage;
+    Vector3 origine; // origine vas etre le point du milieu de la base au niveau du sol
     Vector3[] Sommets;
     float deltaAngle, deltaTexture;
     int nbSommets, nbTriangle;
 
-    private void Awake()
+    public void Initialisation(float positionX, float élévationEnY, float positionZ, float rayon, float hauteur, Material material)
     {
+        Position= origine = new Vector3(positionX*DataÉtage.RayonTrajectoirePersonnage, élévationEnY, positionZ * DataÉtage.RayonTrajectoirePersonnage);
+        Rayon = rayon;
+        Hauteur = hauteur;
+
+        Maillage = new Mesh
+        {
+            name = "Pic"
+        };
+
+        transform.position = Position;
+
         CalculerDonnéesDeBase();
         GénérerSommets();
         GénérerCoordonnéesDeTexture();
         GénérerListeTriangles();
+
+        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        gameObject.AddComponent<MeshRenderer>().material = material;
+        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        gameObject.AddComponent<Rigidbody>().isKinematic = true;
+        GetComponent<MeshCollider>().convex = true;
+        //GetComponent<MeshCollider>().isTrigger = true;
     }
 
     void CalculerDonnéesDeBase()
     {
-        origine = transform.position;
-        maillage = new Mesh();
-        GetComponent<MeshFilter>().mesh = maillage;
-        maillage.name = "Pic";
         nbSommets = nbTranches + 2;
         nbTriangle = nbTranches;
         deltaAngle = 2 * Mathf.PI / nbTranches;
@@ -37,12 +52,12 @@ public class Pic : MonoBehaviour
     void GénérerSommets()
     {
         Sommets = new Vector3[nbSommets];
-        Sommets[0] = origine + Vector3.up * hauteur;
+        Sommets[0] = origine + Vector3.up * Hauteur;
         for(int n = 1; n < nbSommets; ++n)
         {
-            Sommets[n] = origine + new Vector3(Mathf.Sin(n * -deltaAngle), 0, Mathf.Cos(n * deltaAngle)) * rayon;
+            Sommets[n] = origine + new Vector3(Mathf.Sin(n * -deltaAngle), 0, Mathf.Cos(n * deltaAngle)) * Rayon;
         }
-        maillage.vertices = Sommets;
+        Maillage.vertices = Sommets;
     }
 
     void GénérerCoordonnéesDeTexture()
@@ -53,7 +68,7 @@ public class Pic : MonoBehaviour
         {
             CoordonnéesDeTexture[n] = new Vector2(n * deltaTexture, 0);
         }
-        maillage.uv = CoordonnéesDeTexture;
+        Maillage.uv = CoordonnéesDeTexture;
     }
 
     void GénérerListeTriangles()
@@ -65,7 +80,12 @@ public class Pic : MonoBehaviour
             Triangles[n * 3 + 1] = 0;
             Triangles[n * 3 + 2] = n + 2;
         }
-        maillage.triangles = Triangles;
-        maillage.RecalculateNormals();
+        Maillage.triangles = Triangles;
+        Maillage.RecalculateNormals();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.ToString().Contains("Personnage")) { DataÉtage.Personnage.GetComponent<Personnage>().Die(); }
     }
 }
