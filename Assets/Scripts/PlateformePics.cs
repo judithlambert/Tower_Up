@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlateformePics : Plateforme {
 
+    // fixer le bug avec la texture
+
     protected float HauteurPic;
 
     //public void Awake()
@@ -61,12 +63,12 @@ public class PlateformePics : Plateforme {
     {
         Origine = transform.position;
         nbTranches = (int)(Amplitude / 15);
-        AngleDébut = DegréEnRadian(AngleDébut);
-        Amplitude = DegréEnRadian(Amplitude);
+        AngleDébut = Maths.DegréEnRadian(AngleDébut);
+        Amplitude = Maths.DegréEnRadian(Amplitude);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS + nbTranches;
         nbTriangles = (nbTranches * 3 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE + nbTranches*4;
         DeltaAngle = Amplitude / nbTranches;
-        DeltaTexture = DeltaAngle / DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
+        DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
     }
 
     override protected void GénérerTriangles()

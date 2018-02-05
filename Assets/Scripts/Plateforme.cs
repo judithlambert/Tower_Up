@@ -5,7 +5,7 @@ using UnityEngine;
 public class Plateforme : MonoBehaviour
 {
     protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 90, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
-    protected const float FACTEUR_CONVERSION_DEGRÉ_RADIAN = 2 * Mathf.PI / 360, NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
+    protected const float NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
 
     //protected float AngleDébut, Amplitude, Épaisseur, Largeur, Rayon, Élévation, Rugosité;
     public float AngleDébut { get; protected set; }
@@ -91,13 +91,13 @@ public class Plateforme : MonoBehaviour
     virtual protected void CalculerDonnéesDeBase()
     {
         Origine = transform.position;
-        AngleDébut = DegréEnRadian(AngleDébut);
-        Amplitude = DegréEnRadian(Amplitude);
+        AngleDébut = Maths.DegréEnRadian(AngleDébut);
+        Amplitude = Maths.DegréEnRadian(Amplitude);
         nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Amplitude / (2 * Mathf.PI)));
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS;
         nbTriangles = (nbTranches * 4 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE;
         DeltaAngle = Amplitude / nbTranches;
-        DeltaTexture = DeltaAngle / DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR/(Largeur+Rayon));
+        DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR/(Largeur+Rayon));
         DeltaÉlévation = Inclinaison / nbTranches;
     }
 
@@ -198,10 +198,7 @@ public class Plateforme : MonoBehaviour
         Maillage.RecalculateNormals();
     }
 
-    static protected float DegréEnRadian(float angleDegré)
-    {
-        return angleDegré * FACTEUR_CONVERSION_DEGRÉ_RADIAN;
-    }
+ 
 
     protected float RugositéAléatoire()
     {

@@ -22,6 +22,7 @@ public class LanceurProjectiles : MonoBehaviour
         if ((Time.time%5)==0 && Time.time>0)
         {
             GameObject proj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            proj.name = "Projectile";
             proj.AddComponent<Projectile>();
         }
     }
@@ -34,7 +35,7 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        Math.SetGlobalScale(transform,new Vector3(0.5f,0.5f,0.5f));
+        Maths.SetGlobalScale(transform,new Vector3(0.5f,0.5f,0.5f));
         GetComponent<Renderer>().material.color = Color.red;
         transform.position = LanceurProjectiles.Position;
     }

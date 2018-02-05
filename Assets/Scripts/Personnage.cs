@@ -24,7 +24,8 @@ public class Personnage : MonoBehaviour
     bool jump,
          crouch,
          reculer,
-         avancer;
+         avancer,
+         block;
 
     int nbJumps;
 
@@ -54,7 +55,7 @@ public class Personnage : MonoBehaviour
 
     void ArrêterMouvement()
     {
-        jump = crouch = reculer = avancer = false;
+        jump = crouch = reculer = avancer = block = false;
     }
 
     bool Déplacement()
@@ -65,9 +66,10 @@ public class Personnage : MonoBehaviour
     void DéterminerMouvement()
     {
         jump = Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space);
-        crouch = Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow);
+        crouch = Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         reculer = Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow);
         avancer = Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow);
+        block = Input.GetKeyDown("q")
     }
 
     void EffectuerDéplacementEtRotation()
