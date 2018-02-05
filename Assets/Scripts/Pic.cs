@@ -52,10 +52,10 @@ public class Pic : Obstacle
     void GénérerSommets()
     {
         Sommets = new Vector3[nbSommets];
-        Sommets[0] = origine + Vector3.up * Hauteur;
+        Sommets[0] = Vector3.up * Hauteur;
         for(int n = 1; n < nbSommets; ++n)
         {
-            Sommets[n] = origine + new Vector3(Mathf.Sin(n * -deltaAngle), 0, Mathf.Cos(n * deltaAngle)) * Rayon;
+            Sommets[n] = new Vector3(Mathf.Sin(n * -deltaAngle), 0, Mathf.Cos(n * deltaAngle)) * Rayon;
         }
         Maillage.vertices = Sommets;
     }

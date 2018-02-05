@@ -57,7 +57,7 @@ public class DataÉtage : MonoBehaviour
         RayonTrajectoirePersonnage = RayonTour + Plancher.GetComponent<Plateforme>().Largeur / 2;
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
 
-        Personnage = Instantiate(prefabPersonnage, new Vector3(0, 0.5f, 3), Quaternion.Euler(Vector3.zero));
+        Personnage = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
 
         Caméra.gameObject.AddComponent<CameraControlleur>();
 

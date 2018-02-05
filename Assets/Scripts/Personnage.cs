@@ -42,7 +42,7 @@ public class Personnage : MonoBehaviour
         origine = DataÉtage.Origine;
         // ne dois pas bouger lors du respawn
         transform.rotation =rotationInitial= Quaternion.Euler(Vector3.zero);
-        transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
+        //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         ArrêterMouvement();
     }
