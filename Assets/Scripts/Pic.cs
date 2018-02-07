@@ -15,11 +15,11 @@ public class Pic : Obstacle
     float deltaAngle, deltaTexture;
     int nbSommets;
 
-    [SerializeField] Material matériel;
-    private void Awake()
-    {
-        Initialisation(0, 0, 0, 2, 6, matériel);
-    }
+    //[SerializeField] Material matériel;
+    //private void Awake()
+    //{
+    //    Initialisation(0, 0, 0, 2, 6, matériel);
+    //}
 
     public void Initialisation(float positionX, float élévationEnY, float positionZ, float rayon, float hauteur, Material material)
     {
@@ -87,10 +87,6 @@ public class Pic : Obstacle
             Triangles[n + 1] = (int)(n * 2 / 3f) + 1;
             Triangles[n + 2] = (int)(n * 2 / 3f) + 2;
         }
-        //int i = nbTranches - 2;
-        //Triangles[(int)(i * 2 / 3f)] = i;
-        //Triangles[(int)(i * 2 / 3f) + 1] = i + 1;
-        //Triangles[(int)(i * 2 / 3f) + 2] = 0;
         Maillage.triangles = Triangles;
         Maillage.RecalculateNormals();
     }
