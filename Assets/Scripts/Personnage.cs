@@ -43,6 +43,7 @@ public class Personnage : MonoBehaviour
         origine = DataÉtage.Origine;
         // ne dois pas bouger lors du respawn
         transform.rotation =rotationInitial= Quaternion.Euler(Vector3.zero);
+        positionInitial = transform.position;
         //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         ArrêterMouvement();
@@ -69,7 +70,7 @@ public class Personnage : MonoBehaviour
         crouch = Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         reculer = Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow);
         avancer = Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow);
-        block = Input.GetKeyDown("q")
+        block = Input.GetKeyDown("q");
     }
 
     void EffectuerDéplacementEtRotation()
@@ -124,7 +125,8 @@ public class Personnage : MonoBehaviour
     public void Die()
     {
         Debug.Log("Die");
-        Awake();
+        transform.position = positionInitial;
+        transform.rotation = rotationInitial;
     }
 
     public Vector3 VecteurPolaire(Vector3 vecteur)
