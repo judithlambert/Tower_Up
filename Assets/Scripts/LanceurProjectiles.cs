@@ -19,7 +19,7 @@ public class LanceurProjectiles : MonoBehaviour
 
     void FixedUpdate()
     {
-        if ((Time.time%5)==0 && Time.time>0)
+        if ((Time.time % 5) == 0 && Time.time > 0)
         {
             GameObject proj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             proj.name = "Projectile";

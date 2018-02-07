@@ -69,7 +69,7 @@ public class Personnage : MonoBehaviour
         crouch = Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         reculer = Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow);
         avancer = Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow);
-        block = Input.GetKeyDown("q")
+        block = Input.GetKeyDown("q");
     }
 
     void EffectuerDéplacementEtRotation()

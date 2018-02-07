@@ -63,8 +63,8 @@ public class DataÉtage : MonoBehaviour
 
 
         //---test--------------------------------
-        GameObject cubeLanceur = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cubeLanceur.AddComponent<LanceurProjectiles>();
+        //GameObject cubeLanceur = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //cubeLanceur.AddComponent<LanceurProjectiles>();
 
         //---------------------------------------
 
