@@ -6,6 +6,8 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
+    int ANGULAR_DRAG = 5;
+
     // continue a rouler apres avoir ete en collison avec quelque chose
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
@@ -43,8 +45,9 @@ public class Personnage : MonoBehaviour
 
         origine = DataÉtage.Origine;
         // ne dois pas bouger lors du respawn
-        transform.rotation =rotationInitial= Quaternion.Euler(Vector3.zero);
+        transform.rotation = rotationInitial = Quaternion.Euler(Vector3.zero);
         positionInitial = transform.position;
+        GetComponent<Rigidbody>().angularDrag = ANGULAR_DRAG;
         //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         ArrêterMouvement();
@@ -118,10 +121,10 @@ public class Personnage : MonoBehaviour
         if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision)) { isTouchingGround = true; }
     }
 
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    isTouchingGround = false;
-    //}
+    private void OnCollisionExit(Collision collision)
+    {
+        isTouchingGround = false;
+    }
 
     public void Die()
     {
