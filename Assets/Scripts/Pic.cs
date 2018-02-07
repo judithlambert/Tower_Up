@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class Pic : Obstacle
 {
-    int nbTranches=20;
-    float Rayon=2;
-    float Hauteur=5;
+    int nbTranches = 20;
+    float Rayon = 2;
+    float Hauteur = 5;
     Vector3 Position;
 
     Mesh Maillage;
     Vector3 origine; // origine vas etre le point du milieu de la base au niveau du sol
     Vector3[] Sommets;
     float deltaAngle, deltaTexture;
-    int nbSommets, nbTriangle;
+    int nbSommets;
+
+    [SerializeField] Material matériel;
+    private void Awake()
+    {
+        Initialisation(0, 0, 0, 2, 6, matériel);
+    }
 
     public void Initialisation(float positionX, float élévationEnY, float positionZ, float rayon, float hauteur, Material material)
     {
@@ -43,43 +49,48 @@ public class Pic : Obstacle
 
     void CalculerDonnéesDeBase()
     {
-        nbSommets = nbTranches + 2;
-        nbTriangle = nbTranches;
+        nbSommets = nbTranches * 2 + 1;
         deltaAngle = 2 * Mathf.PI / nbTranches;
         deltaTexture = 1f / nbTranches;
     }
     
     void GénérerSommets()
     {
-        Sommets = new Vector3[nbSommets];
-        Sommets[0] = Vector3.up * Hauteur;
-        for(int n = 1; n < nbSommets; ++n)
+        Sommets = new Vector3[nbSommets];  
+        for(int n = 0; n < nbSommets - 2; n += 2)
         {
-            Sommets[n] = new Vector3(Mathf.Sin(n * -deltaAngle), 0, Mathf.Cos(n * deltaAngle)) * Rayon;
+            Sommets[n] = new Vector3(Mathf.Sin(n / 2 * -deltaAngle), 0, Mathf.Cos(n / 2 * deltaAngle)) * Rayon;
+            Sommets[n + 1] = Vector3.up * Hauteur;
         }
+        Sommets[Sommets.Length - 1] = Sommets[0];
         Maillage.vertices = Sommets;
     }
 
     void GénérerCoordonnéesDeTexture()
     {
         Vector2[] CoordonnéesDeTexture = new Vector2[nbSommets];
-        CoordonnéesDeTexture[0] = new Vector2(0, 1);
-        for(int n = 1; n < nbSommets; ++n)
+        for(int n = 0; n < nbSommets - 2; n += 2)
         {
-            CoordonnéesDeTexture[n] = new Vector2(n * deltaTexture, 0);
+            CoordonnéesDeTexture[n] = new Vector2(n / 2 * deltaTexture, 0);
+            CoordonnéesDeTexture[n + 1] = new Vector2(n / 2 * deltaTexture + deltaTexture / 2, 1);
         }
+        CoordonnéesDeTexture[CoordonnéesDeTexture.Length - 1] = new Vector2(1, 0);
         Maillage.uv = CoordonnéesDeTexture;
     }
 
     void GénérerListeTriangles()
     {
-        int[] Triangles = new int[nbTriangle * 3];
-        for(int n = 0; n < nbTriangle; ++n)
+        int[] Triangles = new int[nbTranches * 3];
+        for(int n = 0; n < Triangles.Length - 2; n += 3)
         {
-            Triangles[n * 3] = n + 1;
-            Triangles[n * 3 + 1] = 0;
-            Triangles[n * 3 + 2] = n + 2;
+            Triangles[n] = (int)(n * 2 / 3f);
+            Triangles[n + 1] = (int)(n * 2 / 3f) + 1;
+            Triangles[n + 2] = (int)(n * 2 / 3f) + 2;
         }
+        //int i = nbTranches - 2;
+        //Triangles[(int)(i * 2 / 3f)] = i;
+        //Triangles[(int)(i * 2 / 3f) + 1] = i + 1;
+        //Triangles[(int)(i * 2 / 3f) + 2] = 0;
         Maillage.triangles = Triangles;
         Maillage.RecalculateNormals();
     }

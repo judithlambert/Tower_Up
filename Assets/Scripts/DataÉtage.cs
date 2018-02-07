@@ -20,7 +20,7 @@ public class DataÉtage : MonoBehaviour
     const float DISTANCE_CAMERA_PERSONNAGE=10; // ratio avec tour
 
     [SerializeField] GameObject prefabPersonnage;
-    [SerializeField] Material MaterialPlatforme;
+    public static Material MaterialPlatforme;
     public static int nbÉtage { get; set; }
     StreamReader étageReader;
     StreamWriter saveWriter;
@@ -29,7 +29,7 @@ public class DataÉtage : MonoBehaviour
 
     int cptNaming=0;
 
-    float HauteurPlateforme=1;
+    float deltaHauteur=1;
 
     List<GameObject> ListGameObject;
 
@@ -51,7 +51,7 @@ public class DataÉtage : MonoBehaviour
 
         RayonTour = gameObject.transform.lossyScale.x/2;
 
-        largeurPlatforme = 5;
+        largeurPlatforme = 3;
 
         Plancher = new GameObject("Plancher");
         Plancher.AddComponent<Plateforme>().Initialisation(0, 360, largeurPlatforme, 1, 0, RayonTour, 0, MaterialPlatforme);
@@ -105,22 +105,22 @@ public class DataÉtage : MonoBehaviour
             switch (obj)
             {
                 case "Plateforme":
-                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3]*HauteurPlateforme, RayonTour, attributs[4], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3]*deltaHauteur, RayonTour, attributs[4], MaterialPlatforme);
                     break;
                 case "PlateformeMobile":
-                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3] * HauteurPlateforme, RayonTour, attributs[4], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3] * deltaHauteur, RayonTour, attributs[4], MaterialPlatforme);
                     break;
                 case "PlateformeTemporaire":
-                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3] * HauteurPlateforme, RayonTour, attributs[4], attributs[5], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3] * deltaHauteur, RayonTour, attributs[4], attributs[5], MaterialPlatforme);
                     break;
                 case "PlateformePics":
-                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3] * HauteurPlateforme, RayonTour, attributs[4], attributs[5], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], largeurPlatforme, attributs[2], attributs[3] * deltaHauteur, RayonTour, attributs[4], attributs[5], MaterialPlatforme);
                     break;
                 case "Pic":
-                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1],attributs[2] * HauteurPlateforme, attributs[3], attributs[4]*HauteurPlateforme, MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1],attributs[2] * deltaHauteur, largeurPlatforme / 2, attributs[4]*deltaHauteur, MaterialPlatforme);
                     break;
                 case "LanceurProjecteurs":
-                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * HauteurPlateforme, attributs[2], MaterialPlatforme);
+                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * deltaHauteur, attributs[2], MaterialPlatforme);
                     break;
             }
 
