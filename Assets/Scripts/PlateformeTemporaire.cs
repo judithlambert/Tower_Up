@@ -10,13 +10,14 @@ public class PlateformeTemporaire : Plateforme
     Color color;
     float Temps;
 
-    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, float temps, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float temps, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
         Largeur = largeur;
         Épaisseur = épaisseur;
         Hauteur = hauteur;
+        Inclinaison = inclinaison;
         Rayon = rayon;
         Rugosité = rugosité;
 
@@ -24,22 +25,7 @@ public class PlateformeTemporaire : Plateforme
         isInitialisé = true;
 
         CréationObject(material);
-
-        //Maillage = new Mesh
-        //{
-        //    name = "Plateforme"
-        //};
-
-        //CalculerDonnéesDeBase();
-        //GénérerTriangles();
-
-        //gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        //gameObject.AddComponent<Rigidbody>().useGravity = false;
-        //gameObject.AddComponent<MeshRenderer>().material = material;
-        //gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        //GetComponent<MeshCollider>().convex = true;
-        //GetComponent<Rigidbody>().isKinematic = true;
-
+        
         color = GetComponent<Renderer>().material.color;
     }
 

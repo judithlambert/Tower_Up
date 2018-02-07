@@ -1,20 +1,20 @@
 Plateforme
-angleDébut;amplitude;épaisseur;élévation;rugusité
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
 
 PlatformeMobile
-angleDébut;amplitude;épaisseur;élévation;rugusité
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
 
 PlateformeTemporaire
-angleDébut;amplitude;épaisseur;élévation;rugusité;temps
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps
 
-ObstaclePlateformePic
-angleDébut;amplitude;épaisseur;élévation;rugusité;hauteurPic
+PlateformePic
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;hauteurPic
 
 LanceurProjectiles
 positionX;hauteur;positionX
 
 Pic
-positionX;élévationEnY;positionX;rayon;hauteur
+positionX;élévationEnY;positionX;hauteur
 
 
 // les position sont placer comme si le rayon etait de 1

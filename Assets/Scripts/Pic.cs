@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pic : Obstacle
 {
     int nbTranches=20;
-    float Rayon=2;
+    float Rayon=2; // le rayon du pic devrait etre selon la largeur de la plateforme
     float Hauteur=5;
     Vector3 Position;
 

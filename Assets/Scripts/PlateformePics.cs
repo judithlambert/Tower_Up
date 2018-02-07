@@ -2,36 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlateformePics : Plateforme {
-
-    // fixer le bug avec la texture
-    // arranger le mesh
-
+public class PlateformePics : Plateforme
+{
     protected float HauteurPic;
 
-    //public void Awake()
-    //{
-    //    AngleDébut = 0;
-    //    Amplitude = 90;
-    //    AngleDébut = 0;
-    //    Amplitude = 90;
-    //    Largeur = 3;
-    //    Épaisseur = 1;
-    //    Hauteur = 1;
-    //    Inclinaison = 0;
-    //    Rayon = 5;
-    //    Rugosité = 0;
-    //    CalculerDonnéesDeBase();
-    //    GénérerTriangles();
-    //}
-
-    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, float hauteurPic, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float hauteurPic, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
         Largeur = largeur;
         Épaisseur = épaisseur;
         Hauteur = hauteur;
+        Inclinaison = inclinaison;
         Rayon = rayon;
         Rugosité = rugosité;
 
@@ -41,23 +23,22 @@ public class PlateformePics : Plateforme {
 
         Maillage = new Mesh
         {
-            name = "ObstaclePic"
+            name = "PlateformePics"
         };
 
         CalculerDonnéesDeBase();
         GénérerTriangles();
 
         gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        //gameObject.AddComponent<Rigidbody>().useGravity = false;
+        gameObject.AddComponent<Rigidbody>().isKinematic = true;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<MeshCollider>().convex = true;
-        GetComponent<MeshCollider>().isTrigger = true;
+        //GetComponent<MeshCollider>().isTrigger = true;
         //GetComponent<Rigidbody>().isKinematic = true;
-
     }
 
-   
+    // MAILLAGE
     override protected void CalculerDonnéesDeBase()
     {
         Origine = transform.position;
@@ -65,7 +46,7 @@ public class PlateformePics : Plateforme {
         AngleDébut = Maths.DegréEnRadian(AngleDébut);
         Amplitude = Maths.DegréEnRadian(Amplitude);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS + nbTranches;
-        nbTriangles = (nbTranches * 3 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE + nbTranches*4;
+        nbTriangles = (nbTranches * 3 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE + nbTranches * 4;
         DeltaAngle = Amplitude / nbTranches;
         DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
     }
@@ -76,11 +57,12 @@ public class PlateformePics : Plateforme {
         GénérerCoordonnéesDeTextures();
         GénérerListeTriangles();
     }
+
     Vector3 SommetPic(float angleAjouté, float élévationAjouté)
     {
-        return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (Largeur/2)),
-                           Origine.y + Hauteur+ élévationAjouté,
-                           Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (Largeur/2)));
+        return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (Largeur / 2)),
+                           Origine.y + Hauteur + élévationAjouté,
+                           Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (Largeur / 2)));
     }
 
     protected override void GénérerSommets()
@@ -93,12 +75,12 @@ public class PlateformePics : Plateforme {
             float angleAjouté = DeltaAngle * n;
             float élévationAjouté = DeltaÉlévation * n;
             Sommets[n] = Sommets[n + ((nbTranches + 1) * 4)] = Sommet(angleAjouté, élévationAjouté, false, true);
-            Sommets[(nbTranches + 1) + n]                    = Sommet(angleAjouté, élévationAjouté, false, false);
-            Sommets[(nbTranches + 1) * 2 + n]                = Sommet(angleAjouté, élévationAjouté, true, false);
-            Sommets[(nbTranches + 1) * 3 + n]                = Sommet(angleAjouté, élévationAjouté, true, true);
+            Sommets[(nbTranches + 1) + n] = Sommet(angleAjouté, élévationAjouté, false, false);
+            Sommets[(nbTranches + 1) * 2 + n] = Sommet(angleAjouté, élévationAjouté, true, false);
+            Sommets[(nbTranches + 1) * 3 + n] = Sommet(angleAjouté, élévationAjouté, true, true);
 
             //  Sommets des pointes des pics
-            Sommets[nbSommets-NB_SOMMETS_BOUTS+(n-nbTranches)] = SommetPic(angleAjouté + DeltaAngle/2, HauteurPic+Épaisseur);
+            Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPic(angleAjouté + DeltaAngle / 2, HauteurPic + Épaisseur);
         }
 
         // Sommets des deux bouts
@@ -123,13 +105,14 @@ public class PlateformePics : Plateforme {
         for (int n = 0; n < (nbTranches + 1) * 5; ++n)
         {
             int nièmeArrête = (n - n % (nbTranches + 1)) / (nbTranches + 1);
-            CoordonnéesTexture[n] = new Vector2((n % (nbTranches + 1)) * DeltaTexture, nièmeArrête % 2 == 0 ? nièmeArrête / 2 * (1 + ratio) : (nièmeArrête - 1) / 2 * (1 + ratio) + 1);
+            CoordonnéesTexture[n] = new Vector2((n % (nbTranches + 1)) * DeltaTexture,
+                                                 nièmeArrête % 2 == 0 ? nièmeArrête / 2 * (1 + ratio) : (nièmeArrête - 1) / 2 * (1 + ratio) + 1);
         }
 
-        for(int n = nbSommets - NB_SOMMETS_BOUTS - nbTranches; n < nbSommets - NB_SOMMETS_BOUTS; n++)
+        // Coordonnées de textures des pointes
+        for (int n = nbSommets - NB_SOMMETS_BOUTS - nbTranches; n < nbSommets - NB_SOMMETS_BOUTS; n++)
         {
-            int t = n- (nbSommets - NB_SOMMETS_BOUTS - nbTranches);
-            CoordonnéesTexture[n] = new Vector2(t+0.5f, 0.5f);
+            CoordonnéesTexture[n] = new Vector2((n % (nbTranches + 1)) * DeltaTexture + DeltaTexture / 2, 0.5f);
         }
 
         // Coordonnées de textures des deux bouts
@@ -195,15 +178,12 @@ public class PlateformePics : Plateforme {
         Maillage.RecalculateNormals();
     }
 
-    public void OnTriggerEnter(Collider other) // faire que seulement personnage trigger
+    private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("meurt");
-        DataÉtage.Personnage.GetComponent<Personnage>().Die();
-    }
-
-    public void OnCollisionEntre(Collider other) // faire que seulement personnage trigger
-    {
-        Debug.Log("meurt");
-        DataÉtage.Personnage.GetComponent<Personnage>().Die();
+        if (collision.gameObject.name.ToString().Contains("Personnage") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision))
+        {
+            Debug.Log("meurt");
+            DataÉtage.Personnage.GetComponent<Personnage>().Die();
+        }
     }
 }
