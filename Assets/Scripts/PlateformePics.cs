@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlateformePics : Plateforme {
 
     // fixer le bug avec la texture
+    // arranger le mesh
 
     protected float HauteurPic;
 
@@ -36,29 +37,27 @@ public class PlateformePics : Plateforme {
 
         HauteurPic = hauteurPic;
 
-        CréationObject(material);
+        //CréationObject(material);
 
-        //Maillage = new Mesh
-        //{
-        //    name = "ObstaclePic"
-        //};
+        Maillage = new Mesh
+        {
+            name = "ObstaclePic"
+        };
 
-        //CalculerDonnéesDeBase();
-        //GénérerTriangles();
+        CalculerDonnéesDeBase();
+        GénérerTriangles();
 
-        //gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        ////gameObject.AddComponent<Rigidbody>().useGravity = false;
-        //gameObject.AddComponent<MeshRenderer>().material = material;
-        //gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        //GetComponent<MeshCollider>().convex = true;
-        //GetComponent<MeshCollider>().isTrigger = true;
+        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        //gameObject.AddComponent<Rigidbody>().useGravity = false;
+        gameObject.AddComponent<MeshRenderer>().material = material;
+        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        GetComponent<MeshCollider>().convex = true;
+        GetComponent<MeshCollider>().isTrigger = true;
+        //GetComponent<Rigidbody>().isKinematic = true;
+
     }
 
-    public void OnTriggerEnter(Collider other) // faire que seulement personnage trigger
-    {
-        DataÉtage.Personnage.GetComponent<Personnage>().Die();
-    }
-
+   
     override protected void CalculerDonnéesDeBase()
     {
         Origine = transform.position;
@@ -194,5 +193,17 @@ public class PlateformePics : Plateforme {
 
         Maillage.triangles = Triangles;
         Maillage.RecalculateNormals();
+    }
+
+    public void OnTriggerEnter(Collider other) // faire que seulement personnage trigger
+    {
+        Debug.Log("meurt");
+        DataÉtage.Personnage.GetComponent<Personnage>().Die();
+    }
+
+    public void OnCollisionEntre(Collider other) // faire que seulement personnage trigger
+    {
+        Debug.Log("meurt");
+        DataÉtage.Personnage.GetComponent<Personnage>().Die();
     }
 }
