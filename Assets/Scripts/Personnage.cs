@@ -6,6 +6,8 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
+    int ANGULAR_DRAG = 5;
+
     // continue a rouler apres avoir ete en collison avec quelque chose
     // ajouté du drag
 
@@ -38,8 +40,9 @@ public class Personnage : MonoBehaviour
         GetComponent<Rigidbody>().angularDrag = 5;
 
         // ne dois pas bouger lors du respawn
-        transform.rotation =rotationInitial= Quaternion.Euler(Vector3.zero);
+        transform.rotation = rotationInitial = Quaternion.Euler(Vector3.zero);
         positionInitial = transform.position;
+        GetComponent<Rigidbody>().angularDrag = ANGULAR_DRAG;
         //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         jump = crouch = reculer = avancer = block = false;
@@ -80,19 +83,16 @@ public class Personnage : MonoBehaviour
    
     void Update()
     {
-        Debug.Log("jumps: " + nbJumps.ToString());
+        //Debug.Log("jumps: " + nbJumps.ToString());
         InputMouvement();
         if (reculer|| avancer) { EffectuerDéplacementEtRotation(); }
         if (jump) { Jumper(); }
-        Debug.Log("jumps: " + nbJumps.ToString());
 
         // replacer la balle sur sa trajectoire
         Vector3 vecteurPolaireOrigine = Maths.VecteurPolaire(VecteurOrigineBalle);
         transform.right = VecteurOrigineBalle;
         transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x/2), 0, 0);
         transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
-        Debug.Log("jumps: " + nbJumps.ToString());
-
     }
 
     public void Die()
