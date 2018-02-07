@@ -29,7 +29,7 @@ public class DataÉtage : MonoBehaviour
 
     int cptNaming=0;
 
-    float HauteurPlateforme=3;
+    float HauteurPlateforme=1;
 
     List<GameObject> ListGameObject;
 
