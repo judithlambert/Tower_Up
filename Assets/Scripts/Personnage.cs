@@ -19,6 +19,7 @@ public class Personnage : MonoBehaviour
     Vector3 positionInitial;
 
     bool isTouchingGround=false;
+
     int nbÉtage = 0; int hauteurÉtage = 0; // devra faire le lien
 
     bool jump,
