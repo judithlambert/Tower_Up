@@ -28,10 +28,10 @@ public class DataÉtage : MonoBehaviour
     public static float RayonTour; // si distance < rayon
     public static float RayonTrajectoirePersonnage;
     public static float RayonCamera;
-    public static float DeltaHauteur = 2;
-    public static float LargeurPlatforme = 5;
+    public static float DeltaHauteur = 2; //Hauteur entre 2 plateformes
+    public static float LargeurPlatforme = 3; //Largeur des objets
 
-    public static Vector3 Origine=Vector3.zero;
+    public static Vector3 Origine = Vector3.zero;
 
     StreamReader étageReader;
     StreamWriter saveWriter;

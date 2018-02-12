@@ -6,16 +6,28 @@ using System.Threading;
 
 public class Personnage : MonoBehaviour
 {
-    int ANGULAR_DRAG = 5;
+    const int ACCÉLÉRATION = 5;
+    const int ANGULAR_DRAG = 5;
 
     // continue a rouler apres avoir ete en collison avec quelque chose
     // ajouté du drag
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
-    float déplacementVitesse = 6; // devrait etre proportionnel à la tour
-    float déplacementForce = 75;  // devrait etre proportionnel à la tour
+    float vitesse = 0;
+    float Vitesse
+    {
+        get { return vitesse; }
+        set
+        {
+            if (value < -DataÉtage.RayonTour) { vitesse = -DataÉtage.RayonTour; }
+            else if (value > DataÉtage.RayonTour) { vitesse = DataÉtage.RayonTour; }
+            else { vitesse = value; }
+        }
+    }
 
+    float déplacementForce = 375;
+  
     Quaternion rotationInitial;
     Vector3 positionInitial;
 
@@ -25,7 +37,7 @@ public class Personnage : MonoBehaviour
          avancer,
          block;
 
-    int nbJumps=0;
+    int nbJumps = 0;
 
     Vector3 VecteurOrigineBalle
     {
@@ -58,10 +70,17 @@ public class Personnage : MonoBehaviour
         block = Input.GetKeyDown("q");
     }
 
+    public void DéterminerVitesse()
+    {
+        if (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
+        else if (reculer) { Vitesse = Vitesse - Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse > 0 ? 2 : 1) * (jump ? 2 : 1)); }
+        else { Vitesse = Vitesse + (Vitesse < 0 ? 1 : -1) * Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2); }
+    }
+
     void EffectuerDéplacementEtRotation()
     {
-        float angle = déplacementVitesse / DataÉtage.RayonTrajectoirePersonnage;
-        transform.RotateAround(Vector3.zero, Vector3.down, (avancer || reculer ? (reculer ? -angle : angle) : 0));
+        float angle = Vitesse / DataÉtage.RayonTrajectoirePersonnage;
+        transform.RotateAround(Vector3.zero, Vector3.down, angle);
     }
 
     // TO BE FIXED
@@ -70,7 +89,7 @@ public class Personnage : MonoBehaviour
         if (nbJumps < 2) // est ce que le saut est valide
         {
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce * 5));
+            gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
             ++nbJumps;
         }
     }
@@ -85,8 +104,10 @@ public class Personnage : MonoBehaviour
     {
         //Debug.Log("jumps: " + nbJumps.ToString());
         InputMouvement();
-        if (reculer|| avancer) { EffectuerDéplacementEtRotation(); }
+        DéterminerVitesse();
+        EffectuerDéplacementEtRotation();
         if (jump) { Jumper(); }
+        jump = crouch = reculer = avancer = block = false;
 
         // replacer la balle sur sa trajectoire
         Vector3 vecteurPolaireOrigine = Maths.VecteurPolaire(VecteurOrigineBalle);
