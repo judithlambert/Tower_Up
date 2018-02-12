@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Pic : Obstacle
 {
+   public const string String = "Pic";
+
     int nbTranches = 20;
     float Rayon = 2;
     float Hauteur = 5;

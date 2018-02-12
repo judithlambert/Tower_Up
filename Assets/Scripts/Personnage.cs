@@ -13,9 +13,9 @@ public class Personnage : MonoBehaviour
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
-    float déplacementVitesse = 6; // devrait etre proportionnele a quelque chose
-    float déplacementForce = 75;
-  
+    float déplacementVitesse = 6; // devrait etre proportionnel à la tour
+    float déplacementForce = 75;  // devrait etre proportionnel à la tour
+
     Quaternion rotationInitial;
     Vector3 positionInitial;
 
@@ -74,7 +74,7 @@ public class Personnage : MonoBehaviour
             ++nbJumps;
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) // bug si on double jumps sous une plateform collé sur soi
     {
         nbJumps = 0; //seulement parce que jump bug encore
         //if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision)) { nbJumps = 0; }

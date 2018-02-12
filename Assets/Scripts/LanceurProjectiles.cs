@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class LanceurProjectiles : MonoBehaviour
 {
+    public const string String="LanceurProjectiles";
+
     static public Vector3 Position { get; private set; }
 
     public void Initialisation(float positionX, float hauteur, float positionZ, Material material)
     {
         Position = new Vector3(positionX * DataÉtage.RayonTrajectoirePersonnage, hauteur + transform.lossyScale.y / 2, positionZ * DataÉtage.RayonTrajectoirePersonnage);
-
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject.AddComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().mesh;
+        Destroy(cube);
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
-        gameObject.GetComponent<BoxCollider>();
+        gameObject.AddComponent<BoxCollider>();
 
         transform.position = Position;
     }
@@ -40,16 +45,17 @@ public class Projectile : MonoBehaviour
         transform.position = LanceurProjectiles.Position;
     }
 
+    // marche pas avec le cube projecteur
     private void OnTriggerEnter(Collider other)
     {
         if (revolutoinFni)
-            Destroy(gameObject);
+        { Destroy(gameObject); Debug.Log("trigger"); }
         else
             revolutoinFni = true;
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        Destroy(gameObject); Debug.Log("collision");
     }
 
     private void Update()

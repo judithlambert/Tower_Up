@@ -4,8 +4,12 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Linq;
+using UnityEditor;
 
-// class pour les material
+// faire methode pour creation d'un objet
+// tour devrait avoir rigidbody
+// class to string pas efficace
+// change _Scripts
 
 public class DataÉtage : MonoBehaviour
 {
@@ -41,22 +45,21 @@ public class DataÉtage : MonoBehaviour
         nbÉtage = 1;
         //---
 
+        Materials.init();
+
         ListGameObject = new List<GameObject>();
 
         // instanciation du placher, personnage, camera
         RayonTour = gameObject.transform.lossyScale.x/2;
         Plancher = new GameObject("Plancher");
-        Plancher.AddComponent<Plateforme>().Initialisation(0, 360, LargeurPlatforme, 1, 0, 0, RayonTour, 0,MaterialPlatforme);
+        Plancher.AddComponent<Plateforme>().Initialisation(0, 360, LargeurPlatforme, 1, 0, 0, RayonTour, 0, Materials.Get((int)NomMaterial.Plateforme));
         RayonTrajectoirePersonnage = RayonTour + Plancher.GetComponent<Plateforme>().Largeur / 2;
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
         Personnage = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
-
         //---test--------------------------------
-        //GameObject cubeLanceur = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //cubeLanceur.AddComponent<LanceurProjectiles>();
 
         //---------------------------------------
 
@@ -72,7 +75,8 @@ public class DataÉtage : MonoBehaviour
 
     void LoadÉtage()
     {
-        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
+        //étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
+        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + "Test" + ".txt"); // juste pour tester
         do
         {
             string obj = étageReader.ReadLine();
@@ -86,23 +90,33 @@ public class DataÉtage : MonoBehaviour
             ListGameObject.Add(new GameObject(NewName(obj)));
             switch (obj)
             {
-                case "Plateforme":
-                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], attributs[3]*DeltaHauteur, attributs[4], RayonTour, attributs[5], MaterialPlatforme);
+                case Plateforme.String:
+                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], 
+                                                                                    attributs[3]*DeltaHauteur, attributs[4], RayonTour, attributs[5], 
+                                                                                    Materials.Get((int)NomMaterial.Plateforme));
                     break;
-                case "PlateformeMobile":
-                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], attributs[3] * DeltaHauteur, attributs[4], RayonTour, attributs[5], MaterialPlatforme);
+                case PlateformeMobile.String:
+                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], 
+                                                                                          attributs[3] * DeltaHauteur, attributs[4], RayonTour, attributs[5],
+                                                                                          Materials.Get((int)NomMaterial.Plateforme));
                     break;
-                case "PlateformeTemporaire":
-                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], attributs[3] * DeltaHauteur, attributs[4], RayonTour, attributs[5], attributs[6], MaterialPlatforme);
+                case PlateformeTemporaire.String:
+                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], 
+                                                                                              attributs[3] * DeltaHauteur, attributs[4], RayonTour, attributs[5], 
+                                                                                              attributs[6], Materials.Get((int)NomMaterial.Plateforme));
                     break;
-                case "PlateformePics":
-                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], attributs[3] * DeltaHauteur,attributs[4], RayonTour, attributs[5], MaterialPlatforme);
+                case PlateformePics.String:
+                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], LargeurPlatforme, attributs[2], 
+                                                                                        attributs[3] * DeltaHauteur,attributs[4], RayonTour, attributs[5],
+                                                                                        Materials.Get((int)NomMaterial.Plateforme));
                     break;
-                case "Pic":
-                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1] * DeltaHauteur, attributs[2], LargeurPlatforme/2 ,attributs[3]*DeltaHauteur, MaterialPlatforme);
+                case Pic.String:
+                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1] * DeltaHauteur, attributs[2], LargeurPlatforme/2 ,
+                                                                             attributs[3]*DeltaHauteur, Materials.Get((int)NomMaterial.Plateforme));
                     break;
-                case "LanceurProjecteurs":
-                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * DeltaHauteur, attributs[2], MaterialPlatforme);
+                case LanceurProjectiles.String:
+                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * DeltaHauteur, attributs[2], 
+                                                                                            Materials.Get((int)NomMaterial.Plateforme));
                     break;
             }
 

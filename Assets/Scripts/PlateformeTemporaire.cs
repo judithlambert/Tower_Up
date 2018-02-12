@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlateformeTemporaire : Plateforme
 {
-    bool wasTouched=false;
+    public const string String = "PlateformeTemporaire";
+
+
+    bool wasTouched =false;
     float timeTouched=0;
     bool isInitialisé = false;
     Color color;

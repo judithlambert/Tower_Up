@@ -1,13 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEditor;
 
-public class Materials : MonoBehaviour
+public static class Materials
 {
-    public Material[] materials;
+    static public List<Material> ListMaterials;
 
-    private void Awake()
+    static public void init()
     {
-        materials = Resources.LoadAll("Materials") as Material[];
+        ListMaterials = new List<Material>();
+        // faire pour chaque materials (si fait d'un coup, impossible de savoir quel material est quel)
+        ListMaterials.Add(AssetDatabase.LoadAssetAtPath("Assets/Materials/MaterialPlatforme.mat", typeof(Material)) as Material);
     }
+
+    static public Material Get(int n) 
+    {
+        return ListMaterials[n]; 
+    }
+}
+
+public enum NomMaterial
+{
+    Plateforme, 
+    Personnage
 }

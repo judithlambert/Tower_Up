@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Plateforme : MonoBehaviour
 {
+    public const string String = "Plateforme";
+
+
     protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 90, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
     protected const float NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
 

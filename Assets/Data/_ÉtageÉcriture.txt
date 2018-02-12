@@ -11,7 +11,7 @@ PlateformePic
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;hauteurPic
 
 LanceurProjectiles
-positionX;hauteur;positionY
+positionX;hauteur;positionX
 
 Pic
 positionX;élévationEnY;positionX;hauteur

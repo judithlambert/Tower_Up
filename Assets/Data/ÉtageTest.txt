@@ -1,8 +1,12 @@
 Plateforme
-10;30;0.5;1;0
+20;45;1;1;0;0
+Plateforme
+135;45;1;2;0;0
 PlateformeTemporaire
-60;20;0.5;2;0;3
+50;30;0.5;2;0;0;5
 PlateformePics
-70;50;0.5;0;0;1
-PlateformeMobile
-110;30;0.5;3;0
+180;45;0.5;2;0;0;1
+Pic
+0;0;-1;2;5
+LanceurProjectiles
+0;0;1

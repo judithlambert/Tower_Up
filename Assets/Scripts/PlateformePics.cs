@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// bug avec la position
+
 public class PlateformePics : Plateforme
 {
+    public const string String = "PlateformePics";
+
+
     protected float HauteurPic;
 
+   
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float hauteurPic, Material material)
     {
         AngleDébut = angleDébut;
