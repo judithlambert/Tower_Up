@@ -17,7 +17,7 @@ public class Plateforme : MonoBehaviour
     public float Inclinaison { get; protected set; }
     public float Rugosité { get; protected set; }
 
-    protected Vector3 Origine;
+    protected Vector3 Origine; // est toujours égal a DataÉtage.Origine (Vector3.zero)
     protected Mesh Maillage;
     protected Vector3[] Sommets;
     protected float DeltaAngle, DeltaTexture, DeltaÉlévation;
@@ -25,47 +25,21 @@ public class Plateforme : MonoBehaviour
 
     //public void Awake()
     //{
-    //    AngleDébut = 0;
-    //    Amplitude = 90;
-    //    AngleDébut = 0;
-    //    Amplitude = 90;
-    //    Largeur = 3;
-    //    Épaisseur = 1;
-    //    Hauteur = 1;
-    //    Inclinaison = 0;
-    //    Rayon = 5;
-    //    Rugosité = 0;
-    //    CalculerDonnéesDeBase();
-    //    GénérerTriangles();
+    //    Initialisation(0, 90, DataÉtage.LargeurPlatforme, 1, 1, 0, DataÉtage.RayonTour, 0, DataÉtage.MaterialPlatforme);
     //}
 
-    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
         Largeur = largeur;
         Épaisseur = épaisseur;
         Hauteur = hauteur;
+        Inclinaison = inclinaison;
         Rayon = rayon;
         Rugosité = rugosité;
 
         CréationObject(material);
-
-        //Maillage = new Mesh
-        //{
-        //    name = "Plateforme"
-        //};
-
-        //CalculerDonnéesDeBase();
-        //GénérerTriangles();
-
-        //gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        ////gameObject.AddComponent<Rigidbody>().useGravity = false;
-        //gameObject.AddComponent<MeshRenderer>().material = material;
-        //gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        //GetComponent<MeshCollider>().convex = true;
-        ////GetComponent<MeshCollider>().isTrigger = true;
-        //GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public void CréationObject(Material material)
@@ -88,6 +62,28 @@ public class Plateforme : MonoBehaviour
     }
 
 
+    protected float RugositéAléatoire()
+    {
+        return Random.value * Rugosité * Épaisseur / 2;
+    }
+
+    public bool CollisionDessus(Collision collision)
+    {
+        bool auDessus = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointDessus(cp.point)) { auDessus = true; }
+        }
+        return auDessus;
+    }
+    public bool IsPointDessus(Vector3 point)
+    {
+        return ((point.y < Hauteur + 0.1) && (point.y > Hauteur - 0.1)); // marche par pour une platform avec inclinaison
+    }
+
+
+    // MAILLAGE
+
     virtual protected void CalculerDonnéesDeBase()
     {
         Origine = transform.position;
@@ -97,7 +93,7 @@ public class Plateforme : MonoBehaviour
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS;
         nbTriangles = (nbTranches * 4 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE;
         DeltaAngle = Amplitude / nbTranches;
-        DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR/(Largeur+Rayon));
+        DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
         DeltaÉlévation = Inclinaison / nbTranches;
     }
 
@@ -196,27 +192,5 @@ public class Plateforme : MonoBehaviour
         
         Maillage.triangles = Triangles;
         Maillage.RecalculateNormals();
-    }
-
- 
-
-    protected float RugositéAléatoire()
-    {
-        return Random.value * Rugosité * Épaisseur / 2;
-    }
-
-    public bool CollisionDessus(Collision collision)
-    {
-        bool auDessus = false;
-        foreach (ContactPoint cp in collision.contacts)
-        {
-            if (IsPointDessus(cp.point)) { auDessus = true; }
-        }
-        return auDessus;
-    }
-
-    public bool IsPointDessus(Vector3 point)
-    {
-        return ((point.y < Hauteur + 0.1) && (point.y > Hauteur - 0.1)); // marche par pour une platform avec inclinaison
     }
 }

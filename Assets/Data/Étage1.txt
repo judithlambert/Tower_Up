@@ -1,11 +1,11 @@
 Plateforme
-45;45;1;1;0
+20;45;1;1;0;0
 Plateforme
-135;45;1;2;0
+135;45;1;2;0;0
 PlateformeTemporaire
-10;90;0.5;2;0;3
+50;30;0.5;2;0;0;5
 PlateformePics
-180;45;0.5;3;0;1
+180;45;0.5;2;0;0;1
 Pic
 0;0;-1;2;5
 LanceurProjectiles

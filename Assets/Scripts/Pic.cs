@@ -7,6 +7,7 @@ public class Pic : Obstacle
     int nbTranches = 20;
     float Rayon = 2;
     float Hauteur = 5;
+
     Vector3 Position;
 
     Mesh Maillage;
