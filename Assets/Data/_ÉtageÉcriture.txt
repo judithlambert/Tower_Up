@@ -17,5 +17,4 @@ Pic
 positionX;élévationEnY;positionX;hauteur
 
 
-// les position sont placer comme si le rayon etait de 1
-// donc pour etre a 45degré il faudrait ecrire squrt(2)
+// les position sont placer comme si la hauteur de étage = 1 et que un tour = 360
