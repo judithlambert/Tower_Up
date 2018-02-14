@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Plateforme : MonoBehaviour
 {
+
+   
     public const string String = "Plateforme";
-
-
+    
     protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 90, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
     protected const float NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
 
@@ -31,6 +32,20 @@ public class Plateforme : MonoBehaviour
     //    Initialisation(0, 90, DataÉtage.LargeurPlatforme, 1, 1, 0, DataÉtage.RayonTour, 0, DataÉtage.MaterialPlatforme);
     //}
 
+    // initiantion soit avec position et non angle
+    /// <summary>
+    /// tous les angles sont en degré
+    /// </summary>
+    public void Initialisation(float positionXDébut, float positionYDébut, float positionXFin, float positionYFin, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
+    {
+        Initialisation(Mathf.Atan2(positionXDébut, positionYDébut), Mathf.Atan2(positionXFin, positionYFin)- Mathf.Atan2(positionXDébut, positionYDébut),
+                       largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
+    }
+    public void Initialisation(float positionX, float positionY, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
+    {
+        Initialisation(Mathf.Atan2(positionX, positionY), 
+                       amplitude, largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
+    }
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
     {
         AngleDébut = angleDébut;
@@ -89,7 +104,7 @@ public class Plateforme : MonoBehaviour
 
     virtual protected void CalculerDonnéesDeBase()
     {
-        Origine = transform.position;
+        Origine = transform.position; //?*
         AngleDébut = Maths.DegréEnRadian(AngleDébut);
         Amplitude = Maths.DegréEnRadian(Amplitude);
         nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Amplitude / (2 * Mathf.PI)));

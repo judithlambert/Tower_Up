@@ -110,7 +110,7 @@ public class Personnage : MonoBehaviour
         jump = crouch = reculer = avancer = block = false;
 
         // replacer la balle sur sa trajectoire
-        Vector3 vecteurPolaireOrigine = Maths.VecteurPolaire(VecteurOrigineBalle);
+        Vector3 vecteurPolaireOrigine = Maths.VecteurCartésienÀPolaire(VecteurOrigineBalle);
         transform.right = VecteurOrigineBalle;
         transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x/2), 0, 0);
         transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
