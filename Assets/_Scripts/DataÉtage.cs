@@ -60,7 +60,8 @@ public class DataÉtage : MonoBehaviour
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
         //---test--------------------------------
-
+        GameObject fusil = new GameObject("fusil");
+        fusil.AddComponent<Fusil>().Initialisation(-1, 0, 0, Materials.Get((int)NomMaterial.Plateforme));
         //---------------------------------------
 
         LoadÉtage();
