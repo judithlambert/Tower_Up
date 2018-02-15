@@ -84,6 +84,7 @@ public class Personnage : MonoBehaviour
     }
 
     // TO BE FIXED
+    // wall jump
     void Jumper()
     {
         if (nbJumps < 2) // est ce que le saut est valide
@@ -95,7 +96,7 @@ public class Personnage : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision) // bug si on double jumps sous une plateform collé sur soi
     {
-        nbJumps = 0; //seulement parce que jump bug encore
+        nbJumps = 0; // *seulement parce que jump bug encore*
         //if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision)) { nbJumps = 0; }
         //else { Debug.Log("collision jump fail"); }
     }
