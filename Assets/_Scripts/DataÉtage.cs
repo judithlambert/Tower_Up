@@ -60,8 +60,8 @@ public class DataÉtage : MonoBehaviour
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
         //---test--------------------------------
-        GameObject fusil = new GameObject("fusil");
-        fusil.AddComponent<Fusil>().Initialisation(-1, 0, 0, Materials.Get((int)NomMaterial.Plateforme));
+        //GameObject fusil = new GameObject("fusil");
+        //fusil.AddComponent<Fusil>().Initialisation(-1, 0, 0, Materials.Get((int)NomMaterial.Plateforme));
         //---------------------------------------
 
         LoadÉtage();
@@ -112,8 +112,8 @@ public class DataÉtage : MonoBehaviour
                                                                                         Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case Pic.String:
-                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1] * DeltaHauteur, attributs[2], LargeurPlatforme/2 ,
-                                                                             attributs[3]*DeltaHauteur, Materials.Get((int)NomMaterial.Plateforme));
+                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1] * DeltaHauteur, LargeurPlatforme / 2.4f,
+                                                                             attributs[2] * DeltaHauteur, Materials.Get((int)NomMaterial.Pic));
                     break;
                 case LanceurProjectiles.String:
                     ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * DeltaHauteur, attributs[2], 

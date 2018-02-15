@@ -14,7 +14,7 @@ LanceurProjectiles
 positionX;hauteur;positionX
 
 Pic
-positionX;élévationEnY;positionX;hauteur
+angle;élévationEnY;hauteur
 
 
 // les position sont placer comme si la hauteur de étage = 1 et que un tour = 360

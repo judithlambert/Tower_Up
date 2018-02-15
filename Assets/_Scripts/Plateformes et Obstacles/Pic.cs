@@ -21,12 +21,12 @@ public class Pic : Obstacle
     //[SerializeField] Material matériel;
     //private void Awake()
     //{
-    //    Initialisation(0, 0, 0, 2, 6, matériel);
+    //    Initialisation(0, 0, 2, 6, matériel);
     //}
 
-    public void Initialisation(float positionX, float élévationEnY, float positionZ, float rayon, float hauteur, Material material)
+    public void Initialisation(float angle, float élévationEnY, float rayon, float hauteur, Material material)
     {
-        Position= origine = new Vector3(positionX*DataÉtage.RayonTrajectoirePersonnage, élévationEnY, positionZ * DataÉtage.RayonTrajectoirePersonnage);
+        Position = origine = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, élévationEnY, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
         Rayon = rayon;
         Hauteur = hauteur;
 

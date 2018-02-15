@@ -64,7 +64,7 @@ public class Plateforme : MonoBehaviour
     {
         Maillage = new Mesh
         {
-            name = "Plateforme"
+            name = "PlateformePic"
         };
 
         CalculerDonnéesDeBase();

@@ -13,6 +13,8 @@ public static class Materials
         ListMaterials = new List<Material>();
         // faire pour chaque materials (si fait d'un coup, impossible de savoir quel material est quel)
         ListMaterials.Add(AssetDatabase.LoadAssetAtPath("Assets/Materials/MaterialPlatforme.mat", typeof(Material)) as Material);
+        ListMaterials.Add(AssetDatabase.LoadAssetAtPath("Assets/Materials/MaterialPersonnage.mat", typeof(Material)) as Material);
+        ListMaterials.Add(AssetDatabase.LoadAssetAtPath("Assets/Materials/MaterialPic.mat", typeof(Material)) as Material);
     }
 
     static public Material Get(int n) 
@@ -24,5 +26,6 @@ public static class Materials
 public enum NomMaterial
 {
     Plateforme, 
-    Personnage
+    Personnage,
+    Pic
 }
