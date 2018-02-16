@@ -6,11 +6,6 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 
-// faire methode pour creation d'un objet
-// tour devrait avoir rigidbody
-// class to string pas efficace
-// change _Scripts
-
 public class DataÉtage : MonoBehaviour
 {
     const string CHEMIN_DATA_ÉTAGE= "Assets/Data/";

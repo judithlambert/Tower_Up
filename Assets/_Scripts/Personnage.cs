@@ -9,8 +9,7 @@ public class Personnage : MonoBehaviour
     const int ACCÉLÉRATION = 5;
     const int ANGULAR_DRAG = 5;
 
-    // continue a rouler apres avoir ete en collison avec quelque chose
-    // ajouté du drag
+
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
