@@ -6,5 +6,5 @@
  * tour devrait avoir rigidbody
  * class to string pas efficace
  * personnage continue a rouler apres avoir ete en collison avec quelque chose
- * 
+ * on peut pas utiliser 'using UnityEditor' dans un build (class materials)
  */

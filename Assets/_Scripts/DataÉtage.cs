@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Linq;
-using UnityEditor;
+//using UnityEditor;
 
 public class DataÉtage : MonoBehaviour
 {
@@ -40,7 +40,7 @@ public class DataÉtage : MonoBehaviour
         nbÉtage = 1;
         //---
 
-        Materials.init();
+        Materials.Init();
 
         ListGameObject = new List<GameObject>();
 
