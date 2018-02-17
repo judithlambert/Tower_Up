@@ -7,7 +7,7 @@ angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
 PlateformeTemporaire
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps
 
-PlateformePic
+PlateformePics
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;hauteurPic
 
 LanceurProjectiles

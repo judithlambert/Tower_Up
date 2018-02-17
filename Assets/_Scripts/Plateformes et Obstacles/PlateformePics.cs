@@ -39,7 +39,7 @@ public class PlateformePics : Plateforme
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        GetComponent<MeshCollider>().convex = true;
+        //GetComponent<MeshCollider>().convex = true;          <-- crée un mesh colider qui ne fit pas avec le mesh réel
         //GetComponent<MeshCollider>().isTrigger = true;
         //GetComponent<Rigidbody>().isKinematic = true;
     }
@@ -48,7 +48,7 @@ public class PlateformePics : Plateforme
     override protected void CalculerDonnéesDeBase()
     {
         Origine = transform.position;
-        nbTranches = (int)(Amplitude / 15);
+        nbTranches = (int)Mathf.Ceil(Maths.DegréEnRadian(Amplitude) * DataÉtage.RayonTrajectoirePersonnage / DataÉtage.LARGEUR_PLATEFORME);
         AngleDébut = Maths.DegréEnRadian(AngleDébut);
         Amplitude = Maths.DegréEnRadian(Amplitude);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS + nbTranches;
@@ -86,7 +86,7 @@ public class PlateformePics : Plateforme
             Sommets[(nbTranches + 1) * 3 + n] = Sommet(angleAjouté, élévationAjouté, true, true);
 
             //  Sommets des pointes des pics
-            Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPic(angleAjouté + DeltaAngle / 2, HauteurPic + Épaisseur);
+            Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPic(angleAjouté + DeltaAngle / 2, HauteurPic);
         }
 
         // Sommets des deux bouts
