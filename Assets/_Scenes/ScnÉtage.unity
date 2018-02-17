@@ -38,7 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+<<<<<<< HEAD
   m_IndirectSpecularColor: {r: 0.20203, g: 0.29936957, b: 0.21856391, a: 1}
+=======
+  m_IndirectSpecularColor: {r: 0.49780262, g: 0.49780262, b: 0.49780262, a: 1}
+>>>>>>> d5744bf96d02888c9a0c55d97c3d5bcbb8b42967
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -207,7 +211,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4791107958934980, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4791107958934980, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
       propertyPath: m_LocalPosition.z
@@ -233,7 +237,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1910514425136810, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
+      propertyPath: m_Name
+      value: Instanciateur
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791107958934980, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791107958934980, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791107958934980, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 23573083992273604, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
+    - {fileID: 33815050551283390, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5396bbf4bffbd884aba08a3e4e8ae452, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1465412328
