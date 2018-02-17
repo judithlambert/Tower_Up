@@ -36,16 +36,16 @@ public class Plateforme : MonoBehaviour
     /// <summary>
     /// tous les angles sont en degré
     /// </summary>
-    public void Initialisation(float positionXDébut, float positionYDébut, float positionXFin, float positionYFin, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
-    {
-        Initialisation(Mathf.Atan2(positionXDébut, positionYDébut), Mathf.Atan2(positionXFin, positionYFin)- Mathf.Atan2(positionXDébut, positionYDébut),
-                       largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
-    }
-    public void Initialisation(float positionX, float positionY, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
-    {
-        Initialisation(Mathf.Atan2(positionX, positionY), 
-                       amplitude, largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
-    }
+    //public void Initialisation(float positionXDébut, float positionYDébut, float positionXFin, float positionYFin, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
+    //{
+    //    Initialisation(Mathf.Atan2(positionXDébut, positionYDébut), Mathf.Atan2(positionXFin, positionYFin)- Mathf.Atan2(positionXDébut, positionYDébut),
+    //                   largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
+    //}
+    //public void Initialisation(float positionX, float positionY, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
+    //{
+    //    Initialisation(Mathf.Atan2(positionX, positionY), 
+    //                   amplitude, largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
+    //}
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
     {
         AngleDébut = angleDébut;
@@ -74,7 +74,7 @@ public class Plateforme : MonoBehaviour
         gameObject.AddComponent<Rigidbody>().useGravity = false;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        GetComponent<MeshCollider>().convex = true;
+        //GetComponent<MeshCollider>().convex = true;                       <-- le mesh collider ne fit plus avec son mesh réel
         //GetComponent<MeshCollider>().isTrigger = true;
         GetComponent<Rigidbody>().isKinematic = true;
     }
@@ -184,9 +184,9 @@ public class Plateforme : MonoBehaviour
 
         // Triangles du corps
         int cpt = 0;
-        for(int t = 0; t < nbTranches; ++t)
+        for (int t = 0; t < nbTranches; ++t)
         {
-            for(int f = 0; f < 4; ++f)
+            for (int f = 0; f < 4; ++f)
             {
                 Triangles[cpt] = f * (nbTranches + 1) + t;
                 Triangles[cpt + 1] = Triangles[cpt + 4] = Triangles[cpt] + nbTranches + 1;
@@ -199,15 +199,15 @@ public class Plateforme : MonoBehaviour
 
         // Triangles des deux bouts
         int p = Triangles.Length - NB_SOMMETS_PAR_TRIANGLE * 4;
-        Triangles[p] = nbSommets-8;
-        Triangles[p + 2] = Triangles[p + 3] = nbSommets-7;
-        Triangles[p + 1] = Triangles[p + 4] = nbSommets-6;
-        Triangles[p + 5] = nbSommets-5;
-        Triangles[p + 6] = nbSommets-4;
-        Triangles[p + 7] = Triangles[p + 9] = nbSommets-3;
-        Triangles[p + 8] = Triangles[p + 11] = nbSommets-2;
-        Triangles[p + 10] = nbSommets-1;
-        
+        Triangles[p] = nbSommets - 8;
+        Triangles[p + 2] = Triangles[p + 3] = nbSommets - 7;
+        Triangles[p + 1] = Triangles[p + 4] = nbSommets - 6;
+        Triangles[p + 5] = nbSommets - 5;
+        Triangles[p + 6] = nbSommets - 4;
+        Triangles[p + 7] = Triangles[p + 9] = nbSommets - 3;
+        Triangles[p + 8] = Triangles[p + 11] = nbSommets - 2;
+        Triangles[p + 10] = nbSommets - 1;
+
         Maillage.triangles = Triangles;
         Maillage.RecalculateNormals();
     }

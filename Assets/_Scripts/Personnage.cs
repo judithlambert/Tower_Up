@@ -19,8 +19,8 @@ public class Personnage : MonoBehaviour
         get { return vitesse; }
         set
         {
-            if (value < -DataÉtage.RayonTour) { vitesse = -DataÉtage.RayonTour; }
-            else if (value > DataÉtage.RayonTour) { vitesse = DataÉtage.RayonTour; }
+            if (value < -DataÉtage.RAYON_TOUR) { vitesse = -DataÉtage.RAYON_TOUR; }
+            else if (value > DataÉtage.RAYON_TOUR) { vitesse = DataÉtage.RAYON_TOUR; }
             else { vitesse = value; }
         }
     }
