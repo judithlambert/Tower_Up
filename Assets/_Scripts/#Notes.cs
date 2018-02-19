@@ -13,5 +13,7 @@
  * 
  * plateform angle et amplitude en radian ou degré
  * 
+ * plateforme mobile qui tourne en rond (tour complet)
+ * 
  * switcher epaisseur et hauteur
  */
