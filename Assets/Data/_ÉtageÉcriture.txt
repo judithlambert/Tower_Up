@@ -2,7 +2,7 @@ Plateforme nom
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
 
 PlateformeMobile
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;vitesse;distanced
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;vitesse;distance
 
 PlateformeTemporaire
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps

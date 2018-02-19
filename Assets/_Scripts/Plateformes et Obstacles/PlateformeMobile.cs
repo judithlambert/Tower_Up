@@ -7,7 +7,8 @@ public class PlateformeMobile : Plateforme
     public const string String = Plateforme.String + "Mobile";
 
     bool touching=false;
-    float Temps, Distance, Vitesse;
+
+    float Temps, Distance, Vitesse, rotation;
     // distance est une amplitude, en degré
 
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float vitesse, float distance, Material material)
@@ -40,9 +41,16 @@ public class PlateformeMobile : Plateforme
     }
 
     void Update()
+<<<<<<< HEAD
     { // à tester pour distance et vitesse sont réellement respecter
         // bug avec le personnage qui tourne sur lui-même
         transform.Rotate(Vector3.up, Distance * Mathf.Sin(Time.time*Vitesse));
         if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up, Distance * Mathf.Sin(Time.time * Vitesse)); }
+=======
+    {
+        rotation = -(((Distance - Amplitude) / 2) * Vitesse * (Mathf.Sin(Time.time)) + ((Distance - Amplitude) / 2)); // Vitesse a pt corigé
+        transform.rotation = Quaternion.Euler(new Vector3(0,rotation));
+        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up,rotation); }
+>>>>>>> 3418c714fb01c48173ab39b1f42976b91a688f89
     }
 }
