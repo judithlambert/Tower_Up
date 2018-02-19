@@ -1,2 +1,2 @@
-PlateformeTemporaire
-45;45;1;1;0;0
+PlateformeMobile
+0;45;1;2;0;0;1;90

@@ -1,8 +1,8 @@
 Plateforme
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;
 
 PlatformeMobile
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;vitesse;distance
 
 PlateformeTemporaire
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps

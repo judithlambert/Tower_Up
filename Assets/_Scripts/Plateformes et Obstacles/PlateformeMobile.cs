@@ -7,7 +7,7 @@ public class PlateformeMobile : Plateforme
     public const string String = "PlateformeMobile";
 
     bool touching=false;
-    float Temps, Distance, Vitesse;
+    float Temps, Distance, Vitesse, rotation;
 
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float vitesse, float distance, Material material)
     {
@@ -39,8 +39,9 @@ public class PlateformeMobile : Plateforme
     }
 
     void Update()
-    { // à tester
-        transform.Rotate(Vector3.up, Distance * Mathf.Sin(Time.time*Vitesse));
-        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up, Distance * Mathf.Sin(Time.time * Vitesse)); }
+    {
+        rotation = -(((Distance - Amplitude) / 2) * Vitesse * (Mathf.Sin(Time.time)) + ((Distance - Amplitude) / 2)); // Vitesse a pt corigé
+        transform.rotation = Quaternion.Euler(new Vector3(0,rotation));
+        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up,rotation); }
     }
 }

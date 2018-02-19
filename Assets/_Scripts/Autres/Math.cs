@@ -50,4 +50,9 @@ public static class Maths
         return angle * rayon;
     }
 
+    static public Quaternion Vector3àQuaternion(Vector3 vecteur)
+    {
+        return Quaternion.Euler(vecteur);
+    }
+
 }

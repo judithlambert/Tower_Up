@@ -106,11 +106,10 @@ public class Plateforme : MonoBehaviour
     {
         Origine = transform.position; //?*
         AngleDébut = Maths.DegréEnRadian(AngleDébut);
-        Amplitude = Maths.DegréEnRadian(Amplitude);
-        nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Amplitude / (2 * Mathf.PI)));
+        nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Maths.DegréEnRadian(Amplitude)));
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS;
         nbTriangles = (nbTranches * 4 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE;
-        DeltaAngle = Amplitude / nbTranches;
+        DeltaAngle = Maths.DegréEnRadian(Amplitude) / nbTranches;
         DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
         DeltaÉlévation = Inclinaison / nbTranches;
     }
