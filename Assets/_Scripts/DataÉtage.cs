@@ -8,6 +8,8 @@ using System.Linq;
 
 public class DataÉtage : MonoBehaviour
 {
+
+
     public const float HAUTEUR_TOUR = 35,
                        RAYON_TOUR = 10, // si distance < rayon
                        DELTA_HAUTEUR = 2, //Hauteur entre 2 plateformes
@@ -96,7 +98,7 @@ public class DataÉtage : MonoBehaviour
                     break;
                 case PlateformeMobile.String:
                     ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 
-                                                                                          attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5],
+                                                                                          attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5], attributs[6], attributs[7],
                                                                                           Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeTemporaire.String:

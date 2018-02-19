@@ -9,13 +9,14 @@ public class PlateformeMobile : Plateforme
     bool touching=false;
     float Temps, Distance, Vitesse;
 
-    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float rayon, float rugosité, float vitesse, float distance, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float vitesse, float distance, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
         Largeur = largeur;
         Épaisseur = épaisseur;
         Hauteur = hauteur;
+        Inclinaison = inclinaison;
         Rayon = rayon;
         Rugosité = rugosité;
 
@@ -38,8 +39,8 @@ public class PlateformeMobile : Plateforme
     }
 
     void Update()
-    {
-        transform.Rotate(Vector3.up, Mathf.Sin(Time.time*5)/2);
-        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up, Mathf.Sin(Time.time * 5) / 2); }
+    { // à tester
+        transform.Rotate(Vector3.up, Distance * Mathf.Sin(Time.time*Vitesse));
+        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up, Distance * Mathf.Sin(Time.time * Vitesse)); }
     }
 }
