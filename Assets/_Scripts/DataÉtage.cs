@@ -74,7 +74,7 @@ public class DataÉtage : MonoBehaviour
     void LoadÉtage()
     {       
         //étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
-        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + "1" + ".txt"); // juste pour tester
+        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + "2" + ".txt"); // juste pour tester
 
         do
         {
@@ -96,11 +96,11 @@ public class DataÉtage : MonoBehaviour
                     break;
                 case PlateformeMobile.String:
                     ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 
-                                                                                          attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5],
+                                                                                          attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5], 0,
                                                                                           Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeTemporaire.String:
-                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2], 
+                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 
                                                                                               attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5], 
                                                                                               attributs[6], Materials.Get((int)NomMaterial.Plateforme));
                     break;

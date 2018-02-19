@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlateformeMobile : Plateforme
 {
-    public const string String="PlateformeMobile";
+    public const string String = "PlateformeMobile";
 
     bool touching=false;
     float Temps, Distance, Vitesse;
