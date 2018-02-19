@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Plateforme : MonoBehaviour
 {
-
+    // transform.position 
+    // si position non a (0,y,0), rotate marche pas
+    // transform.rotation
    
     public const string String = "Plateforme";
     
@@ -27,25 +29,7 @@ public class Plateforme : MonoBehaviour
     protected float DeltaAngle, DeltaTexture, DeltaÉlévation;
     protected int nbTranches, nbSommets, nbTriangles;
 
-    //public void Awake()
-    //{
-    //    Initialisation(0, 90, DataÉtage.LargeurPlatforme, 1, 1, 0, DataÉtage.RayonTour, 0, DataÉtage.MaterialPlatforme);
-    //}
-
-    // initiantion soit avec position et non angle
-    /// <summary>
-    /// tous les angles sont en degré
-    /// </summary>
-    //public void Initialisation(float positionXDébut, float positionYDébut, float positionXFin, float positionYFin, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
-    //{
-    //    Initialisation(Mathf.Atan2(positionXDébut, positionYDébut), Mathf.Atan2(positionXFin, positionYFin)- Mathf.Atan2(positionXDébut, positionYDébut),
-    //                   largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
-    //}
-    //public void Initialisation(float positionX, float positionY, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
-    //{
-    //    Initialisation(Mathf.Atan2(positionX, positionY), 
-    //                   amplitude, largeur, épaisseur, hauteur, inclinaison, rayon, rugosité, material);
-    //}
+    
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
     {
         AngleDébut = angleDébut;
@@ -96,7 +80,7 @@ public class Plateforme : MonoBehaviour
     }
     public bool IsPointDessus(Vector3 point)
     {
-        return ((point.y < Hauteur + 0.1) && (point.y > Hauteur - 0.1)); // marche par pour une platform avec inclinaison
+        return ((point.y < Hauteur + 0.1) && (point.y > Hauteur - 0.1)); // marche pas pour une platform avec inclinaison
     }
 
 
@@ -104,7 +88,8 @@ public class Plateforme : MonoBehaviour
 
     virtual protected void CalculerDonnéesDeBase()
     {
-        Origine = transform.position; //?*
+        //Origine = transform.position; // l'origine et la position devrait etre pas etre la même chose
+        Origine = DataÉtage.Origine; // le decalage se ferait ici
         AngleDébut = Maths.DegréEnRadian(AngleDébut);
         Amplitude = Maths.DegréEnRadian(Amplitude);
         nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Amplitude / (2 * Mathf.PI)));

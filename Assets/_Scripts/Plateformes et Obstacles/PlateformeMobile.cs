@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlateformeMobile : Plateforme
 {
-    public const string String = "PlateformeMobile";
+    public const string String = Plateforme.String + "Mobile";
 
     bool touching=false;
     float Temps, Distance, Vitesse;
+    // distance est une amplitude, en degré
 
     public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float vitesse, float distance, Material material)
     {
@@ -39,7 +40,8 @@ public class PlateformeMobile : Plateforme
     }
 
     void Update()
-    { // à tester
+    { // à tester pour distance et vitesse sont réellement respecter
+        // bug avec le personnage qui tourne sur lui-même
         transform.Rotate(Vector3.up, Distance * Mathf.Sin(Time.time*Vitesse));
         if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up, Distance * Mathf.Sin(Time.time * Vitesse)); }
     }

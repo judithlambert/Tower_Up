@@ -1,8 +1,8 @@
 Pic
 326.25;0;2
-Plateforme
+Plateforme début
 45;45;1;1;0;0
-Plateforme
+Plateforme1
 135;45;1;1;0;0
 Plateforme
 225;45;1;1;0;0
@@ -14,7 +14,7 @@ Plateforme
 0;180;1.5;5;0;0
 Plateforme
 45;45;3.5;10;0;0
-Pic
+Pic h10
 60;10;2
 Plateforme
 135;45;3.5;10;0;0
@@ -68,9 +68,11 @@ PlateformePics
 165;60;0;22;0;0;1.5
 Plateforme
 60;100;1;26;0;0
-Plateforme
+Plateforme finale
 225;25;0.5;26;0;0
 Plateforme
 0;360;10;38;0;0
 Plateforme
 0;10;0.5;19.5;0;0
+FinEtage
+225;26

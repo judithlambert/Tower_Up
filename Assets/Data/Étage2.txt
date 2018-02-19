@@ -1,2 +1,6 @@
+PlateformeMobile
+45;45;1;1;1;0;0.5;
 PlateformeTemporaire
-45;45;1;1;0;0
+60;10;1;2;2;0;3
+Plateforme
+45;45;1;3;0;0

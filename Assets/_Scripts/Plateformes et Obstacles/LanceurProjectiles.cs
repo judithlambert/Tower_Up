@@ -9,9 +9,9 @@ public class LanceurProjectiles : MonoBehaviour
 
     static public Vector3 Position { get; private set; }
 
-    public void Initialisation(float positionX, float hauteur, float positionZ, Material material)
+    public void Initialisation(float angle, float hauteur, Material material)
     {
-        Position = new Vector3(positionX * DataÉtage.RayonTrajectoirePersonnage, hauteur + transform.lossyScale.y / 2, positionZ * DataÉtage.RayonTrajectoirePersonnage);
+        transform.position =Position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, hauteur + transform.lossyScale.y / 2, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         gameObject.AddComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().mesh;
         Destroy(cube);
@@ -19,7 +19,7 @@ public class LanceurProjectiles : MonoBehaviour
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
         gameObject.AddComponent<BoxCollider>();
 
-        transform.position = Position;
+        // transform.position = Position;
     }
 
     void FixedUpdate()

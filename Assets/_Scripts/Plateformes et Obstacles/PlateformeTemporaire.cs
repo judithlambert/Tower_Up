@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlateformeTemporaire : Plateforme
 {
-    public const string String = "PlateformeTemporaire";
+    public const string String = Plateforme.String + "Temporaire";
 
 
     bool wasTouched =false;
@@ -41,7 +41,7 @@ public class PlateformeTemporaire : Plateforme
         gameObject.AddComponent<Rigidbody>().useGravity = false;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        GetComponent<MeshCollider>().convex = true;
+        GetComponent<MeshCollider>().convex = true; // nécéssaire?
         GetComponent<Rigidbody>().isKinematic = true;
 
         color = GetComponent<Renderer>().material.color;

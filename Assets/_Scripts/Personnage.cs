@@ -51,7 +51,7 @@ public class Personnage : MonoBehaviour
         GetComponent<Rigidbody>().angularDrag = 5;
 
         // ne dois pas bouger lors du respawn
-        transform.rotation = rotationInitial = Quaternion.Euler(Vector3.zero);
+        transform.rotation = rotationInitial = Maths.Vector3àQuaternion(Vector3.zero);
         positionInitial = transform.position;
         GetComponent<Rigidbody>().angularDrag = ANGULAR_DRAG;
         //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);

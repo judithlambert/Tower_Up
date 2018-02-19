@@ -9,11 +9,11 @@ public class Fusil : MonoBehaviour {
     public float Distance = 3; // en longueur d'arc
     static public Vector3 Position { get; private set; }
 
-    public void Initialisation(float positionX, float hauteur, float positionZ, Material material)
+    public void Initialisation(float angle, float hauteur, Material material)
     { // devrait toujours etre en haut (au plafond) dans le fond (accoter sur le mur) pas dans le chemin de la balle
-        Position = new Vector3(positionX * DataÉtage.RAYON_TOUR + transform.lossyScale.x/2, 
-                               DataÉtage.DELTA_HAUTEUR - transform.lossyScale.y/2, 
-                               positionZ * DataÉtage.RAYON_TOUR + transform.lossyScale.z/2);
+        Position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR + transform.lossyScale.x / 2, 
+                               DataÉtage.DELTA_HAUTEUR - transform.lossyScale.y / 2,
+                               Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR + transform.lossyScale.z / 2);
 
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         gameObject.AddComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().mesh;
@@ -27,9 +27,9 @@ public class Fusil : MonoBehaviour {
    
         // création du trigger
         trigger = new GameObject("TriggerFusil");
-        float angleMilieu = Maths.PositionXYàAngle(positionX, positionZ);
         float amplitude = Maths.ArcDeCercleÀAngle(Distance, DataÉtage.RAYON_TOUR);
-        trigger.AddComponent<TriggerFusil>().Initialisation(Maths.RadianEnDegré(angleMilieu) - 30, 60, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR, (hauteur+1)*DataÉtage.DELTA_HAUTEUR, 0, DataÉtage.RAYON_TOUR,0, material);
+        // initialisation a modifier
+        trigger.AddComponent<TriggerFusil>().Initialisation(angle, amplitude, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR, (hauteur+1)*DataÉtage.DELTA_HAUTEUR, 0, DataÉtage.RAYON_TOUR,0, material);
         trigger.GetComponent<Renderer>().material.color = new Color(0,0,0,0);
         Destroy(trigger.GetComponent<MeshRenderer>());
         Destroy(trigger.GetComponent<Rigidbody>());

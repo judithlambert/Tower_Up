@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlateformePics : Plateforme
 {
-    public const string String = "PlateformePics";
+    public const string String = Plateforme.String + "Pics";
 
 
     protected float HauteurPic;

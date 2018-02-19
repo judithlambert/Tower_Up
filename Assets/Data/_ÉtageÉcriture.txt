@@ -1,8 +1,8 @@
-Plateforme
+Plateforme nom
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
 
-PlatformeMobile
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
+PlateformeMobile
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;vitesse;distanced
 
 PlateformeTemporaire
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps
@@ -11,10 +11,13 @@ PlateformePics
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;hauteurPic
 
 LanceurProjectiles
-positionX;hauteur;positionX
+anlge;hauteur
 
 Pic
-angle;élévationEnY;hauteur
+angle;élévationEnY;hauteurPic
 
+FinÉtage
+angle;hauteur
 
+// tout est en degré et seconde
 // les position sont placer comme si la hauteur de étage = 1 et que un tour = 360

@@ -9,6 +9,7 @@ using System.Linq;
 public class DataÉtage : MonoBehaviour
 {
 
+    [SerializeField] int TEST_ÉTAGE;
 
     public const float HAUTEUR_TOUR = 35,
                        RAYON_TOUR = 10, // si distance < rayon
@@ -41,7 +42,7 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        nbÉtage = 1;
+        nbÉtage = TEST_ÉTAGE;
         //---
 
         Materials.Init();
@@ -75,8 +76,7 @@ public class DataÉtage : MonoBehaviour
 
     void LoadÉtage()
     {       
-        //étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
-        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + "2" + ".txt"); // juste pour tester
+        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
 
         do
         {
@@ -88,7 +88,10 @@ public class DataÉtage : MonoBehaviour
                 attributs[cpt] = float.Parse(line[cpt]);
             }
 
-            ListGameObject.Add(new GameObject(NewName(obj)));
+            // if(!obj.Contains(' ')) { obj = NewName(obj); }
+            ListGameObject.Add(new GameObject(obj));
+
+            obj = obj.Split(' ')[0]; // obj.Remove(' ');
             switch (obj)
             {
                 case Plateforme.String:
@@ -116,8 +119,11 @@ public class DataÉtage : MonoBehaviour
                                                                              attributs[2] * DELTA_HAUTEUR, Materials.Get((int)NomMaterial.Pic));
                     break;
                 case LanceurProjectiles.String:
-                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, attributs[2], 
+                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, 
                                                                                             Materials.Get((int)NomMaterial.Plateforme));
+                    break;
+                case FinÉtage.String:
+                    ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR);
                     break;
             }
 
@@ -140,7 +146,7 @@ public class DataÉtage : MonoBehaviour
     int cptNaming = 0;
     string NewName(string n)
     {
-        return n + (cptNaming++).ToString();
+        return n + ' ' + (cptNaming++).ToString();
     }
 
 }
