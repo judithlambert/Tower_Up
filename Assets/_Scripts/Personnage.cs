@@ -38,12 +38,14 @@ public class Personnage : MonoBehaviour
 
     int nbJumps = 0;
 
+    bool wallJump = false;
+
     Vector3 VecteurOrigineBalle
     {
         get { return transform.position - new Vector3(DataÉtage.Origine.x, transform.position.y, DataÉtage.Origine.z); }
     }
 
-    void Awake() // pt pas dans 
+    void Awake() // devrait pt pas etre instancier dans unity mais ici comme les autres objets
     {
         //gameObject.AddComponent<Rigidbody>().useGravity = true;
         //gameObject.AddComponent<MeshRenderer>().material = material;
@@ -71,9 +73,9 @@ public class Personnage : MonoBehaviour
 
     public void DéterminerVitesse()
     {
-        if (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
+        if      (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
         else if (reculer) { Vitesse = Vitesse - Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse > 0 ? 2 : 1) * (jump ? 2 : 1)); }
-        else { Vitesse = Vitesse + (Vitesse < 0 ? 1 : -1) * Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2); }
+        else              { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2)                    * (Vitesse < 0 ? 1 : -1); }
     }
 
     void EffectuerDéplacementEtRotation()
@@ -90,16 +92,35 @@ public class Personnage : MonoBehaviour
         {
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            if (wallJump)
+            {
+                Vitesse = -Vitesse * ACCÉLÉRATION;
+                Debug.Log("wall jump successful");
+            }
             ++nbJumps;
         }
     }
     private void OnCollisionEnter(Collision collision) // bug si on double jumps sous une plateform collé sur soi
     {
-        nbJumps = 0; // *seulement parce que jump bug encore*
-        //if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision)) { nbJumps = 0; }
-        //else { Debug.Log("collision jump fail"); }
+        //nbJumps = 0; // *seulement parce que jump bug encore*
+        if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
+        {
+            Debug.Log("collision jump");
+            nbJumps = 0;
+            if(!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision))
+            {
+                Debug.Log("collision wall jump");
+                // booster pour jumper de l'autre sens
+                wallJump = true;
+            }
+        }
+        else { Debug.Log("collision jump fail"); }
     }
-   
+    private void OnCollisionExit(Collision collision)
+    {
+        wallJump = false; // meuhhhh
+    }
+
     void Update()
     {
         //Debug.Log("jumps: " + nbJumps.ToString());

@@ -8,6 +8,7 @@ using UnityEditor;
 
 public static class Materials
 {
+    const string PATH = "Assets/Materials/";
     static public List<Material> ListMaterials;
 
     static public void Init()
@@ -15,9 +16,10 @@ public static class Materials
         ListMaterials = new List<Material>()
         {
             //faire pour chaque materials(si fait d'un coup, impossible de savoir quel material est quel)
-            AssetDatabase.LoadAssetAtPath("Assets/Materials/MaterialPlatforme.mat", typeof(Material)) as Material,
-            AssetDatabase.LoadAssetAtPath("Assets/Materials/MaterialPersonnage.mat", typeof(Material)) as Material,
-            AssetDatabase.LoadAssetAtPath("Assets/Materials/MaterialPic.mat", typeof(Material)) as Material
+            AssetDatabase.LoadAssetAtPath(PATH + "MaterialPlatforme.mat", typeof(Material)) as Material,
+            AssetDatabase.LoadAssetAtPath(PATH + "MaterialPersonnage.mat", typeof(Material)) as Material,
+            AssetDatabase.LoadAssetAtPath(PATH + "MaterialPic.mat", typeof(Material)) as Material,
+            AssetDatabase.LoadAssetAtPath(PATH + "MaterialTour.mat", typeof(Material)) as Material
         };
     }
 
@@ -31,5 +33,6 @@ public enum NomMaterial
 {
     Plateforme, 
     Personnage,
-    Pic
+    Pic,
+    Tour
 }

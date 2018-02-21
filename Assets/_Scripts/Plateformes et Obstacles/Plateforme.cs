@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Plateforme : MonoBehaviour
 {
@@ -78,10 +79,47 @@ public class Plateforme : MonoBehaviour
         }
         return auDessus;
     }
-    public bool IsPointDessus(Vector3 point)
+
+    bool IsPointDessus(Vector3 point)
     {
-        return ((point.y < Hauteur + 0.1) && (point.y > Hauteur - 0.1)); // marche pas pour une platform avec inclinaison
+        return (Maths.EstDansLeRange(point.y, Hauteur + 0.1f, Hauteur - 0.1f)); // marche pas pour une platform avec inclinaison
     }
+    public bool CollisionDessusEtCôté(Collision collision)
+    {
+        bool auPasDessous = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (!IsPointDessous(cp.point)) { auPasDessous = true; }
+        }
+        return auPasDessous;
+    }
+    bool IsPointDessous(Vector3 point)
+    {
+        return (Maths.EstDansLeRange(point.y, Hauteur-Épaisseur + 0.1f, Hauteur-Épaisseur - 0.1f)); // marche pas pour une platform avec inclinaison
+    }
+    public bool CollisionCôté(Collision collision)
+    {
+        bool surCôté = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointCôté(cp.point)) { surCôté = true; }
+        }
+        return surCôté;
+    }
+    bool IsPointCôté(Vector3 point)
+    {
+        return (Maths.EstDansLeRange(point.y, Hauteur + 0.1f, Hauteur - Épaisseur - 0.1f)
+                &&
+              ((Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x + 0.5f, Sommets[nbSommets - 7].x - 0.5f) &&
+                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z + 0.5f, Sommets[nbSommets - 7].z - 0.5f))
+                ||
+               (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 4].x - 0.5f, Sommets[nbSommets - 3].x + 0.5f) &&
+                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 4].z - 0.5f, Sommets[nbSommets - 3].z + 0.5f))));
+             // marche pas pour une platform avec inclinaison
+    }
+
+
+
 
 
     // MAILLAGE
@@ -121,15 +159,18 @@ public class Plateforme : MonoBehaviour
             Sommets[(nbTranches + 1) * 3 + n] = Sommet(angleAjouté, élévationAjouté, true, true);
         }
 
+        Vector3 testerSommet = new Vector3(3, 3, 3);
+
         // Sommets des deux bouts
-        Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2];
-        Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3];
-        Sommets[nbSommets - 6] = Sommets[nbTranches + 1];
-        Sommets[nbSommets - 5] = Sommets[0];
-        Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1];
-        Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1];
-        Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) *2 - 1];
-        Sommets[nbSommets - 1] = Sommets[nbTranches];
+        Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
+        Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
+        Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
+        Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
+
+        Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
+        Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
+        Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) *2 - 1];  // droit haut inférieur
+        Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
 
         Maillage.vertices = Sommets;
     }

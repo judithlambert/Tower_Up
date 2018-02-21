@@ -53,7 +53,7 @@ public class DataÉtage : MonoBehaviour
         Plancher = new GameObject("Plancher");
         Plancher.AddComponent<Plateforme>().Initialisation(0, 360, LARGEUR_PLATEFORME, 20, 0, 0, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
         Tour = new GameObject("Tour");
-        Tour.AddComponent<Plateforme>().Initialisation(0, 360, RAYON_TOUR, HAUTEUR_TOUR * DELTA_HAUTEUR, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, 0, 0, Materials.Get((int)NomMaterial.Plateforme));
+        Tour.AddComponent<Plateforme>().Initialisation(0, 360, RAYON_TOUR, HAUTEUR_TOUR * DELTA_HAUTEUR, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, 0, 0, Materials.Get((int)NomMaterial.Tour));
         RayonTrajectoirePersonnage = RAYON_TOUR + Plancher.GetComponent<Plateforme>().Largeur / 2;
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
         Personnage = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
