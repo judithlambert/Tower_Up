@@ -97,6 +97,7 @@ public class Personnage : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
             ++nbJumps;
         }
+        if(wallJump && nbWallJump < 2)
         {
             if (dernierCollisionObject == nouveauCollisionObject)
             { ++nbWallJump; }
