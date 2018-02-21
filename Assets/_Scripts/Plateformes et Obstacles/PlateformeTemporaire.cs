@@ -43,13 +43,15 @@ public class PlateformeTemporaire : Plateforme
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<MeshCollider>().convex = true; // nécéssaire?
         GetComponent<Rigidbody>().isKinematic = true;
+   
 
         color = GetComponent<Renderer>().material.color;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (CollisionDessus(collision) && !wasTouched) { wasTouched = true; timeTouched = Time.time; }
+        Debug.Log("collision plateforme temporaire");
+        if (CollisionDessus(collision) && !wasTouched) { wasTouched = true; timeTouched = Time.time; Debug.Log("collision plateforme temporaire réussis");}
     }
 
     // faire que dans l'instantiation, on peux choisir le type de disparition de chq plateforme

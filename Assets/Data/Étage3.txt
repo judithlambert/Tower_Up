@@ -2,3 +2,7 @@ Plateforme
 30;30;4;5;0;0
 PlateformeTemporaire
 130;30;1;2;0;0;2
+Plateforme
+20;1;30;30;0;0
+Plateforme
+20;90;0.5;30;0;0.5

@@ -22,4 +22,6 @@
  * boost when jumping
  * 
  * switcher epaisseur et hauteur
+ * 
+ * collision plateforme temporaire ne marche pas 
  */
