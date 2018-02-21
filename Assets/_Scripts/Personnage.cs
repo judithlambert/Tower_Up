@@ -84,7 +84,7 @@ public class Personnage : MonoBehaviour
     }
 
     // TO BE FIXED
-    // wall jump
+    // wall jump toute à changer pour adam
     void Jumper()
     {
         if (nbJumps < 2) // est ce que le saut est valide
@@ -105,7 +105,7 @@ public class Personnage : MonoBehaviour
         {
             Debug.Log("collision jump");
             nbJumps = 0;
-            if(!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision))
+            if (!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision))
             {
                 Debug.Log("collision wall jump");
                 wallJump = true;

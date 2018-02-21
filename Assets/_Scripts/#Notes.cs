@@ -19,6 +19,10 @@
  * 
  * boost when jumping
  * 
+ * ajouter temps dans le game
+ * 
+ * wall jump ***
+ * 
  * switcher epaisseur et hauteur
  * 
  * collision plateforme temporaire ne marche pas 
