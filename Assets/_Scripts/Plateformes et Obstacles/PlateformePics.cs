@@ -39,7 +39,7 @@ public class PlateformePics : Plateforme
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        //GetComponent<MeshCollider>().convex = true;          <-- crée un mesh colider qui ne fit pas avec le mesh réel
+        //GetComponent<MeshCollider>().convex = true;         // <-- crée un mesh colider qui ne fit pas avec le mesh réel
         //GetComponent<MeshCollider>().isTrigger = true;
         //GetComponent<Rigidbody>().isKinematic = true;
     }
@@ -186,9 +186,9 @@ public class PlateformePics : Plateforme
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.ToString().Contains("Personnage") && collision.gameObject.GetComponent<Plateforme>().CollisionDessus(collision))
+        if (collision.gameObject.name.ToString().Contains("Personnage") && CollisionDessusAvecPics(collision))
         {
-            Debug.Log("meurt");
+            Debug.Log("piquer");
             DataÉtage.Personnage.GetComponent<Personnage>().Die();
         }
     }

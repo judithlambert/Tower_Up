@@ -9,8 +9,6 @@ public class Personnage : MonoBehaviour
     const int ACCÉLÉRATION = 5;
     const int ANGULAR_DRAG = 5;
 
-
-
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
     float vitesse = 0;
@@ -39,6 +37,7 @@ public class Personnage : MonoBehaviour
     int nbJumps = 0;
 
     bool wallJump = false;
+    int côtéCollision; // -1=gauche 1=droit
 
     Vector3 VecteurOrigineBalle
     {
@@ -92,9 +91,9 @@ public class Personnage : MonoBehaviour
         {
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
-            if (wallJump)
+            if (wallJump) // pour que marche peut importe la vitesse mais selon le coté de la platefomr par rapport au personnage
             {
-                Vitesse = -Vitesse * ACCÉLÉRATION;
+                Vitesse = Mathf.Abs(Vitesse) * ACCÉLÉRATION * côtéCollision;
                 Debug.Log("wall jump successful");
             }
             ++nbJumps;
@@ -102,15 +101,13 @@ public class Personnage : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision) // bug si on double jumps sous une plateform collé sur soi
     {
-        //nbJumps = 0; // *seulement parce que jump bug encore*
         if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
         {
             Debug.Log("collision jump");
             nbJumps = 0;
-            if(!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision))
+            if(!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision))
             {
                 Debug.Log("collision wall jump");
-                // booster pour jumper de l'autre sens
                 wallJump = true;
             }
         }

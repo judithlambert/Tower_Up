@@ -105,9 +105,9 @@ public class DataÉtage : MonoBehaviour
                                                                                           Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeTemporaire.String:
-                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 
-                                                                                              attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5], 
-                                                                                              attributs[6], Materials.Get((int)NomMaterial.Plateforme));
+                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR,
+                                                                                              attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5],
+                                                                                              attributs[6], Materials.Get((int)NomMaterial.Plateforme), attributs.Length >= 8 ? (int)attributs[7] : 0);
                     break;
                 case PlateformePics.String:
                     ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 

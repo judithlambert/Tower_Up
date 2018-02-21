@@ -10,7 +10,9 @@ public class Plateforme : MonoBehaviour
     // transform.rotation
    
     public const string String = "Plateforme";
-    
+
+    public const float INCERTITUDE_COLLISION = 0.1f;
+
     protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 90, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
     protected const float NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
 
@@ -82,7 +84,7 @@ public class Plateforme : MonoBehaviour
 
     bool IsPointDessus(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, Hauteur + 0.1f, Hauteur - 0.1f)); // marche pas pour une platform avec inclinaison
+        return (Maths.EstDansLeRange(point.y, Hauteur + INCERTITUDE_COLLISION, Hauteur - INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
     }
     public bool CollisionDessusEtCôté(Collision collision)
     {
@@ -93,29 +95,56 @@ public class Plateforme : MonoBehaviour
         }
         return auPasDessous;
     }
+    public bool CollisionDessusAvecPics(Collision collision)
+    {
+        bool pasDessousNiCôté = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (!IsPointDessous(cp.point) && !IsPointCôté(cp.point)) { pasDessousNiCôté = true; }
+        }
+        return pasDessousNiCôté;
+    }
     bool IsPointDessous(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, Hauteur-Épaisseur + 0.1f, Hauteur-Épaisseur - 0.1f)); // marche pas pour une platform avec inclinaison
+        return (Maths.EstDansLeRange(point.y, Hauteur-Épaisseur + INCERTITUDE_COLLISION, Hauteur-Épaisseur - INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
     }
-    public bool CollisionCôté(Collision collision)
+    public bool CollisionCôté(Collision collision, ref int côtéCollision) //
     {
         bool surCôté = false;
         foreach (ContactPoint cp in collision.contacts)
         {
-            if (IsPointCôté(cp.point)) { surCôté = true; }
+            if (IsPointCôté(cp.point, ref côtéCollision)) { surCôté = true; }
         }
         return surCôté;
+    }
+    bool IsPointCôté(Vector3 point, ref int côtéCollision)
+    {
+        bool c = false;
+        if (Maths.EstDansLeRange(point.y, Hauteur + INCERTITUDE_COLLISION, Hauteur - Épaisseur - INCERTITUDE_COLLISION))
+        {
+            if (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x + INCERTITUDE_COLLISION, Sommets[nbSommets - 7].x - INCERTITUDE_COLLISION) &&
+                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z + INCERTITUDE_COLLISION, Sommets[nbSommets - 7].z - INCERTITUDE_COLLISION))
+            {
+                c = true; côtéCollision = -1;
+            }
+            else if (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 4].x - INCERTITUDE_COLLISION, Sommets[nbSommets - 3].x + INCERTITUDE_COLLISION) &&
+                     Maths.EstDansLeRange(point.z, Sommets[nbSommets - 4].z - INCERTITUDE_COLLISION, Sommets[nbSommets - 3].z + INCERTITUDE_COLLISION))
+            {
+                c = true; côtéCollision = 1;
+            }
+        }
+        return c;
     }
     bool IsPointCôté(Vector3 point)
     {
         return (Maths.EstDansLeRange(point.y, Hauteur + 0.1f, Hauteur - Épaisseur - 0.1f)
                 &&
-              ((Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x + 0.5f, Sommets[nbSommets - 7].x - 0.5f) &&
-                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z + 0.5f, Sommets[nbSommets - 7].z - 0.5f))
+              ((Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x + INCERTITUDE_COLLISION, Sommets[nbSommets - 7].x - INCERTITUDE_COLLISION) &&
+                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z + INCERTITUDE_COLLISION, Sommets[nbSommets - 7].z - INCERTITUDE_COLLISION))
                 ||
-               (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 4].x - 0.5f, Sommets[nbSommets - 3].x + 0.5f) &&
-                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 4].z - 0.5f, Sommets[nbSommets - 3].z + 0.5f))));
-             // marche pas pour une platform avec inclinaison
+               (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 4].x - INCERTITUDE_COLLISION, Sommets[nbSommets - 3].x + INCERTITUDE_COLLISION) &&
+                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 4].z - INCERTITUDE_COLLISION, Sommets[nbSommets - 3].z + INCERTITUDE_COLLISION))));
+        // marche pas pour une platform avec inclinaison
     }
 
 

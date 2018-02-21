@@ -1,8 +1,6 @@
 ﻿/* 
  * Mort si plateforme temporaire tombe sur personnage
  * 
- * wall jump
- * 
  * faire methode pour creation d'un objet
  * 
  * tour devrait avoir rigidbody
@@ -24,4 +22,10 @@
  * switcher epaisseur et hauteur
  * 
  * collision plateforme temporaire ne marche pas 
+ * 
+ * enlever rugosité
+ * 
+ * les collision avec un plateforme temporaire deja tombé
+ * 
+ * plateforme mobile de haut en bas
  */

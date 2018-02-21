@@ -5,7 +5,7 @@ PlateformeMobile
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;vitesse;distance
 
 PlateformeTemporaire
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps
+angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps(;typeDeUpdate)
 
 PlateformePics
 angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;hauteurPic

@@ -8,7 +8,7 @@ Plateforme 4
 190;30;4;4;0;0
 PlateformePics 5
 220;20;0;0;0;0;1
-Plateforme Temporaire 6
+PlateformeTemporaire 6
 220;20;0.5;4;0;0;0.1
 Plateforme 7
 240;5;7;10;0;0
