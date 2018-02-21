@@ -8,8 +8,8 @@ Plateforme 4
 190;30;4;4;0;0
 PlateformePics 5
 220;20;0;0;0;0;1
-Plateforme Temporaire 6
-220;20;0.5;4;0;0;0.1
+PlateformeTemporaire 6
+220;20;0.5;4;0;0;5
 Plateforme 7
 240;5;7;10;0;0
 Plateforme 8
@@ -47,11 +47,11 @@ Plateforme 22
 Plateforme 23
 120;25;1;10;0;0
 PlateformeTemporaire 24
-340;50;0.5;10;0;0;0.1
+340;50;0.5;10;0;0;2
 Plateforme 25
 30;40;1;10;0;0
 PlateformeTemporaire 26
-70;50;1;10;0;0;0.1
+70;50;1;10;0;0;1
 Plateforme 27
 60;10;4;15;0;0
 Plateforme 28
@@ -59,15 +59,56 @@ Plateforme 28
 PlateformeMobile 29
 70;15;0.5;12;0;0;7;50
 PlateformeMobile 30
-70;15;0.5;13.5;0;0;-7;50
+70;15;0.5;13.5;0;0;10;50
 Plateforme 31
 30;30;0.5;15;0;0
 Plateforme 32
-40;15;0.5;13.5;0;0
+40;20;0.5;13.5;0;0
 Plateforme 33
 185;55;1;10;0;0
 Plateforme 34
 145;5;5;13.3;0;0
 Plateforme 35
 180;5;5;13.3;0;0
->>>>>>> 391b45de68288f07ef2b2f5cac15301b9362f5a4
+Plateforme 36
+130;20;0.5;15;0;0
+PlateformePics 37
+185;40;0;10;0;0;1
+PlateformeTemporaire 38
+198;15;0.5;12;0;0;1
+PlateformeMobile 38.1
+240;25;0.5;15;0;0;6;150
+Pic 31
+-13;0;1.5
+PlateformePics 32
+60;130;0;0;0;0;1
+PlateformeMobile 33
+270;10;0.5;17;0;0;4;60
+PlateformeMobile 34
+270;10;0.5;19;0;0;-12;60
+PlateformeMobile 35
+270;10;0.5;21;0;0;8;60
+PlateformeMobile 36
+270;10;0.5;23;0;0;-10;60
+PlateformeMobile 37
+270;10;0.5;25;0;0;7;60
+PlateformeMobile 38
+270;10;0.5;27;0;0;-9;60
+PlateformeMobile 39
+330;20;0.5;21;0;0;7;300
+PlateformeMobile 40
+330;20;0.5;29;0;0;10;295
+Plateforme 41
+265;5;2;31;0;0
+Plateforme 42
+270;170;0.5;31;0;0
+Plateforme 43
+120;15;1.5;30.5;0;0
+PlateformeTemporaire 44
+150;30;0.5;15;0;0;2
+Plateforme 45
+180;60;0.5;15;0;0
+Plateforme 46
+310;20;0.5;29;0;0
+Plateforme 47
+0;360;10;43;0;0
