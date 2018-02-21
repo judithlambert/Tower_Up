@@ -91,9 +91,9 @@ public class PlateformeTemporaire : Plateforme
     // devrait disparaitre progressivement selon le temps dès que toucher ou attendre le temps
     // ratio largeur et rayon tour
     {
-        if (Time.time <= timeTouched + Temps)
+        if (Time.time <= timeTouched + 2*Temps)
         {
-            Maths.SetGlobalScale(gameObject.transform, new Vector3(1- pourcentageTemps, 1, 1 - pourcentageTemps));
+            Maths.SetGlobalScale(gameObject.transform, new Vector3(1- pourcentageTemps/2, 1, 1 - pourcentageTemps/2));
         }
     }
 }
