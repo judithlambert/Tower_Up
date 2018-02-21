@@ -1,0 +1,6 @@
+Plateforme
+350;1;30;30;0;0
+Plateforme
+20;1;30;30;0;0
+Plateforme
+20;90;0.5;30;0;0.5

@@ -41,16 +41,9 @@ public class PlateformeMobile : Plateforme
     }
 
     void Update()
-<<<<<<< HEAD
-    { // à tester pour distance et vitesse sont réellement respecter
-        // bug avec le personnage qui tourne sur lui-même
-        transform.Rotate(Vector3.up, Distance * Mathf.Sin(Time.time*Vitesse));
-        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up, Distance * Mathf.Sin(Time.time * Vitesse)); }
-=======
     {
-        rotation = -(((Distance - Amplitude) / 2) * Vitesse * (Mathf.Sin(Time.time)) + ((Distance - Amplitude) / 2)); // Vitesse a pt corigé
-        transform.rotation = Quaternion.Euler(new Vector3(0,rotation));
+        rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y;
+        transform.Rotate(Vector3.up, rotation);
         if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up,rotation); }
->>>>>>> 3418c714fb01c48173ab39b1f42976b91a688f89
     }
 }

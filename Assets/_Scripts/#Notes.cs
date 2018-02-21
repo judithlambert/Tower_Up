@@ -14,4 +14,6 @@
  * plateform angle et amplitude en radian ou degré
  * 
  * switcher epaisseur et hauteur
+ * 
+ * collision plateforme temporaire ne marche pas 
  */
