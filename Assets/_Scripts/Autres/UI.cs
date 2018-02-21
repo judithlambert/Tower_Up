@@ -17,6 +17,6 @@ public class UI : MonoBehaviour
 	
 	void Update ()
     {
-        temps.text = ((int)(Time.time / 60)).ToString() + ":" + ((int)(Time.time % 60)).ToString("00") + ":" + Time.time.ToString().Split(trim).Last();
+        temps.text = ((int)(Time.time / 60)).ToString() + ":" + ((int)(Time.time % 60)).ToString("00") + ":" + Time.time.ToString().Split(trim).Last().Substring(0,2);
 	}
 }
