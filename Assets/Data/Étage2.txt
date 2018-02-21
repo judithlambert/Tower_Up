@@ -97,7 +97,7 @@ PlateformeMobile 38
 PlateformeMobile 39
 330;20;0.5;21;0;0;7;300
 PlateformeMobile 40
-330;20;0.5;29;0;0;5;295
+330;20;0.5;29;0;0;4.5;295
 Plateforme 41
 265;5;2;31;0;0
 Plateforme 42
@@ -105,7 +105,7 @@ Plateforme 42
 Plateforme 43
 120;15;1.5;30.5;0;0
 PlateformeTemporaire 44
-150;30;0.5;15;0;0;2
+150;30;0.5;15;0;0;1
 Plateforme 45
 180;60;0.5;15;0;0
 Plateforme 46
