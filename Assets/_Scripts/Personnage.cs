@@ -35,6 +35,7 @@ public class Personnage : MonoBehaviour
          block;
 
     int nbJumps = 0;
+    int nbWallJump = 0;
 
     bool wallJump = false;
     int côtéCollision; // -1=gauche 1=droit
@@ -83,6 +84,9 @@ public class Personnage : MonoBehaviour
         transform.RotateAround(Vector3.zero, Vector3.down, angle);
     }
 
+    GameObject dernierCollisionObject;
+    GameObject nouveauCollisionObject;
+
     // TO BE FIXED
     // wall jump toute à changer pour adam
     void Jumper()
@@ -91,28 +95,33 @@ public class Personnage : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
-            if (wallJump) // pour que marche peut importe la vitesse mais selon le coté de la platefomr par rapport au personnage
-            {
-                Vitesse = Mathf.Abs(Vitesse) * ACCÉLÉRATION * côtéCollision;
-                Debug.Log("wall jump successful");
-            }
             ++nbJumps;
+        }
+        {
+            if (dernierCollisionObject == nouveauCollisionObject)
+            { ++nbWallJump; }
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            Vitesse = Mathf.Abs(Vitesse) * ACCÉLÉRATION * côtéCollision;
+            Debug.Log("wall jump successful");
+            dernierCollisionObject = nouveauCollisionObject;
         }
     }
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
         {
+            Debug.Log("collision jump");
             if (!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision))
             {
-                Debug.Log("collision wall jump");
+                nouveauCollisionObject = collision.gameObject;
                 wallJump = true;
+               
+                Debug.Log("collision wall jump");
+                dernierCollisionObject = collision.gameObject;
+
             }
-            else
-            {
-                Debug.Log("collision jump");
-                nbJumps = 0;
-            }           
+            else { nbJumps = 0; nbWallJump = 0; }
         }
         else { Debug.Log("collision jump fail"); }
     }
