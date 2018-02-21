@@ -89,8 +89,8 @@ public class Personnage : MonoBehaviour
     {
         if (nbJumps < 2) // est ce que le saut est valide
         {
-            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
             if (wallJump) // pour que marche peut importe la vitesse mais selon le coté de la platefomr par rapport au personnage
             {
                 Vitesse = Mathf.Abs(Vitesse) * ACCÉLÉRATION * côtéCollision;
@@ -99,21 +99,24 @@ public class Personnage : MonoBehaviour
             ++nbJumps;
         }
     }
-    private void OnCollisionEnter(Collision collision) // bug si on double jumps sous une plateform collé sur soi
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
         {
-            Debug.Log("collision jump");
-            nbJumps = 0;
             if (!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision))
             {
                 Debug.Log("collision wall jump");
                 wallJump = true;
             }
+            else
+            {
+                Debug.Log("collision jump");
+                nbJumps = 0;
+            }           
         }
         else { Debug.Log("collision jump fail"); }
     }
-    private void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
         wallJump = false; // meuhhhh
     }
