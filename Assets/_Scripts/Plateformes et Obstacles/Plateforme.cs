@@ -81,7 +81,6 @@ public class Plateforme : MonoBehaviour
         }
         return auDessus;
     }
-
     bool IsPointDessus(Vector3 point)
     {
         return (Maths.EstDansLeRange(point.y, Hauteur + INCERTITUDE_COLLISION, Hauteur - INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
