@@ -97,12 +97,12 @@ public class Personnage : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
             ++nbJumps;
         }
-        if(wallJump && nbWallJump < 2) // BUG
+        else if(wallJump && nbWallJump < 2) // BUG
         {
-            if (dernierCollisionObject == nouveauCollisionObject)
+            if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject)
             { ++nbWallJump; }
-            //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            //gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gameObject.GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
             Vitesse = Mathf.Abs(Vitesse) * ACCÉLÉRATION * côtéCollision;
             Debug.Log("wall jump successful");
             dernierCollisionObject = nouveauCollisionObject;
@@ -119,7 +119,6 @@ public class Personnage : MonoBehaviour
                 wallJump = true;
                
                 Debug.Log("collision wall jump");
-                dernierCollisionObject = collision.gameObject;
 
             }
             else { nbJumps = 0; nbWallJump = 0; }
