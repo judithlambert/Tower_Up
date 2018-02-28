@@ -62,5 +62,11 @@ public static class Maths
         else              { max = borne2; min = borne1; }
         return (n >= min && n <= max);
     }
-
+    public static bool EstDansLeRange(float n, float borne1, float borne2, float incertitude)
+    {
+        float min, max;
+        if (borne1 > borne2) { max = borne1; min = borne2; }
+        else { max = borne2; min = borne1; }
+        return (n >= min-incertitude && n <= max+incertitude);
+    }
 }
