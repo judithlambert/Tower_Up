@@ -19,7 +19,7 @@ public class PlateformeTemporaire : Plateforme
     float Temps;
     int TypeDeUpdate;
 
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float temps, Material material, int typeUptade)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float temps, int typeUptade, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;

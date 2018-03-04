@@ -96,23 +96,24 @@ public class DataÉtage : MonoBehaviour
             {
                 case Plateforme.String:
                     ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR,
-                                                                                          attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 
+                                                                                    attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 
                                                                                     Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeMobile.String:
                     ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR,
-                                                                                          attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, attributs[5], attributs[6],
+                                                                                          attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 
+                                                                                          attributs[5], attributs[6], attributs.Length >= 8 ? (int)attributs[7] : 0, 
                                                                                           Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeTemporaire.String:
-                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR,
-                                                                                              attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR,
-                                                                                              attributs[5], Materials.Get((int)NomMaterial.Plateforme), attributs.Length >= 8 ? (int)attributs[6] : 0);
+                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR, attributs[3],
+                                                                                              attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, attributs[5],
+                                                                                              attributs.Length >= 7 ? (int)attributs[6] : 0, Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformePics.String:
-                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR,
-                                                                                        attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR,
-                                                                                        attributs[5] * DELTA_HAUTEUR, Materials.Get((int)NomMaterial.Plateforme));
+                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR, attributs[3], 
+                                                                                        attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR,attributs[5] * DELTA_HAUTEUR, 
+                                                                                        Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case Pic.String:
                     ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, attributs[2] * DELTA_HAUTEUR, 

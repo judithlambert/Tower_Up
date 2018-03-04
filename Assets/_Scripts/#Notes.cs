@@ -23,11 +23,7 @@
  * 
  * wall jump ***
  * 
- * switcher epaisseur et hauteur
- * 
  * collision plateforme temporaire ne marche pas 
- * 
- * enlever rugosité
  * 
  * les collision avec un plateforme temporaire deja tombé
  * 
