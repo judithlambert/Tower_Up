@@ -11,7 +11,7 @@ public class PlateformeMobile : Plateforme
     float Temps, Distance, Vitesse, rotation;
     // distance est une amplitude, en degré
 
-    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float vitesse, float distance, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
@@ -20,7 +20,6 @@ public class PlateformeMobile : Plateforme
         Hauteur = hauteur;
         Inclinaison = inclinaison;
         Rayon = rayon;
-        Rugosité = rugosité;
 
         Vitesse = vitesse;
         Distance = distance;

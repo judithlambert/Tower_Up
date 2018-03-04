@@ -1,20 +1,20 @@
 Plateforme nom
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité
+angleDébut;amplitude;hauteur;inclinaison;épaisseur
 
 PlateformeMobile
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;vitesse;distance
+angleDébut;amplitude;hauteur;inclinaison;épaisseur;vitesse;distance
 
 PlateformeTemporaire
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;temps(;typeDeUpdate)
+angleDébut;amplitude;hauteur;inclinaison;épaisseur;temps(;typeDeUpdate)
 
 PlateformePics
-angleDébut;amplitude;épaisseur;hauteur;inclinaison;rugusité;hauteurPic
+angleDébut;amplitude;hauteur;inclinaison;épaisseur;hauteurPic
 
 LanceurProjectiles
 anlge;hauteur
 
 Pic
-angle;élévationEnY;hauteurPic
+angle;hauteurPic;élévationEnY
 
 FinÉtage
 angle;hauteur
