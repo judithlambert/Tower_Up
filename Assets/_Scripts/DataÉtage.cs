@@ -51,9 +51,9 @@ public class DataÉtage : MonoBehaviour
 
         // instanciation du placher, personnage, camera
         Plancher = new GameObject("Plancher");
-        Plancher.AddComponent<Plateforme>().Initialisation(0, 360, LARGEUR_PLATEFORME, 20, 0, 0, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+        Plancher.AddComponent<Plateforme>().Initialisation(0, 360, 0, 0, 20, LARGEUR_PLATEFORME, RAYON_TOUR, Materials.Get((int)NomMaterial.Plateforme));
         Tour = new GameObject("Tour");
-        Tour.AddComponent<Plateforme>().Initialisation(0, 360, RAYON_TOUR, HAUTEUR_TOUR * DELTA_HAUTEUR, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, 0, 0, Materials.Get((int)NomMaterial.Tour));
+        Tour.AddComponent<Plateforme>().Initialisation(0, 360, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, HAUTEUR_TOUR * DELTA_HAUTEUR, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Tour));
         RayonTrajectoirePersonnage = RAYON_TOUR + Plancher.GetComponent<Plateforme>().Largeur / 2;
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
         Personnage = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
@@ -96,28 +96,30 @@ public class DataÉtage : MonoBehaviour
             switch (obj)
             {
                 case Plateforme.String:
-                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 
-                                                                                    attributs[3]*DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5], 
+                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR,
+                                                                                    attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 
                                                                                     Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeMobile.String:
-                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 
-                                                                                          attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5], attributs[6], attributs[7],
+                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR,
+                                                                                          attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 
+                                                                                          attributs[5], attributs[6], attributs.Length >= 8 ? (int)attributs[7] : 0, 
                                                                                           Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeTemporaire.String:
-                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR,
-                                                                                              attributs[3] * DELTA_HAUTEUR, attributs[4], RAYON_TOUR, attributs[5],
-                                                                                              attributs[6], Materials.Get((int)NomMaterial.Plateforme), attributs.Length >= 8 ? (int)attributs[7] : 0);
+                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR, attributs[3],
+                                                                                              attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, attributs[5],
+                                                                                              attributs.Length >= 7 ? (int)attributs[6] : 0, Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformePics.String:
-                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], LARGEUR_PLATEFORME, attributs[2] * DELTA_HAUTEUR, 
-                                                                                        attributs[3] * DELTA_HAUTEUR,attributs[4], RAYON_TOUR, attributs[5],
-                                                                                        attributs[6] * DELTA_HAUTEUR, Materials.Get((int)NomMaterial.Plateforme));
+                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0], attributs[1], attributs[2] * DELTA_HAUTEUR, attributs[3], 
+                                                                                        attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR,attributs[5] * DELTA_HAUTEUR, 
+                                                                                        Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case Pic.String:
-                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, LARGEUR_PLATEFORME / 2.4f,
-                                                                             attributs[2] * DELTA_HAUTEUR, Materials.Get((int)NomMaterial.Pic));
+                    ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, attributs[2] * DELTA_HAUTEUR, 
+                                                                             LARGEUR_PLATEFORME / 2.4f,
+                                                                             Materials.Get((int)NomMaterial.Pic));
                     break;
                 case LanceurProjectiles.String:
                     ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, 

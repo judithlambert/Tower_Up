@@ -33,7 +33,7 @@ public class Plateforme : MonoBehaviour
     protected int nbTranches, nbSommets, nbTriangles;
 
     
-    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
@@ -42,7 +42,6 @@ public class Plateforme : MonoBehaviour
         Hauteur = hauteur;
         Inclinaison = inclinaison;
         Rayon = rayon;
-        Rugosité = rugosité;
 
         CréationObject(material);
     }

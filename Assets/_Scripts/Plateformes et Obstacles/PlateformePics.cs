@@ -12,7 +12,7 @@ public class PlateformePics : Plateforme
     protected float HauteurPic;
 
    
-    public void Initialisation(float angleDébut, float amplitude, float largeur, float épaisseur, float hauteur, float inclinaison, float rayon, float rugosité, float hauteurPic, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
@@ -21,7 +21,6 @@ public class PlateformePics : Plateforme
         Hauteur = hauteur;
         Inclinaison = inclinaison;
         Rayon = rayon;
-        Rugosité = rugosité;
 
         HauteurPic = hauteurPic;
 

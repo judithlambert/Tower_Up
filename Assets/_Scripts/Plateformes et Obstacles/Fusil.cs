@@ -29,7 +29,7 @@ public class Fusil : MonoBehaviour {
         trigger = new GameObject("TriggerFusil");
         float amplitude = Maths.ArcDeCercleÀAngle(Distance, DataÉtage.RAYON_TOUR);
         // initialisation a modifier
-        trigger.AddComponent<TriggerFusil>().Initialisation(angle, amplitude, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR, (hauteur+1)*DataÉtage.DELTA_HAUTEUR, 0, DataÉtage.RAYON_TOUR,0, material);
+        trigger.AddComponent<TriggerFusil>().Initialisation(angle, amplitude, DataÉtage.DELTA_HAUTEUR, (hauteur+1)*DataÉtage.DELTA_HAUTEUR, 0, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, material);
         trigger.GetComponent<Renderer>().material.color = new Color(0,0,0,0);
         Destroy(trigger.GetComponent<MeshRenderer>());
         Destroy(trigger.GetComponent<Rigidbody>());
