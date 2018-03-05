@@ -20,7 +20,8 @@ public static class Materials
             AssetDatabase.LoadAssetAtPath(PATH + "Personnage.mat", typeof(Material)) as Material,
             AssetDatabase.LoadAssetAtPath(PATH + "Pic.mat", typeof(Material)) as Material,
             AssetDatabase.LoadAssetAtPath(PATH + "Tour.mat", typeof(Material)) as Material,
-            AssetDatabase.LoadAssetAtPath(PATH + "Drapeau.mat", typeof(Material)) as Material
+            AssetDatabase.LoadAssetAtPath(PATH + "Drapeau.mat", typeof(Material)) as Material,
+            AssetDatabase.LoadAssetAtPath(PATH + "Point.mat", typeof(Material)) as Material
         };
     }
 
@@ -36,5 +37,6 @@ public enum NomMaterial
     Personnage,
     Pic,
     Tour, 
-    Drapeau
+    Drapeau,
+    Point
 }

@@ -76,3 +76,5 @@ Plateforme
 0;10;19.5;0;0.5
 FinEtage
 225;26
+Point
+45;1;0;0

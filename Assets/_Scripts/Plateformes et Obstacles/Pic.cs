@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pic : Obstacle
 {
-   public const string String = "Pic";
+    public const string String = "Pic";
 
     int nbTranches = 20;
     float Rayon = 2;
@@ -13,7 +13,6 @@ public class Pic : Obstacle
     Vector3 Position;
 
     Mesh Maillage;
-    Vector3 origine; // origine vas etre le point du milieu de la base au niveau du sol
     Vector3[] Sommets;
     float deltaAngle, deltaTexture;
     int nbSommets;
@@ -26,7 +25,7 @@ public class Pic : Obstacle
 
     public void Initialisation(float angle, float hauteur, float élévationEnY, float rayon, Material material)
     {
-        Position = origine = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, élévationEnY, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
+        Position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, élévationEnY, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
         Rayon = rayon;
         Hauteur = hauteur;
 

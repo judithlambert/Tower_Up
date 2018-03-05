@@ -128,6 +128,9 @@ public class DataÉtage : MonoBehaviour
                 case FinÉtage.String:
                     ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR);
                     break;
+                case Point.String:
+                    ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, attributs[2] == 0 ? false : true, attributs[3], Materials.Get((int)NomMaterial.Point));
+                    break;
             }
 
         } while (!étageReader.EndOfStream);
