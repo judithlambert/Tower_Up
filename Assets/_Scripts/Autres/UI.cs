@@ -8,15 +8,22 @@ using UnityEngine;
 public class UI : MonoBehaviour
 {
     Text temps;
+    Text points;
+    Personnage personnage;
     char[] trim = new char[] { '.' };
 
-	void Awake ()
+	void Start ()
     {
-        temps = GetComponentInChildren<Text>();
-	}
+        temps = GetComponentsInChildren<Text>().Where(x => x.name == "Temps").First();
+        points = GetComponentsInChildren<Text>().Where(x => x.name == "Points").First();
+    }
 	
 	void Update ()
     {
-        temps.text = ((int)(Time.time / 60)).ToString() + ":" + ((int)(Time.time % 60)).ToString("00") + ":" + Time.time.ToString().Split(trim).Last().Substring(0,2);
-	}
+        temps.text = ((int)(Time.time / 60)).ToString() + ":" + ((int)(Time.time % 60)).ToString("00") + ":" + Time.time.ToString().Split(trim).Last().Substring(0, 2);
+        if (DataÉtage.PersonnageScript.PointsUpdate)
+        {
+            points.text = DataÉtage.PersonnageScript.Points.ToString();
+        }
+    }
 }

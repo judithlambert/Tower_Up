@@ -23,6 +23,17 @@ public class Personnage : MonoBehaviour
         }
     }
 
+    bool pointsUpdate = true;
+    public bool PointsUpdate { get; private set; }
+
+    float points = 0;
+    public float Points
+    {
+        get { return points; }
+        private set { points = value; pointsUpdate = true;}
+    }
+
+
     float déplacementForce = 375;
   
     Quaternion rotationInitial;
@@ -144,6 +155,8 @@ public class Personnage : MonoBehaviour
         transform.right = VecteurOrigineBalle;
         transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x/2), 0, 0);
         transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+
+        PointsUpdate = false;
     }
 
     public void Die()
