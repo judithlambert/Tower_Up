@@ -24,7 +24,6 @@ public class Plateforme : MonoBehaviour
     public float Rayon { get; protected set; }
     public float Hauteur { get; protected set; }
     public float Inclinaison { get; protected set; }
-    public float Rugosité { get; protected set; }
 
     protected Vector3 Origine; // est toujours égal a DataÉtage.Origine (Vector3.zero)
     protected Mesh Maillage;
@@ -36,7 +35,7 @@ public class Plateforme : MonoBehaviour
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, Material material)
     {
         AngleDébut = angleDébut;
-        Amplitude = amplitude; ;
+        Amplitude = amplitude;
         Largeur = largeur;
         Épaisseur = épaisseur;
         Hauteur = hauteur;
@@ -68,7 +67,7 @@ public class Plateforme : MonoBehaviour
 
     protected float RugositéAléatoire()
     {
-        return Random.value * Rugosité * Épaisseur / 2;
+        return Random.value * Épaisseur / 2;
     }
 
 
@@ -83,11 +82,11 @@ public class Plateforme : MonoBehaviour
     }
     bool IsPointDessus(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, Hauteur + INCERTITUDE_COLLISION, Hauteur - INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
+        return (Maths.EstDansLeRange(point.y, Hauteur, Hauteur, INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
     }
     bool IsPointDessous(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, Hauteur-Épaisseur + INCERTITUDE_COLLISION, Hauteur-Épaisseur - INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
+        return (Maths.EstDansLeRange(point.y, Hauteur-Épaisseur, Hauteur - Épaisseur, INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
     }
     public bool CollisionCôté(Collision collision, ref int côtéCollision) 
     {
@@ -116,7 +115,7 @@ public class Plateforme : MonoBehaviour
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
         bool c = false;
-        if (Maths.EstDansLeRange(point.y, Hauteur-INCERTITUDE_COLLISION, Hauteur - Épaisseur+INCERTITUDE_COLLISION))
+        if (point.y <= Hauteur - INCERTITUDE_COLLISION && point.y >= Hauteur - Épaisseur + INCERTITUDE_COLLISION)
         {
             if (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x, Sommets[nbSommets - 7].x, INCERTITUDE_COLLISION) &&
                 Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z, Sommets[nbSommets - 7].z, INCERTITUDE_COLLISION))
@@ -148,7 +147,7 @@ public class Plateforme : MonoBehaviour
 
     virtual protected void CalculerDonnéesDeBase()
     {
-        //Origine = transform.position; // l'origine et la position devrait etre pas etre la même chose
+        //Origine = transform.position; // l'origine et la position devrait etre pas etre la même chose (utilie pour la translation verticela de la plateforme mobile)
         Origine = DataÉtage.Origine; // le decalage se ferait ici
         AngleDébut = Maths.DegréEnRadian(AngleDébut);
         nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Maths.DegréEnRadian(Amplitude)));
@@ -197,12 +196,13 @@ public class Plateforme : MonoBehaviour
         Maillage.vertices = Sommets;
     }
 
-    protected virtual Vector3 Sommet(float angleAjouté, float inclinaisonAjouté, bool sommetDuDessous, bool sommetSuppérieur)
+    protected Vector3 Sommet(float angleAjouté, float inclinaisonAjouté, bool sommetDuDessous, bool sommetSuppérieur)
     {
-        return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur - (Rugosité * Épaisseur / 2) / 2 + RugositéAléatoire() : 0)),
-                           Origine.y + Hauteur + inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0) + RugositéAléatoire(),
-                           Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur - (Rugosité * Épaisseur / 2) / 2 + RugositéAléatoire() : 0)));
+        return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
+                           Origine.y + Hauteur + inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0),
+                           Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
     }
+
 
     protected virtual void GénérerCoordonnéesDeTextures()
     {

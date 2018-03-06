@@ -1,0 +1,46 @@
+Plateforme mur
+60;30;10;0;10
+Plateforme
+30;30;2;0;1
+Plateforme
+30;30;4.5;0;1
+Plateforme
+30;30;7;0;1
+Plateforme
+30;30;10;0;1
+Plateforme
+90;30;10;0;1
+PlateformePics
+90;130;0;0;1;7
+PlateformeTemporaire 1
+120;20;10;0;1;1
+PlateformeTemporaire 2
+140;20;10;0;1;1
+PlateformeTemporaire 3
+160;20;10;0;1;1
+PlateformeTemporaire 4
+180;20;10;0;1;1
+PlateformeTemporaire 5
+200;20;10;0;1;1
+Plateforme
+220;30;11;0;1
+PlateformeMobile
+250;30;12;0;1;1;10;1
+Plateforme debut tunel
+300;30;21.5;-3;1
+Plateforme debut tunel
+300;30;23.3;-3;1
+Plateforme
+330;30;20;0;1
+PlateformePics plafond
+330;35;24;0;1;-1.5
+Pic tunel
+345;1;20
+Plateforme coté 1
+325;5;23;0;2
+Plateforme coté 2
+365;5;23;0;2
+Plateforme fin tunel
+360;30;20;3;1
+Plateforme fin tunel
+370;35;22;3;1

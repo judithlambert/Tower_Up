@@ -14,7 +14,7 @@ LanceurProjectiles
 anlge;hauteur
 
 Pic
-angle;hauteurPic;élévationEnY
+angle;hauteurPic;hauteur
 
 FinÉtage
 angle;hauteur
