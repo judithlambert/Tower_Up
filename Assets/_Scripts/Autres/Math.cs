@@ -6,6 +6,14 @@ using UnityEngine;
 
 public static class Maths
 {
+    /// <summary>permet d'arranger "-20" ou "380"</summary>
+    public static float GestionAngle(float angle)
+    {
+        angle = angle % 360;
+        if (angle < 0) angle = 360 + angle;
+        return angle;
+    }
+
     public static void SetGlobalScale(this Transform transform, Vector3 globalScale)
     {
         transform.localScale = Vector3.one;

@@ -63,10 +63,10 @@ public class PlateformePics : Plateforme
         GénérerListeTriangles();
     }
 
-    Vector3 SommetPic(float angleAjouté, float élévationAjouté)
+    Vector3 SommetPointePic(float angleAjouté, float hauteurAjouté, float inclinaisonAjouté)
     {
         return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (Largeur / 2)),
-                           Origine.y + Hauteur + élévationAjouté,
+                           Origine.y + Hauteur + hauteurAjouté + inclinaisonAjouté,
                            Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (Largeur / 2)));
     }
 
@@ -85,7 +85,7 @@ public class PlateformePics : Plateforme
             Sommets[(nbTranches + 1) * 3 + n] = Sommet(angleAjouté, élévationAjouté, true, true);
 
             //  Sommets des pointes des pics
-            Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPic(angleAjouté + DeltaAngle / 2, HauteurPic);
+            Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPointePic(angleAjouté + DeltaAngle / 2, HauteurPic, élévationAjouté);
         }
 
         // Sommets des deux bouts

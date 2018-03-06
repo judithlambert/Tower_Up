@@ -28,4 +28,6 @@
  * les collision avec un plateforme temporaire deja tombé
  * 
  * plateforme mobile de haut en bas
+ * 
+ * inclinaison des plateforme ne marche pas
  */

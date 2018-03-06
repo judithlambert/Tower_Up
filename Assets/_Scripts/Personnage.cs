@@ -91,13 +91,7 @@ public class Personnage : MonoBehaviour
     // wall jump toute à changer pour adam
     void Jumper()
     {
-        if (nbJumps < 2) // est ce que le saut est valide
-        {
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
-            ++nbJumps;
-        }
-        else if(wallJump && nbWallJump < 2) // BUG
+        if ((wallJump && nbWallJump < 2) || (DataÉtage.GodMod && wallJump)) // BUG
         {
             if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject)
             { ++nbWallJump; }
@@ -107,19 +101,25 @@ public class Personnage : MonoBehaviour
             Debug.Log("wall jump successful");
             dernierCollisionObject = nouveauCollisionObject;
         }
+        else if (nbJumps < 2 || DataÉtage.GodMod) // est ce que le saut est valide
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            ++nbJumps;
+        }
+         
     }
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
         {
             Debug.Log("collision jump");
-            if (!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision))
+            if (!collision.gameObject.name.Contains("Plancher") && collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision) && nbJumps!=0)
             {
                 nouveauCollisionObject = collision.gameObject;
                 wallJump = true;
                
                 Debug.Log("collision wall jump");
-
             }
             else { nbJumps = 0; nbWallJump = 0; }
         }
@@ -149,7 +149,10 @@ public class Personnage : MonoBehaviour
     public void Die()
     {
         Debug.Log("Die");
-        transform.position = positionInitial;
-        transform.rotation = rotationInitial;
+        if (!DataÉtage.GodMod)
+        {
+            transform.position = positionInitial;
+            transform.rotation = rotationInitial;
+        }
     }
 }

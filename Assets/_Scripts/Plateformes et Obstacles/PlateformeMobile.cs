@@ -8,7 +8,7 @@ public class PlateformeMobile : Plateforme
 
     bool touching=false;
 
-    float Temps, Distance, Vitesse, rotation;
+    float Temps, Distance, Vitesse, rotation, translation;
     // distance est une amplitude, en degré
     int TypeMouvement;
    enum Mouvement { horizontal, vertical, diagonal}
@@ -28,6 +28,10 @@ public class PlateformeMobile : Plateforme
         
 
         CréationObject(material);
+
+        //temporaire
+        translation = Vitesse / 20;
+        Distance = Distance * DataÉtage.DELTA_HAUTEUR;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -45,13 +49,17 @@ public class PlateformeMobile : Plateforme
     void Update()
     { 
         rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y;
+        //translation = Distance * DataÉtage.DELTA_HAUTEUR * Mathf.Sin(Time.time * Vitesse / 10); // trouver le bon calcul
+
         switch (TypeMouvement)
         {
             case 0:
                 transform.Rotate(Vector3.up, rotation);
                 break;
             case 1:
-                transform.Translate(new Vector3(0, rotation, 0)); //maybbeee idk
+                transform.Translate(new Vector3(0, translation, 0)); //maybbeee idk
+                if (transform.position.y >= Distance || transform.position.y <= 0)
+                { translation = -translation; Debug.Log("translation changed"); }
                 break;
             case 2:
                 transform.Rotate(Vector3.up, rotation); // not this
