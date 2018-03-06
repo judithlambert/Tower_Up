@@ -22,8 +22,9 @@ public class DataÉtage : MonoBehaviour
     static public Camera Caméra;
     public static Personnage PersonnageScript;
     public static Plateforme PlancherScript;
+    public static UI UiScript;
     [SerializeField] GameObject prefabPersonnage;
-    [SerializeField] Material MaterialPlatforme;
+    public static GameObject Ui;
     List<GameObject> ListGameObject;
 
     const float DISTANCE_CAMERA_PERSONNAGE=10; // ratio avec tour 
@@ -58,6 +59,8 @@ public class DataÉtage : MonoBehaviour
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
         Personnage = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
         PersonnageScript = Personnage.GetComponent<Personnage>();
+        Ui = GameObject.FindGameObjectWithTag("UI");
+        UiScript = Ui.GetComponent<UI>();
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
@@ -129,7 +132,7 @@ public class DataÉtage : MonoBehaviour
                     ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR);
                     break;
                 case Point.String:
-                    ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, attributs[2] == 0 ? false : true, attributs[3], Materials.Get((int)NomMaterial.Point));
+                    ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR + 0.5f * DELTA_HAUTEUR, attributs[2] == 0 ? false : true, attributs[3], attributs[2] == 0 ? Materials.Get((int)NomMaterial.Point) : Materials.Get((int)NomMaterial.Multiplicateur));
                     break;
             }
 

@@ -1,4 +1,4 @@
-Plateforme nom
+Plateforme
 angleDébut;amplitude;hauteur;inclinaison;épaisseur
 
 PlateformeMobile

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Point : MonoBehaviour
 {
@@ -8,8 +9,8 @@ public class Point : MonoBehaviour
     const int NB_TUILES_CUBE = 6;
     const int NB_TRIANGLES_PAR_TUILE = 2;
     const int NB_SOMMETS_PAR_TRIANGLE = 3;
-    const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 90;
-    const int VITESSE_TRANSLATION = 6;
+    const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 180;
+    const int VITESSE_TRANSLATION = 4;
     public const string String = "Point";
 
     bool Multiplicateur;
@@ -20,14 +21,16 @@ public class Point : MonoBehaviour
     float Étendue;
     Vector3 Origine;
     Vector3 Position;
+    GameObject ComposanteTexte;
+    Text Texte;
 
     public void Initialisation(float angle, float hauteur, bool multiplicateur, float points, Material material)
     {
-        Position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, hauteur, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);        
+        Position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, hauteur, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
         Multiplicateur = multiplicateur;
         Points = points;
 
-        CalculerDonnéesDeBase();       
+        CalculerDonnéesDeBase();
         Maillage = new Mesh { name = "Point" };
         GénérerTriangle();
         transform.position = Position;
@@ -35,8 +38,16 @@ public class Point : MonoBehaviour
         gameObject.AddComponent<MeshFilter>().mesh = Maillage;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        gameObject.AddComponent<Rigidbody>().isKinematic = true;
         GetComponent<MeshCollider>().convex = true;
+        GetComponent<MeshCollider>().isTrigger = true;
+
+        ComposanteTexte = new GameObject();
+        Texte = ComposanteTexte.AddComponent<Text>();
+        Texte.text = points.ToString();
+        Texte.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        Texte.alignment = TextAnchor.MiddleCenter;
+        Texte.color = Color.yellow;
+        ComposanteTexte.transform.SetParent(DataÉtage.Ui.transform);
     }
 
     void CalculerDonnéesDeBase()
@@ -115,7 +126,42 @@ public class Point : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(new Vector3(0, NB_DEGRÉS_ROTATION_PAR_SECONDE, 0) * Time.deltaTime);
-        transform.position = new Vector3(Position.x, DataÉtage.DELTA_HAUTEUR/2 * Mathf.Sin(Time.time) + Position.y, Position.z);
+        if (EstVisible())
+        {
+            ComposanteTexte.SetActive(true);
+            ComposanteTexte.GetComponent<RectTransform>().position = DataÉtage.Caméra.WorldToScreenPoint(gameObject.transform.position);
+            Texte.fontSize = (int)(500 / (transform.position - DataÉtage.Caméra.transform.position).magnitude);
+        }
+        else
+        {
+            ComposanteTexte.SetActive(false);
+        }
+        transform.Rotate(new Vector3(0, NB_DEGRÉS_ROTATION_PAR_SECONDE, 0) * Time.deltaTime); 
+        transform.position = new Vector3(Position.x, Étendue/3 * Mathf.Sin(Time.time * VITESSE_TRANSLATION) + Position.y, Position.z);
+        // Y aurait-il une facon de rendre plus efficace: chaque cube doit faire le calcul à chaque update
+    }
+
+    bool EstVisible()
+    {
+        return !Physics.Raycast(DataÉtage.Caméra.transform.position, transform.position - DataÉtage.Caméra.transform.position, (transform.position - DataÉtage.Caméra.transform.position).magnitude - Étendue);
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {              
+        if (other.gameObject == DataÉtage.Personnage)
+        {
+            if (Multiplicateur)
+            {
+                DataÉtage.UiScript.Multiplicateur += Points;
+            }
+            else
+            {
+                DataÉtage.UiScript.Points += (int)Points;
+            }
+            Destroy(gameObject);
+            Destroy(ComposanteTexte,3);
+            Destroy(this);
+        }
     }
 }
