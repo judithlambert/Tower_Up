@@ -24,6 +24,7 @@ public class Plateforme : MonoBehaviour
     public float Rayon { get; protected set; }
     public float Hauteur { get; protected set; }
     public float Inclinaison { get; protected set; }
+    public float Rotation { get; protected set; }
 
     protected Vector3 Origine; // est toujours égal a DataÉtage.Origine (Vector3.zero)
     protected Mesh Maillage;
@@ -32,7 +33,7 @@ public class Plateforme : MonoBehaviour
     protected int nbTranches, nbSommets, nbTriangles;
 
     
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float rotation, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude;
@@ -41,8 +42,18 @@ public class Plateforme : MonoBehaviour
         Hauteur = hauteur;
         Inclinaison = inclinaison;
         Rayon = rayon;
+        Rotation = rotation;
 
+       
         CréationObject(material);
+        Positionnement();
+    }
+
+    public void Positionnement()
+    {
+        transform.position = new Vector3(0, Hauteur, 0);
+        transform.RotateAround(Vector3.zero, Vector3.down, AngleDébut);
+        transform.Rotate(new Vector3(Rotation, 0, 0));
     }
 
     public void CréationObject(Material material)
@@ -149,7 +160,7 @@ public class Plateforme : MonoBehaviour
     {
         //Origine = transform.position; // l'origine et la position devrait etre pas etre la même chose (utilie pour la translation verticela de la plateforme mobile)
         Origine = DataÉtage.Origine; // le decalage se ferait ici
-        AngleDébut = Maths.DegréEnRadian(AngleDébut);
+        //AngleDébut = Maths.DegréEnRadian(AngleDébut);
         nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Maths.DegréEnRadian(Amplitude)));
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS;
         nbTriangles = (nbTranches * 4 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE;
@@ -198,9 +209,13 @@ public class Plateforme : MonoBehaviour
 
     protected Vector3 Sommet(float angleAjouté, float inclinaisonAjouté, bool sommetDuDessous, bool sommetSuppérieur)
     {
-        return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
-                           Origine.y + Hauteur + inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0),
-                           Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
+        //return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
+        //                   Origine.y + Hauteur + (sommetDuDessous ? -Épaisseur : 0),
+        //                   Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
+        return new Vector3(( Mathf.Cos(angleAjouté)) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
+                           inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0),
+                           (Mathf.Sin(angleAjouté)) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
+
     }
 
 

@@ -19,7 +19,7 @@ public class PlateformeTemporaire : Plateforme
     float Temps;
     int TypeDeUpdate;
 
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float temps, int typeUptade, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float temps, int typeUptade, float rotation, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
@@ -29,6 +29,7 @@ public class PlateformeTemporaire : Plateforme
         Inclinaison = inclinaison;
         Rayon = rayon;
         TypeDeUpdate = typeUptade;
+        Rotation = rotation;
 
         Temps = temps;
 
@@ -46,6 +47,8 @@ public class PlateformeTemporaire : Plateforme
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<MeshCollider>().convex = true; // nécéssaire?
         GetComponent<Rigidbody>().isKinematic = true;
+
+        Positionnement();
 
 
         color = GetComponent<Renderer>().material.color;

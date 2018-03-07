@@ -11,6 +11,7 @@ public class Point : MonoBehaviour
     const int NB_SOMMETS_PAR_TRIANGLE = 3;
     const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 180;
     const int VITESSE_TRANSLATION = 4;
+
     public const string String = "Point";
 
     bool Multiplicateur;

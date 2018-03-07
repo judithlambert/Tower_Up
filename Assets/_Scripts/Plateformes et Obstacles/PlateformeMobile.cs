@@ -12,7 +12,7 @@ public class PlateformeMobile : Plateforme
     // distance est une amplitude, en degré
     int TypeMouvement;
    enum Mouvement { horizontal, vertical, diagonal}
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, float rotation, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
@@ -21,7 +21,7 @@ public class PlateformeMobile : Plateforme
         Hauteur = hauteur;
         Inclinaison = inclinaison;
         Rayon = rayon;
-
+        Rotation = rotation;
         Vitesse = vitesse;
         Distance = distance;
         TypeMouvement = mouvement;
@@ -32,6 +32,9 @@ public class PlateformeMobile : Plateforme
         //temporaire
         translation = Vitesse / 20;
         Distance = Distance * DataÉtage.DELTA_HAUTEUR;
+
+        Positionnement();
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -58,7 +61,7 @@ public class PlateformeMobile : Plateforme
                 break;
             case 1:
                 transform.Translate(new Vector3(0, translation, 0)); //maybbeee idk
-                if (transform.position.y >= Distance || transform.position.y <= 0)
+                if (transform.position.y >= Distance + Hauteur || transform.position.y <= Hauteur)
                 { translation = -translation; Debug.Log("translation changed"); }
                 break;
             case 2:

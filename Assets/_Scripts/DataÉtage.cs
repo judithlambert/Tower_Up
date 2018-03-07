@@ -57,9 +57,9 @@ public class DataÉtage : MonoBehaviour
 
         // instanciation du placher, personnage, camera
         Plancher = new GameObject("Plancher");
-        Plancher.AddComponent<Plateforme>().Initialisation(0, 360, 0, 0, 20, LARGEUR_PLATEFORME, RAYON_TOUR, Materials.Get((int)NomMaterial.Plateforme));
+        Plancher.AddComponent<Plateforme>().Initialisation(0, 360, 0, 0, 20, LARGEUR_PLATEFORME, RAYON_TOUR,0, Materials.Get((int)NomMaterial.Plateforme));
         Tour = new GameObject("Tour");
-        Tour.AddComponent<Plateforme>().Initialisation(0, 360, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, HAUTEUR_TOUR * DELTA_HAUTEUR, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Tour));
+        Tour.AddComponent<Plateforme>().Initialisation(0, 360, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, HAUTEUR_TOUR * DELTA_HAUTEUR, RAYON_TOUR,0, 0, Materials.Get((int)NomMaterial.Tour));
         RayonTrajectoirePersonnage = RAYON_TOUR + Plancher.GetComponent<Plateforme>().Largeur / 2;
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
         Personnage = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
@@ -104,37 +104,70 @@ public class DataÉtage : MonoBehaviour
             switch (obj)
             {
                 case Plateforme.String:
-                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(Maths.GestionAngle(attributs[0]), attributs[1], attributs[2] * DELTA_HAUTEUR,
-                                                                                    attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 
+                    ListGameObject.Last().AddComponent<Plateforme>().Initialisation(Maths.GestionAngle(attributs[0]), 
+                                                                                    attributs[1], 
+                                                                                    attributs[2] * DELTA_HAUTEUR,
+                                                                                    attributs[3], 
+                                                                                    attributs[4] * DELTA_HAUTEUR, 
+                                                                                    LARGEUR_PLATEFORME, 
+                                                                                    RAYON_TOUR, 
+                                                                                    attributs.Length >= 6 ? (int)attributs[5] : 0,
                                                                                     Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeMobile.String:
-                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(Maths.GestionAngle(attributs[0]), attributs[1], attributs[2] * DELTA_HAUTEUR,
-                                                                                          attributs[3], attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 
-                                                                                          attributs[5], attributs[6], attributs.Length >= 8 ? (int)attributs[7] : 0, 
+                    ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(Maths.GestionAngle(attributs[0]), 
+                                                                                          attributs[1], 
+                                                                                          attributs[2] * DELTA_HAUTEUR,
+                                                                                          attributs[3], 
+                                                                                          attributs[4] * DELTA_HAUTEUR, 
+                                                                                          LARGEUR_PLATEFORME, 
+                                                                                          RAYON_TOUR, 
+                                                                                          attributs[5], 
+                                                                                          attributs[6], 
+                                                                                          attributs.Length >= 8 ? (int)attributs[7] : 0, 
+                                                                                          attributs.Length >= 9 ? (int)attributs[8] : 0,
                                                                                           Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformeTemporaire.String:
-                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(Maths.GestionAngle(attributs[0]), attributs[1], attributs[2] * DELTA_HAUTEUR, attributs[3],
-                                                                                              attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, attributs[5],
-                                                                                              attributs.Length >= 7 ? (int)attributs[6] : 0, Materials.Get((int)NomMaterial.Plateforme));
+                    ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(Maths.GestionAngle(attributs[0]), 
+                                                                                              attributs[1], 
+                                                                                              attributs[2] * DELTA_HAUTEUR, 
+                                                                                              attributs[3],
+                                                                                              attributs[4] * DELTA_HAUTEUR, 
+                                                                                              LARGEUR_PLATEFORME, 
+                                                                                              RAYON_TOUR, 
+                                                                                              attributs[5],
+                                                                                              attributs.Length >= 7 ? (int)attributs[6] : 0, 
+                                                                                              attributs.Length >= 8 ? (int)attributs[7] : 0, 
+                                                                                              Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case PlateformePics.String:
-                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(Maths.GestionAngle(attributs[0]), attributs[1], attributs[2] * DELTA_HAUTEUR, attributs[3], 
-                                                                                        attributs[4] * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR,attributs[5] * DELTA_HAUTEUR, 
+                    ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(Maths.GestionAngle(attributs[0]), 
+                                                                                        attributs[1], 
+                                                                                        attributs[2] * DELTA_HAUTEUR, 
+                                                                                        attributs[3], 
+                                                                                        attributs[4] * DELTA_HAUTEUR, 
+                                                                                        LARGEUR_PLATEFORME, 
+                                                                                        RAYON_TOUR,
+                                                                                        attributs[5] * DELTA_HAUTEUR, 
+                                                                                        attributs.Length >= 7 ? (int)attributs[6] : 0,
                                                                                         Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case Pic.String:
-                    ListGameObject.Last().AddComponent<Pic>().Initialisation(Maths.GestionAngle(attributs[0]), attributs[1] * DELTA_HAUTEUR, attributs[2] * DELTA_HAUTEUR, 
+                    ListGameObject.Last().AddComponent<Pic>().Initialisation(Maths.GestionAngle(attributs[0]), 
+                                                                             attributs[1] * DELTA_HAUTEUR, 
+                                                                             attributs[2] * DELTA_HAUTEUR, 
                                                                              LARGEUR_PLATEFORME / 2.4f,
                                                                              Materials.Get((int)NomMaterial.Pic));
                     break;
                 case LanceurProjectiles.String:
-                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(Maths.GestionAngle(attributs[0]), attributs[1] * DELTA_HAUTEUR, 
+                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(Maths.GestionAngle(attributs[0]), 
+                                                                                            attributs[1] * DELTA_HAUTEUR, 
                                                                                             Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case FinÉtage.String:
-                    ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(Maths.GestionAngle(attributs[0]), attributs[1] * DELTA_HAUTEUR);
+                    ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(Maths.GestionAngle(attributs[0]), 
+                                                                                  attributs[1] * DELTA_HAUTEUR);
                     break;
                 case Point.String:
                     ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR + 0.5f * DELTA_HAUTEUR, attributs[2] == 0 ? false : true, attributs[3], attributs[2] == 0 ? Materials.Get((int)NomMaterial.Point) : Materials.Get((int)NomMaterial.Multiplicateur));
