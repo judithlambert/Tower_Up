@@ -39,6 +39,7 @@ public class FinÉtage : MonoBehaviour // : Plateforme
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("fin étage");
+        DataÉtage.étageFini = true;
     }
 
     private void Update()

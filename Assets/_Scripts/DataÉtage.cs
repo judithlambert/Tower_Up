@@ -39,6 +39,8 @@ public class DataÉtage : MonoBehaviour
     StreamReader étageReader;
     StreamWriter saveWriter;
 
+    static public bool étageFini = false;
+    static public bool jeuFini = false;
 
     public static int nbÉtage { get; set; }
     
@@ -75,15 +77,29 @@ public class DataÉtage : MonoBehaviour
         //---------------------------------------
 
         LoadÉtage();
+
+
+        //do //meuhhhhh
+        //{
+        //    if (étageFini)
+        //    {
+        //        ++nbÉtage;
+        //        Save();
+        //        //personnageScript.DébutÉtage();
+        //        ListGameObject.Clear();
+        //        étageFini = false;
+        //        LoadÉtage();
+        //    }
+        //} while (!jeuFini);
     }
     
     private void Start()
     {
-        //saveWriter = new StreamWriter(Menu.CHEMIN_SAVE);
-        //Save();
+        saveWriter = new StreamWriter(Menu.CHEMIN_SAVE);
+        Save();
     }
 
-    void LoadÉtage()
+    public void LoadÉtage()
     {       
         étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
 
@@ -177,17 +193,16 @@ public class DataÉtage : MonoBehaviour
         } while (!étageReader.EndOfStream);
     }
 
-    // quand l'étage à été traverser
-    void ÉtageFini()
-    {
-        nbÉtage++;
-        LoadÉtage();
-    }
+    //static void ÉtageFini()
+    //{
+    //    nbÉtage++;
+    //    é
+    //}
 
 
     void Save()
     {
-        //saveWriter.Write(nbÉtage);
+        saveWriter.Write(nbÉtage);
     }
 
     int cptNaming = 0;
