@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading;
+using System.Linq;
 
 public class Personnage : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Personnage : MonoBehaviour
     const int ANGULAR_DRAG = 5;
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
+
+    public int Vie { get; private set; }
 
     float vitesse = 0;
     float Vitesse
@@ -56,9 +59,12 @@ public class Personnage : MonoBehaviour
         transform.rotation = rotationInitial = Maths.Vector3àQuaternion(Vector3.zero);
         positionInitial = transform.position;
         GetComponent<Rigidbody>().angularDrag = ANGULAR_DRAG;
+
+        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         jump = crouch = reculer = avancer = block = false;
+        Vie = 3;
     }
 
     
@@ -153,6 +159,25 @@ public class Personnage : MonoBehaviour
         {
             transform.position = positionInitial;
             transform.rotation = rotationInitial;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Vie = 3;
         }
+    }
+
+    public void Dommage(int dommage, Collision collision)
+    {
+        Vie -= dommage;
+        if (Vie <= 0) { Die(); }
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        gameObject.GetComponent<Rigidbody>().AddExplosionForce(déplacementForce*2, collision.contacts.First().point, RayonSphere);
+        FlashCouleur(Color.red);     
+    }
+
+    IEnumerator FlashCouleur(Color couleur)
+    {
+        Color couleurOrigine = GetComponent<Renderer>().material.color;
+        GetComponent<Renderer>().material.color = couleur;
+        yield return new WaitForSeconds(5);
+        GetComponent<Renderer>().material.color = couleurOrigine;
     }
 }

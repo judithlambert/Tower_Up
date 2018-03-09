@@ -429,7 +429,7 @@ Prefab:
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
       propertyPath: GODMOD
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
@@ -546,7 +546,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

@@ -95,6 +95,6 @@ public class Pic : Obstacle
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.ToString().Contains("Personnage")) { DataÉtage.Personnage.GetComponent<Personnage>().Die(); }
+        if(collision.gameObject.ToString().Contains("Personnage")) { DataÉtage.Personnage.GetComponent<Personnage>().Dommage(1,collision); }
     }
 }

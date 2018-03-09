@@ -22,7 +22,7 @@ public class PlateformeMobile : Plateforme
         Largeur = largeur; 
         Rayon = rayon;
         Vitesse = vitesse;
-        Distance = distance;
+        Distance = mouvement == 0 ? distance : distance * DataÉtage.DELTA_HAUTEUR;
         Rotation = rotation;
         TypeMouvement = mouvement;
         
@@ -51,24 +51,24 @@ public class PlateformeMobile : Plateforme
 
     void Update()
     {
-        rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y - AngleDébut;
-        //translation = Distance * DataÉtage.DELTA_HAUTEUR * Mathf.Sin(Time.time * Vitesse / 10); // trouver le bon calcul
-
         switch (TypeMouvement)
         {
             case 0:
+                rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y - AngleDébut;
                 transform.Rotate(Vector3.up, rotation);
+                if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero, Vector3.up, rotation); }
                 break;
             case 1:
-                transform.Translate(new Vector3(0, translation, 0)); //maybbeee idk
-                if (transform.position.y >= Distance + Hauteur || transform.position.y <= Hauteur)
-                { translation = -translation; Debug.Log("translation changed"); }
+                transform.position = new Vector3(0, Distance / 2 * Mathf.Sin(Time.time * Vitesse / 10) + Hauteur - Distance / 2, 0);
+                //transform.Translate(new Vector3(0, translation, 0)); //maybbeee idk
+                //if (transform.position.y >= Distance + Hauteur || transform.position.y <= Hauteur)
+                //{ translation = -translation; Debug.Log("translation changed"); }
                 break;
             case 2:
                 transform.Rotate(Vector3.up, rotation); // not this
                 break;
         }
 
-        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero, Vector3.up, rotation); }
+        
     }
 }

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleMortel : Obstacle
-{
-
+public interface IObstacleMortel
+{   
     
 }

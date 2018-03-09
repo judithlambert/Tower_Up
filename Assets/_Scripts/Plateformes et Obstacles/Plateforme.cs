@@ -13,7 +13,7 @@ public class Plateforme : MonoBehaviour
 
     public const float INCERTITUDE_COLLISION = 0.1f;
 
-    protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 90, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
+    protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 72, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
     protected const float NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
 
     //protected float AngleDébut, Amplitude, Épaisseur, Largeur, Rayon, Élévation, Rugosité;
@@ -161,7 +161,7 @@ public class Plateforme : MonoBehaviour
         //Origine = transform.position; // l'origine et la position devrait etre pas etre la même chose (utilie pour la translation verticela de la plateforme mobile)
         Origine = DataÉtage.Origine; // le decalage se ferait ici
         //AngleDébut = Maths.DegréEnRadian(AngleDébut);
-        nbTranches = (int)Mathf.Ceil(NB_TUILES_PAR_CERCLE_COMPLET * (Maths.DegréEnRadian(Amplitude)));
+        nbTranches = (int)Mathf.Ceil(Amplitude * NB_TUILES_PAR_CERCLE_COMPLET / 360);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS;
         nbTriangles = (nbTranches * 4 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE;
         DeltaAngle = Maths.DegréEnRadian(Amplitude) / nbTranches;
