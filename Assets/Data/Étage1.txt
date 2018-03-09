@@ -65,7 +65,7 @@ PlateformePics
 Plateforme 30
 245;20;18;0;2
 PlateformePics
-165;60;22;0;0;1.5
+165;60;22;0;0;1.4
 Plateforme
 60;100;26;0;1
 Plateforme finale
