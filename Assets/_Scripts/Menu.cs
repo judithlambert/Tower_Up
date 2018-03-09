@@ -7,21 +7,26 @@ public class Menu : MonoBehaviour {
     public const string CHEMIN_SAVE = "Assets/Resources/SaveFile.txt";
     StreamReader saveReader;
 
-    // Use this for initialization
     void Start ()
     {
         saveReader = new StreamReader(CHEMIN_SAVE);
     }
 
-    void NewGame()
+    public void NewGame()
     {
-        DataÉtage.nbÉtage = 0;
+        DataÉtage.nbÉtage = 1;
         SceneManager.LoadScene("ScnÉtage");
     }
 
-    void ResumeGame()
+    public void ResumeGame()
     {
-        DataÉtage.nbÉtage = int.Parse(saveReader.ReadLine());
-        SceneManager.LoadScene("ScnÉtage");
+        string save = saveReader.ReadLine();
+        if (save == null) { Debug.Log("il n'y a aucune game de déja commencer"); NewGame(); }
+        else { DataÉtage.nbÉtage = int.Parse(save); SceneManager.LoadScene("ScnÉtage"); }
+    }
+
+    public void Setting()
+    {
+
     }
 }

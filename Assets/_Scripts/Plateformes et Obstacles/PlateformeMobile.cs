@@ -11,19 +11,19 @@ public class PlateformeMobile : Plateforme
     float Temps, Distance, Vitesse, rotation, translation;
     // distance est une amplitude, en degré
     int TypeMouvement;
-   enum Mouvement { horizontal, vertical, diagonal}
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, Material material)
+    enum Mouvement { horizontal, vertical, diagonal}
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, float rotation, Material material)
     {
         AngleDébut = angleDébut;
-        Amplitude = amplitude; ;
-        Largeur = largeur;
-        Épaisseur = épaisseur;
+        Amplitude = amplitude;
         Hauteur = hauteur;
         Inclinaison = inclinaison;
+        Épaisseur = épaisseur;
+        Largeur = largeur; 
         Rayon = rayon;
-
         Vitesse = vitesse;
         Distance = distance;
+        Rotation = rotation;
         TypeMouvement = mouvement;
         
 
@@ -31,7 +31,10 @@ public class PlateformeMobile : Plateforme
 
         //temporaire
         translation = Vitesse / 20;
-        Distance = Distance * DataÉtage.DELTA_HAUTEUR;
+        //Distance = Distance * DataÉtage.DELTA_HAUTEUR;
+
+        Positionnement();
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -47,8 +50,8 @@ public class PlateformeMobile : Plateforme
     }
 
     void Update()
-    { 
-        rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y;
+    {
+        rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y - AngleDébut;
         //translation = Distance * DataÉtage.DELTA_HAUTEUR * Mathf.Sin(Time.time * Vitesse / 10); // trouver le bon calcul
 
         switch (TypeMouvement)
@@ -58,14 +61,14 @@ public class PlateformeMobile : Plateforme
                 break;
             case 1:
                 transform.Translate(new Vector3(0, translation, 0)); //maybbeee idk
-                if (transform.position.y >= Distance || transform.position.y <= 0)
+                if (transform.position.y >= Distance + Hauteur || transform.position.y <= Hauteur)
                 { translation = -translation; Debug.Log("translation changed"); }
                 break;
             case 2:
                 transform.Rotate(Vector3.up, rotation); // not this
                 break;
         }
-        
-        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero,Vector3.up,rotation); }
+
+        if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero, Vector3.up, rotation); }
     }
 }

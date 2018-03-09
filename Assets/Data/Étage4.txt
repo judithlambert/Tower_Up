@@ -23,24 +23,41 @@ PlateformeTemporaire 4
 PlateformeTemporaire 5
 200;20;10;0;1;1
 Plateforme
-220;30;11;0;1
+220;30;10;0;1
 PlateformeMobile
-250;30;12;0;1;1;10;1
+250;50;10;0;1;0.75;10;1
+Point 1
+290;12;0;5
+Point 2
+260;14;0;5
+Point 3
+290;16;0;5
+Point 4
+260;18;0;5
+Point 5
+295;20;0;5
 Plateforme debut tunel
-300;30;21.5;-3;1
+300;30;22;-4;1
 Plateforme debut tunel
-300;30;23.3;-3;1
+300;30;24;-4;1
 Plateforme
 330;30;20;0;1
 PlateformePics plafond
-330;35;24;0;1;-1.5
+330;30;24;0;1;-1.5
 Pic tunel
 345;1;20
 Plateforme coté 1
-325;5;23;0;2
+325;5;24;0;2
 Plateforme coté 2
-365;5;23;0;2
+360;5;24;0;2
 Plateforme fin tunel
-360;30;20;3;1
+360;30;20;4;1
 Plateforme fin tunel
-370;35;22;3;1
+360;30;22;4;1
+Plateforme
+30;100;22;0;1
+Plateforme
+30;60;24;0;1
+PlateformePics
+100;20;26;0;1;1;90
+

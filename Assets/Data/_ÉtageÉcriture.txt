@@ -1,14 +1,14 @@
 Plateforme
-angleDébut;amplitude;hauteur;inclinaison;épaisseur
+angleDébut;amplitude;hauteur;inclinaison;épaisseur(;rotation)
 
 PlateformeMobile
-angleDébut;amplitude;hauteur;inclinaison;épaisseur;vitesse;distance(;typeMouvement)
+angleDébut;amplitude;hauteur;inclinaison;épaisseur;vitesse;distance(;typeMouvement(;rotation))
 
 PlateformeTemporaire
-angleDébut;amplitude;hauteur;inclinaison;épaisseur;temps(;typeDeUpdate)
+angleDébut;amplitude;hauteur;inclinaison;épaisseur;temps(;typeDeUpdate(;rotation))
 
 PlateformePics
-angleDébut;amplitude;hauteur;inclinaison;épaisseur;hauteurPic
+angleDébut;amplitude;hauteur;inclinaison;épaisseur;hauteurPic(;rotation)
 
 LanceurProjectiles
 anlge;hauteur

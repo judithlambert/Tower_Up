@@ -12,7 +12,7 @@ public class PlateformePics : Plateforme
     protected float HauteurPic;
 
    
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, Material material)
+    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, float rotation, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
@@ -21,6 +21,7 @@ public class PlateformePics : Plateforme
         Hauteur = hauteur;
         Inclinaison = inclinaison;
         Rayon = rayon;
+        Rotation = rotation;
 
         HauteurPic = hauteurPic;
 
@@ -41,6 +42,9 @@ public class PlateformePics : Plateforme
         //GetComponent<MeshCollider>().convex = true;         // <-- crée un mesh colider qui ne fit pas avec le mesh réel
         //GetComponent<MeshCollider>().isTrigger = true;
         //GetComponent<Rigidbody>().isKinematic = true;
+
+        Positionnement();
+
     }
 
     // MAILLAGE
@@ -48,11 +52,11 @@ public class PlateformePics : Plateforme
     {
         Origine = transform.position;
         nbTranches = (int)Mathf.Ceil(Maths.DegréEnRadian(Amplitude) * DataÉtage.RayonTrajectoirePersonnage / DataÉtage.LARGEUR_PLATEFORME);
-        AngleDébut = Maths.DegréEnRadian(AngleDébut);
-        Amplitude = Maths.DegréEnRadian(Amplitude);
+        //AngleDébut = Maths.DegréEnRadian(AngleDébut);
+        //Amplitude = Maths.DegréEnRadian(Amplitude);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS + nbTranches;
         nbTriangles = (nbTranches * 3 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE + nbTranches * 4;
-        DeltaAngle = Amplitude / nbTranches;
+        DeltaAngle = Maths.DegréEnRadian(Amplitude) / nbTranches;
         DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
     }
 
@@ -65,9 +69,9 @@ public class PlateformePics : Plateforme
 
     Vector3 SommetPointePic(float angleAjouté, float hauteurAjouté, float inclinaisonAjouté)
     {
-        return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (Largeur / 2)),
-                           Origine.y + Hauteur + hauteurAjouté + inclinaisonAjouté,
-                           Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (Largeur / 2)));
+        return new Vector3(Mathf.Cos(angleAjouté) * (Rayon + (Largeur / 2)),
+                           inclinaisonAjouté + hauteurAjouté,
+                           Mathf.Sin(angleAjouté) * (Rayon + (Largeur / 2)));
     }
 
     protected override void GénérerSommets()
