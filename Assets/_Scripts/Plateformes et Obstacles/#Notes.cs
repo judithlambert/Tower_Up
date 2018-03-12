@@ -32,4 +32,6 @@
  * inclinaison des plateforme ne marche pas
  * 
  * bug avec la lumiere si on part de ScnMenu
+ * 
+ * finir FinÉtage
  */

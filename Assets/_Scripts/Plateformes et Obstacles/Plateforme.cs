@@ -53,7 +53,7 @@ public class Plateforme : MonoBehaviour
     {
         transform.position = new Vector3(0, Hauteur, 0);
         transform.RotateAround(Vector3.zero, Vector3.down, AngleDébut);
-        //transform.Rotate(new Vector3(Rotation, 0, 0));
+        transform.Rotate(new Vector3(Rotation, 0, 0));
     }
 
     public void CréationObject(Material material)
@@ -126,7 +126,7 @@ public class Plateforme : MonoBehaviour
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
         bool c = false;
-        if (point.y <= Hauteur - INCERTITUDE_COLLISION && point.y >= Hauteur - Épaisseur + INCERTITUDE_COLLISION)
+        if (point.y <= Hauteur && point.y >= Hauteur - Épaisseur)
         {
             if (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x, Sommets[nbSommets - 7].x, INCERTITUDE_COLLISION) &&
                 Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z, Sommets[nbSommets - 7].z, INCERTITUDE_COLLISION))

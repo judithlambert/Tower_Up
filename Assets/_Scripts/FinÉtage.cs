@@ -12,8 +12,8 @@ public class FinÉtage : MonoBehaviour // : Plateforme
     public void Initialisation(float angle, float hauteur)
     {
         Vector3 position = transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, 
-                                         hauteur + DataÉtage.DELTA_HAUTEUR/2, 
-                                         Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
+                                                            hauteur + DataÉtage.DELTA_HAUTEUR/2, 
+                                                            Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
 
         transform.rotation = Maths.Vector3àQuaternion(new Vector3(0, angle, 0));
 
