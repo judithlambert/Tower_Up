@@ -141,7 +141,7 @@ public class Plateforme : MonoBehaviour
         }
         return c;
     }
-    public bool CollisionDessusAvecPics(Collision collision)
+    public bool CollisionDessusAvecPics(Collision collision) //Pourquoi ce n'est pas dans plateformPics?
     {
         bool pasDessousNiCôté = false;
         foreach (ContactPoint cp in collision.contacts)

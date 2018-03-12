@@ -16,7 +16,7 @@ anlge;hauteur
 Pic
 angle;hauteurPic;hauteur
 
-FinÉtage
+FinEtage
 angle;hauteur
 
 Point

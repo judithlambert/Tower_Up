@@ -193,13 +193,6 @@ public class DataÉtage : MonoBehaviour
         } while (!étageReader.EndOfStream);
     }
 
-    //static void ÉtageFini()
-    //{
-    //    nbÉtage++;
-    //    é
-    //}
-
-
     void Save()
     {
         saveWriter.Write(nbÉtage);
@@ -209,6 +202,22 @@ public class DataÉtage : MonoBehaviour
     string NewName(string n)
     {
         return n + ' ' + (cptNaming++).ToString();
+    }
+
+    private void Update()
+    {
+        if (étageFini)
+        {
+            foreach(GameObject g in ListGameObject)
+            {
+                Destroy(g);
+            }
+            ListGameObject.Clear();
+          //Save();           
+            étageFini = false;
+            nbÉtage++;
+            LoadÉtage();
+        }
     }
 
 }

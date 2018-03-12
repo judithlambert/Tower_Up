@@ -9,7 +9,7 @@ public class DrapeauAnimé : MonoBehaviour {
 
     const float A = 1, S = 1;
     bool initialisé = false;
-    protected Vector2 Étendue = new Vector2(1, 1), Charpente = new Vector2(50, 50);
+    protected Vector2 Étendue, Charpente = new Vector2(50, 50);
 
     protected Mesh Maillage;
     protected Vector3[] Sommets;
@@ -44,6 +44,7 @@ public class DrapeauAnimé : MonoBehaviour {
         Origine = transform.position;
         NbColonnes = (int)Charpente.x;
         NbLignes = (int)Charpente.y;
+        Étendue = new Vector2(DataÉtage.DELTA_HAUTEUR * 2.5f, DataÉtage.DELTA_HAUTEUR);
 
         NbSommets = (NbColonnes + 1) * (NbLignes + 1);
         NbTriangles = NbColonnes * NB_TRIANGLES_PAR_TUILE * NbLignes;
@@ -72,8 +73,8 @@ public class DrapeauAnimé : MonoBehaviour {
             int l = n / (NbColonnes + 1);
 
             // Position Sommets 
-            Sommets[n] = new Vector3((c * DeltaPosition.x) + Origine.x,
-                                     (l * DeltaPosition.y) + Origine.y);
+            Sommets[n] = new Vector3((c * DeltaPosition.x),
+                                     (l * DeltaPosition.y));
             // Coordonnées Texture
             CoordonnéesTexture[n] = new Vector2(c * DeltaTexture.x,
                                                 l * DeltaTexture.y);
@@ -111,14 +112,14 @@ public class DrapeauAnimé : MonoBehaviour {
     {
         for (int i = 0; i < Sommets.Length; ++i)
         {
-            Sommets[i].z = A * ((Sommets[i].x - Origine.x) / Étendue.x) * ((Mathf.Sin(-Sommets[i].x / S + Time.time)));
+            Sommets[i].z = A * ((Sommets[i].x) / Étendue.x) * ((Mathf.Sin(-Sommets[i].x / S + Time.time)));
             Maillage.vertices = Sommets;
         }
     }
 
-	void Update ()
+    void Update()
     {
         if (initialisé)
             FonctionVent();
-	}
+    }
 }
