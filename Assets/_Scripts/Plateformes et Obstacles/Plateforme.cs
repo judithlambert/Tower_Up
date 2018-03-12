@@ -126,7 +126,7 @@ public class Plateforme : MonoBehaviour
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
         bool c = false;
-        if (point.y <= Hauteur - INCERTITUDE_COLLISION && point.y >= Hauteur - Épaisseur + INCERTITUDE_COLLISION)
+        if (point.y <= Hauteur && point.y >= Hauteur - Épaisseur)
         {
             if (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x, Sommets[nbSommets - 7].x, INCERTITUDE_COLLISION) &&
                 Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z, Sommets[nbSommets - 7].z, INCERTITUDE_COLLISION))
@@ -141,7 +141,7 @@ public class Plateforme : MonoBehaviour
         }
         return c;
     }
-    public bool CollisionDessusAvecPics(Collision collision)
+    public bool CollisionDessusAvecPics(Collision collision) //Pourquoi ce n'est pas dans plateformPics?
     {
         bool pasDessousNiCôté = false;
         foreach (ContactPoint cp in collision.contacts)

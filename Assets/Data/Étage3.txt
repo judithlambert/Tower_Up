@@ -156,8 +156,8 @@ Plateforme 16.2
 70;5;14.5;0;2
 PlateformePics 16.3
 200;5;15.5;0;1.2;1.5
-Fin…tage
-80;20
+FinEtage
+80;33
 PlateformeMobile 17
 100;20;9;0;0.5;2;225
 Plateforme 17.1

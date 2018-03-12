@@ -15,7 +15,7 @@ public class FinÉtage : MonoBehaviour // : Plateforme
                                          hauteur + DataÉtage.DELTA_HAUTEUR/2, 
                                          Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
 
-        transform.rotation = Maths.Vector3àQuaternion(new Vector3(0, angle, 0));
+        transform.rotation = Quaternion.Euler(0, -angle, 0);
 
 
 
@@ -23,27 +23,27 @@ public class FinÉtage : MonoBehaviour // : Plateforme
         gameObject.AddComponent<MeshFilter>().mesh = cube.GetComponent<MeshFilter>().mesh;
         Destroy(cube);
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
-        gameObject.AddComponent<MeshRenderer>(); // doit etre enlever quand fini
+        //gameObject.AddComponent<MeshRenderer>(); // doit etre enlever quand fini
         gameObject.AddComponent<MeshCollider>().convex = true;
         GetComponent<MeshCollider>().isTrigger = true;
 
         Maths.SetGlobalScale(transform, new Vector3(DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR, 1));
 
         drapeau = new GameObject("Drapeau");
-        drapeau.AddComponent<DrapeauAnimé>().Initialisation(position);
-        drapeau.transform.rotation = Maths.Vector3àQuaternion(new Vector3(0, angle, 0));
+        drapeau.AddComponent<DrapeauAnimé>().Initialisation(new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR,
+                                         hauteur + DataÉtage.DELTA_HAUTEUR / 2,
+                                         Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR));
+        drapeau.transform.rotation = Quaternion.Euler(0, -angle, 0);
 
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("fin étage");
-        DataÉtage.étageFini = true;
-    }
-
-    private void Update()
-    {
-
+        if (other.gameObject.name.Contains("Personnage"))
+        {
+            Debug.Log("fin étage");
+            DataÉtage.étageFini = true;
+        }
     }
 }
