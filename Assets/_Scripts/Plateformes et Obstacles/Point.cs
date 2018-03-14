@@ -11,6 +11,7 @@ public class Point : MonoBehaviour
     const int NB_SOMMETS_PAR_TRIANGLE = 3;
     const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 180;
     const int VITESSE_TRANSLATION = 4;
+    const int TEMPS_DESTRUCTION = 2;
 
     public const string String = "Point";
 
@@ -42,7 +43,7 @@ public class Point : MonoBehaviour
         GetComponent<MeshCollider>().convex = true;
         GetComponent<MeshCollider>().isTrigger = true;
 
-        ComposanteTexte = new GameObject();
+        ComposanteTexte = new GameObject(name + " ComposanteTexte");
         Texte = ComposanteTexte.AddComponent<Text>();
         Texte.text = points.ToString();
         Texte.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
@@ -127,19 +128,22 @@ public class Point : MonoBehaviour
 
     void Update()
     {
-        if (EstVisible())
+        if (!DataÉtage.pause)
         {
-            ComposanteTexte.SetActive(true);
-            ComposanteTexte.GetComponent<RectTransform>().position = DataÉtage.Caméra.WorldToScreenPoint(gameObject.transform.position);
-            Texte.fontSize = (int)(500 / (transform.position - DataÉtage.Caméra.transform.position).magnitude);
+            if (EstVisible())
+            {
+                ComposanteTexte.SetActive(true);
+                ComposanteTexte.GetComponent<RectTransform>().position = DataÉtage.Caméra.WorldToScreenPoint(gameObject.transform.position);
+                Texte.fontSize = (int)(500 / (transform.position - DataÉtage.Caméra.transform.position).magnitude);
+            }
+            else
+            {
+                ComposanteTexte.SetActive(false);
+            }
+            transform.Rotate(new Vector3(0, NB_DEGRÉS_ROTATION_PAR_SECONDE, 0) * Time.deltaTime);
+            transform.position = new Vector3(Position.x, Étendue / 3 * Mathf.Sin(Time.time * VITESSE_TRANSLATION) + Position.y, Position.z);
+            // Y aurait-il une facon de rendre plus efficace: chaque cube doit faire le calcul à chaque update
         }
-        else
-        {
-            ComposanteTexte.SetActive(false);
-        }
-        transform.Rotate(new Vector3(0, NB_DEGRÉS_ROTATION_PAR_SECONDE, 0) * Time.deltaTime); 
-        transform.position = new Vector3(Position.x, Étendue/3 * Mathf.Sin(Time.time * VITESSE_TRANSLATION) + Position.y, Position.z);
-        // Y aurait-il une facon de rendre plus efficace: chaque cube doit faire le calcul à chaque update
     }
 
     bool EstVisible()
@@ -161,8 +165,14 @@ public class Point : MonoBehaviour
                 DataÉtage.UiScript.Points += (int)Points;
             }
             Destroy(gameObject);
-            Destroy(ComposanteTexte,3);
+            Destroy(ComposanteTexte,TEMPS_DESTRUCTION);
             Destroy(this);
         }
+    }
+
+    public void Destroy()
+    {
+        Destroy(ComposanteTexte);
+        Destroy(gameObject);
     }
 }

@@ -11,6 +11,11 @@ public class UI : MonoBehaviour
     bool pointsUpdate, multiplicateurUpdate;
     char[] trim = new char[] { '.' };
 
+    public string Score { get { return "SCORE : " + ((int)(Points * (1 + Multiplicateur / 100) /tempsPassé * 10)).ToString(); } }
+
+    float tempsPassé = 0;
+    public string TempsPassé { get { return ((int)(tempsPassé / 60)).ToString() + ":" + ((int)(tempsPassé % 60)).ToString("00") + ":" + tempsPassé.ToString().Split(trim).Last().Substring(0, 2); } }
+
     int points = 0;
     public int Points { get { return points; } set { points = value; pointsUpdate = true; } }
 
@@ -28,7 +33,8 @@ public class UI : MonoBehaviour
     }
 	
 	void Update ()
-    {       
+    {
+        tempsPassé += Time.deltaTime;
         if (pointsUpdate || multiplicateurUpdate)
         {
             pointsEtMultiplicateurTxt.text = Points.ToString() + " pts" + " + " + Multiplicateur.ToString() + " %";
@@ -40,7 +46,14 @@ public class UI : MonoBehaviour
             vieTxt.text = "nb de vies: " + DataÉtage.PersonnageScript.Vie;
             DataÉtage.PersonnageScript.updateVie = false;
         }
-        tempsTxt.text = ((int)(Time.time / 60)).ToString() + ":" + ((int)(Time.time % 60)).ToString("00") + ":" + Time.time.ToString().Split(trim).Last().Substring(0, 2);
-        scoreTxt.text = "SCORE : " + ((int)(Points * (1 + Multiplicateur / 100) / Time.time * 10)).ToString();
+        tempsTxt.text = TempsPassé;
+        scoreTxt.text = Score;
+    }
+
+    public void Réinitialiser()
+    {
+        tempsPassé = 0;
+        Points = 0;
+        Multiplicateur = 0;
     }
 }

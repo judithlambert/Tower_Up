@@ -12,7 +12,7 @@ public class FinÉtage : MonoBehaviour // : Plateforme
     public void Initialisation(float angle, float hauteur)
     {
         Vector3 position = transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, 
-                                                            hauteur + DataÉtage.DELTA_HAUTEUR/2, 
+                                                            hauteur + DataÉtage.DELTA_HAUTEUR, 
                                                             Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
 
         transform.rotation = Quaternion.Euler(0, -angle, 0);
@@ -27,7 +27,7 @@ public class FinÉtage : MonoBehaviour // : Plateforme
         gameObject.AddComponent<MeshCollider>().convex = true;
         GetComponent<MeshCollider>().isTrigger = true;
 
-        Maths.SetGlobalScale(transform, new Vector3(DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR, 1));
+        Maths.SetGlobalScale(transform, new Vector3(DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR * 2, 1));
 
         drapeau = new GameObject("Drapeau");
         drapeau.AddComponent<DrapeauAnimé>().Initialisation(new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR,
@@ -44,6 +44,7 @@ public class FinÉtage : MonoBehaviour // : Plateforme
         {
             Debug.Log("fin étage");
             DataÉtage.étageFini = true;
+            Destroy(drapeau);
         }
     }
 }
