@@ -10,7 +10,7 @@ public class DataÉtage : MonoBehaviour
 {
     [SerializeField] bool GODMOD;
 
-    static public bool GodMod;
+    static public bool GodMode;
 
     [SerializeField] int TEST_ÉTAGE;
 
@@ -21,7 +21,9 @@ public class DataÉtage : MonoBehaviour
     const string CHEMIN_DATA_ÉTAGE= "Assets/Data/";
     const char SÉPARATEUR = ';';
 
-    static public GameObject Personnage, Plancher, Tour;
+    int NB_MAX_JUMP = 2;
+
+    static public GameObject PersonnageGameObject, PlancherGameObject, TourGameObject;
     static public Camera Caméra;
     public static Personnage PersonnageScript;
     public static Plateforme PlancherScript;
@@ -51,21 +53,22 @@ public class DataÉtage : MonoBehaviour
         nbÉtage = TEST_ÉTAGE;
         //---
 
-        GodMod = GODMOD;
+        GodMode = GODMOD;
+
 
         Materials.Init();
 
         ListGameObject = new List<GameObject>();
 
         // instanciation du placher, personnage, camera
-        Plancher = new GameObject("Plancher");
-        Plancher.AddComponent<Plateforme>().Initialisation(0, 360, 0, 0, 20, LARGEUR_PLATEFORME, RAYON_TOUR,0, Materials.Get((int)NomMaterial.Plateforme));
-        Tour = new GameObject("Tour");
-        Tour.AddComponent<Plateforme>().Initialisation(0, 360, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, HAUTEUR_TOUR * DELTA_HAUTEUR, RAYON_TOUR,0, 0, Materials.Get((int)NomMaterial.Tour));
-        RayonTrajectoirePersonnage = RAYON_TOUR + Plancher.GetComponent<Plateforme>().Largeur / 2;
+        PlancherGameObject = new GameObject("Plancher");
+        PlancherGameObject.AddComponent<Plateforme>().Initialisation(0, 360, 0, 0, 20, LARGEUR_PLATEFORME, RAYON_TOUR,0, Materials.Get((int)NomMaterial.Plateforme));
+        TourGameObject = new GameObject("Tour");
+        TourGameObject.AddComponent<Plateforme>().Initialisation(0, 360, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, HAUTEUR_TOUR * DELTA_HAUTEUR, RAYON_TOUR,0, 0, Materials.Get((int)NomMaterial.Tour));
+        RayonTrajectoirePersonnage = RAYON_TOUR + PlancherGameObject.GetComponent<Plateforme>().Largeur / 2;
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
-        Personnage = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
-        PersonnageScript = Personnage.GetComponent<Personnage>();
+        PersonnageGameObject = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
+        PersonnageScript = PersonnageGameObject.GetComponent<Personnage>();
         Ui = GameObject.FindGameObjectWithTag("UI");
         UiScript = Ui.GetComponent<UI>();
         Caméra = Camera.main;
@@ -105,7 +108,12 @@ public class DataÉtage : MonoBehaviour
 
         do
         {
-            string obj = étageReader.ReadLine();
+            string obj;
+            do
+            {
+                obj = étageReader.ReadLine();
+            } while (obj == "" || obj[0] == '/');
+
             string[] line = étageReader.ReadLine().Split(SÉPARATEUR);
             float[] attributs = new float[line.Length];
             for (int cpt = 0; cpt < line.Length; ++cpt)
@@ -213,7 +221,7 @@ public class DataÉtage : MonoBehaviour
                 Destroy(g);
             }
             ListGameObject.Clear();
-          //Save();           
+            Save();           
             étageFini = false;
             nbÉtage++;
             LoadÉtage();

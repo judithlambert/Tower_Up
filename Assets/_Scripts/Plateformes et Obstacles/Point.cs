@@ -150,7 +150,7 @@ public class Point : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {              
-        if (other.gameObject == DataÉtage.Personnage)
+        if (other.gameObject == DataÉtage.PersonnageGameObject)
         {
             if (Multiplicateur)
             {

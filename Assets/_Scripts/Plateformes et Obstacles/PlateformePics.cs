@@ -194,7 +194,7 @@ public class PlateformePics : Plateforme
         if (collision.gameObject.name.ToString().Contains("Personnage") && CollisionDessusAvecPics(collision))
         {
             Debug.Log("piquer");
-            DataÉtage.Personnage.GetComponent<Personnage>().Dommage(1, collision);
+            DataÉtage.PersonnageGameObject.GetComponent<Personnage>().Dommage(1, collision);
         }
     }
 }

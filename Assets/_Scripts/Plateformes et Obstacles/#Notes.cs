@@ -19,8 +19,6 @@
  * 
  * boost when jumping
  * 
- * ajouter temps dans le game
- * 
  * wall jump ***
  * 
  * collision plateforme temporaire ne marche pas 
@@ -33,5 +31,13 @@
  * 
  * bug avec la lumiere si on part de ScnMenu
  * 
+ * collision plateforme
+ * 
+ * ligne de vie
+ * 
  * finir FinÉtage
+ * 
+ * fleche poir chemin
+ * 
+ * checkpoint
  */

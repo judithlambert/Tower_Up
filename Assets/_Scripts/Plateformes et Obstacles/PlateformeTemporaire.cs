@@ -49,7 +49,9 @@ public class PlateformeTemporaire : Plateforme
         GetComponent<Rigidbody>().isKinematic = true;
 
         Positionnement();
+        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
+        ratio = ((DataÉtage.LARGEUR_PLATEFORME / 2 + DataÉtage.PersonnageGameObject.transform.lossyScale.y) / (DataÉtage.RAYON_TOUR + DataÉtage.LARGEUR_PLATEFORME));
 
         color = GetComponent<Renderer>().material.color;
     }
@@ -65,7 +67,7 @@ public class PlateformeTemporaire : Plateforme
     {
         deltaTime = Time.time - timeTouched;
         pourcentageTemps = deltaTime / Temps;
-        if (wasTouched)
+        if (wasTouched && pourcentageTemps<=1.6)
         {
             switch (TypeDeUpdate)
             {
@@ -84,18 +86,20 @@ public class PlateformeTemporaire : Plateforme
     }
     void UpdateTombe()
     {
-        if (Time.time != 0 && deltaTime >= Temps)
+        //if (Time.time != 0 && deltaTime >= Temps)
+        if (pourcentageTemps == 1)
         {
             GetComponent<Rigidbody>().useGravity = true; GetComponent<Rigidbody>().isKinematic = false;
         }
     }
+    float ratio;
     void UpdateRappetisse() 
     // devrait disparaitre progressivement selon le temps dès que toucher ou attendre le temps
     // ratio largeur et rayon tour
     {
-        if (Time.time <= timeTouched + 2*Temps)
+        if (Time.time <= timeTouched + 1.5*Temps)
         {
-            Maths.SetGlobalScale(gameObject.transform, new Vector3(1- pourcentageTemps/2, 1, 1 - pourcentageTemps/2));
+            Maths.SetGlobalScale(gameObject.transform, new Vector3(1 - ratio * pourcentageTemps, 1, 1 - ratio * pourcentageTemps));
         }
     }
 }

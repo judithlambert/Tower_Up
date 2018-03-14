@@ -25,7 +25,7 @@ public class PlateformeMobile : Plateforme
         Distance = mouvement == 0 ? distance : distance * DataÉtage.DELTA_HAUTEUR;
         Rotation = rotation;
         TypeMouvement = mouvement;
-        
+
 
         CréationObject(material);
 
@@ -34,6 +34,7 @@ public class PlateformeMobile : Plateforme
         //Distance = Distance * DataÉtage.DELTA_HAUTEUR;
 
         Positionnement();
+        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
     }
 
@@ -56,7 +57,7 @@ public class PlateformeMobile : Plateforme
             case 0:
                 rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y - AngleDébut;
                 transform.Rotate(Vector3.up, rotation);
-                if (touching) { DataÉtage.Personnage.transform.RotateAround(Vector3.zero, Vector3.up, rotation); }
+                if (touching) { DataÉtage.PersonnageGameObject.transform.RotateAround(Vector3.zero, Vector3.up, rotation); }
                 break;
             case 1:
                 transform.position = new Vector3(0, Distance / 2 * Mathf.Sin(Time.time * Vitesse / 10) + Hauteur - Distance / 2, 0);

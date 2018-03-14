@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
 
-    public const string CHEMIN_SAVE = "Assets/Resources/SaveFile.txt";
+    public const string CHEMIN_SAVE = "Assets/Ressources/SaveFile.txt";
     StreamReader saveReader;
 
     void Start ()

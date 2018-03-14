@@ -32,7 +32,11 @@ public class Plateforme : MonoBehaviour
     protected float DeltaAngle, DeltaTexture, DeltaÉlévation;
     protected int nbTranches, nbSommets, nbTriangles;
 
-    
+    Vector3 SommetDroiteHautSuppérieur, SommetDroiteHautInférieur, SommetDroiteBasSuppérieur, SommetDroiteBasInférieur, SommetGaucheHautSuppérieur, SommetGaucheHautInférieur, SommetGaucheBasSuppérieur, SommetGaucheBasInférieur;
+    float PositionDessus, PositionDessous;
+    Vector3 PositionCôtéDébut, PositionCôtéFin;
+
+
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float rotation, Material material)
     {
         AngleDébut = angleDébut;
@@ -44,9 +48,19 @@ public class Plateforme : MonoBehaviour
         Rayon = rayon;
         Rotation = rotation;
 
-       
+        PositionDessus = Hauteur;
+        PositionDessous = Hauteur - Épaisseur;
+        if(rotation==180)
+        {
+            PositionDessus = Hauteur - Épaisseur;
+            PositionDessous = Hauteur;
+        }
+
+
         CréationObject(material);
         Positionnement();
+
+        //Debug.Log(SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z);
     }
 
     public void Positionnement()
@@ -76,9 +90,41 @@ public class Plateforme : MonoBehaviour
     }
 
 
-    protected float RugositéAléatoire()
+    bool IsPointDessus(Vector3 point)
     {
-        return Random.value * Épaisseur / 2;
+        return (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessus, INCERTITUDE_COLLISION));
+    }
+    bool IsPointDessous(Vector3 point)
+    {
+        return (Maths.EstDansLeRange(point.y, PositionDessous, PositionDessous, INCERTITUDE_COLLISION));
+    }
+    bool IsPointCôté(Vector3 point)
+    {
+        int x = 0;
+        return IsPointCôté(point, ref x);
+    }
+    //bool IsPointCôté(Vector3 point, ref int côtéCollision)
+    //{
+    //    bool c = false; // ne marche pas avec rotation
+    //    if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -INCERTITUDE_COLLISION))
+    //    {
+    //        if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+    //            Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
+    //            { c = true; côtéCollision = -1; } 
+    //        else if (Maths.EstDansLeRange(point.x, SommetDroiteBasInférieur.x, SommetDroiteBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+    //                 Maths.EstDansLeRange(point.z, SommetDroiteBasInférieur.z, SommetDroiteBasSuppérieur.z, INCERTITUDE_COLLISION))
+    //            { c = true; côtéCollision = 1; }
+    //    }
+    //    if (Rotation == 180) { côtéCollision = -côtéCollision; }
+    //    return c;
+    //}
+    bool IsPointCôté(Vector3 point, ref int côtéCollision)
+    {
+        bool estNiDessusNiDessous = false;
+        if (!IsPointDessus(point) && !IsPointDessous(point)) { estNiDessusNiDessous = true; }
+        if ((point - SommetGaucheBasInférieur).magnitude < (point - SommetDroiteBasInférieur).magnitude) { côtéCollision = -1; }
+        else { côtéCollision = 1; }
+        return estNiDessusNiDessous;
     }
 
 
@@ -90,14 +136,6 @@ public class Plateforme : MonoBehaviour
             if (IsPointDessus(cp.point)) { auDessus = true; }
         }
         return auDessus;
-    }
-    bool IsPointDessus(Vector3 point)
-    {
-        return (Maths.EstDansLeRange(point.y, Hauteur, Hauteur, INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
-    }
-    bool IsPointDessous(Vector3 point)
-    {
-        return (Maths.EstDansLeRange(point.y, Hauteur-Épaisseur, Hauteur - Épaisseur, INCERTITUDE_COLLISION)); // marche pas pour une platform avec inclinaison
     }
     public bool CollisionCôté(Collision collision, ref int côtéCollision) 
     {
@@ -117,31 +155,7 @@ public class Plateforme : MonoBehaviour
         }
         return auPasDessous;
     }
-    bool IsPointCôté(Vector3 point)
-    {
-        int x=0;
-        return IsPointCôté(point, ref x);
-        // marche pas pour une platform avec inclinaison
-    }
-    bool IsPointCôté(Vector3 point, ref int côtéCollision)
-    {
-        bool c = false;
-        if (point.y <= Hauteur && point.y >= Hauteur - Épaisseur)
-        {
-            if (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 8].x, Sommets[nbSommets - 7].x, INCERTITUDE_COLLISION) &&
-                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 8].z, Sommets[nbSommets - 7].z, INCERTITUDE_COLLISION))
-            {
-                c = true; côtéCollision = -1;
-            }
-       else if (Maths.EstDansLeRange(point.x, Sommets[nbSommets - 4].x, Sommets[nbSommets - 3].x, INCERTITUDE_COLLISION) &&
-                Maths.EstDansLeRange(point.z, Sommets[nbSommets - 4].z, Sommets[nbSommets - 3].z, INCERTITUDE_COLLISION))
-            {
-                c = true; côtéCollision = 1;
-            }
-        }
-        return c;
-    }
-    public bool CollisionDessusAvecPics(Collision collision) //Pourquoi ce n'est pas dans plateformPics?
+    public bool CollisionDessusAvecPics(Collision collision)
     {
         bool pasDessousNiCôté = false;
         foreach (ContactPoint cp in collision.contacts)
@@ -194,28 +208,26 @@ public class Plateforme : MonoBehaviour
         Vector3 testerSommet = new Vector3(3, 3, 3);
 
         // Sommets des deux bouts
-        Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
-        Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
-        Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
-        Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
+        SommetGaucheBasInférieur = Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
+        SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
+        SommetGaucheHautInférieur = Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
+        SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
 
-        Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
-        Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
-        Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) *2 - 1];  // droit haut inférieur
-        Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
+        SommetDroiteBasInférieur = Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
+        SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
+        SommetDroiteHautInférieur = Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) *2 - 1];  // droit haut inférieur
+        SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
+
+        
 
         Maillage.vertices = Sommets;
     }
 
     protected Vector3 Sommet(float angleAjouté, float inclinaisonAjouté, bool sommetDuDessous, bool sommetSuppérieur)
     {
-        //return new Vector3(Origine.x + Mathf.Cos(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
-        //                   Origine.y + Hauteur + (sommetDuDessous ? -Épaisseur : 0),
-        //                   Origine.z + Mathf.Sin(AngleDébut + angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
-        return new Vector3(( Mathf.Cos(angleAjouté)) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
-                           inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0),
+        return new Vector3((Mathf.Cos(angleAjouté)) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
+                            inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0),
                            (Mathf.Sin(angleAjouté)) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
-
     }
 
 

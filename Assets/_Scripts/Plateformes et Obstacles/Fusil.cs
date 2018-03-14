@@ -71,7 +71,7 @@ public class Ammo : MonoBehaviour
 
     private void Update()
     {
-        transform.forward=DataÉtage.Personnage.transform.position;
+        transform.forward=DataÉtage.PersonnageGameObject.transform.position;
 
     }
 }
