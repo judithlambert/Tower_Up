@@ -4,13 +4,12 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Linq;
+using UnityEngine.UI;
 //using UnityEditor;
 
 public class DataÉtage : MonoBehaviour
 {
     [SerializeField] bool GODMOD;
-
-    static public bool GodMod;
 
     [SerializeField] int TEST_ÉTAGE;
 
@@ -20,17 +19,20 @@ public class DataÉtage : MonoBehaviour
                        LARGEUR_PLATEFORME = 3; //Largeur des objets
     const string CHEMIN_DATA_ÉTAGE= "Assets/Data/";
     const char SÉPARATEUR = ';';
+    public const int DIFFICULTÉ_DE_BASE = (int)Difficulté.Normale;
 
     static public GameObject Personnage, Plancher, Tour;
     static public Camera Caméra;
     public static Personnage PersonnageScript;
-    public static Plateforme PlancherScript;
-    public static UI UiScript;
+    public static Plateforme PlancherScript;   
     [SerializeField] GameObject prefabPersonnage;
     public static GameObject Ui;
+    public static UI UiScript;
+    public static GameObject UiFinÉtage;
+    public static UIFinÉtage UiFinÉtageScript;
     List<GameObject> ListGameObject;
 
-    const float DISTANCE_CAMERA_PERSONNAGE=10; // ratio avec tour 
+    const float DISTANCE_CAMERA_PERSONNAGE = 10; // ratio avec tour 
     public static float RayonTrajectoirePersonnage;
     public static float RayonCamera;
 
@@ -41,17 +43,21 @@ public class DataÉtage : MonoBehaviour
 
     static public bool étageFini = false;
     static public bool jeuFini = false;
+    static public bool nouvelÉtage = false;
 
     public static int nbÉtage { get; set; }
-    
+    public static bool pause { get; private set; }
+    public static bool étageEnCour { get; private set; }
+
+    public static int difficulté = DIFFICULTÉ_DE_BASE;
+    public enum Difficulté { GodMode, Normale };
 
     private void Awake()
     {
         // for testing
-        nbÉtage = TEST_ÉTAGE;
+        //nbÉtage = TEST_ÉTAGE;
+        if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
         //---
-
-        GodMod = GODMOD;
 
         Materials.Init();
 
@@ -68,6 +74,9 @@ public class DataÉtage : MonoBehaviour
         PersonnageScript = Personnage.GetComponent<Personnage>();
         Ui = GameObject.FindGameObjectWithTag("UI");
         UiScript = Ui.GetComponent<UI>();
+        UiFinÉtage = GameObject.FindGameObjectWithTag("UIFinÉtage");
+        UiFinÉtageScript = UiFinÉtage.GetComponent<UIFinÉtage>();
+        UiFinÉtage.SetActive(false);
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
@@ -77,20 +86,7 @@ public class DataÉtage : MonoBehaviour
         //---------------------------------------
 
         LoadÉtage();
-
-
-        //do //meuhhhhh
-        //{
-        //    if (étageFini)
-        //    {
-        //        ++nbÉtage;
-        //        Save();
-        //        //personnageScript.DébutÉtage();
-        //        ListGameObject.Clear();
-        //        étageFini = false;
-        //        LoadÉtage();
-        //    }
-        //} while (!jeuFini);
+        étageEnCour = true;
     }
     
     private void Start()
@@ -113,7 +109,7 @@ public class DataÉtage : MonoBehaviour
                 attributs[cpt] = float.Parse(line[cpt]);
             }
 
-            // if(!obj.Contains(' ')) { obj = NewName(obj); }
+            //if(obj.Contains("Point")) { ListPoint.Add(new GameObject(obj)); }
             ListGameObject.Add(new GameObject(obj));
 
             obj = obj.Split(' ')[0]; // obj.Remove(' ');
@@ -206,18 +202,46 @@ public class DataÉtage : MonoBehaviour
 
     private void Update()
     {
-        if (étageFini)
-        {
-            foreach(GameObject g in ListGameObject)
-            {
-                Destroy(g);
-            }
-            ListGameObject.Clear();
-          //Save();           
-            étageFini = false;
-            nbÉtage++;
-            LoadÉtage();
-        }
+        if (étageFini) { FinirÉtage(); }
+        if (nouvelÉtage) { NouvelÉtage(); }
+        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))) { pause = !pause; PauseUnPause(); }
     }
 
+    void FinirÉtage()
+    {
+        foreach (GameObject g in ListGameObject)
+        {
+            if (g != null && g.name.Contains("Point"))
+            { g.GetComponent<Point>().Destroy(); }
+            else { Destroy(g); };
+        }
+        ListGameObject.Clear();
+        //Save();
+        UiFinÉtage.SetActive(true);
+        UiFinÉtageScript.FinÉtage();
+        Ui.SetActive(false);
+        étageFini = false;
+        étageEnCour = false;
+    }
+
+    void NouvelÉtage()
+    {
+        UiFinÉtage.SetActive(false);
+        PersonnageScript.Réinitialiser();
+        nbÉtage++;
+        LoadÉtage();
+        Ui.SetActive(true);
+        UiScript.Réinitialiser();
+        nouvelÉtage = false;
+        étageEnCour = true;
+    }
+
+    void PauseUnPause()
+    {
+        Ui.SetActive(!Ui.activeSelf);
+        UiFinÉtage.SetActive(!UiFinÉtage.activeSelf);
+        if(UiFinÉtageScript != null) { UiFinÉtageScript.DonnéesDeBase(); }
+        UiFinÉtage.GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().enabled = false;
+        Personnage.GetComponent<Rigidbody>().isKinematic = !Personnage.GetComponent<Rigidbody>().isKinematic;
+    }
 }

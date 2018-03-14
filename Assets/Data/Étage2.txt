@@ -112,3 +112,5 @@ Plateforme 46
 310;20;29;0;0.5
 Plateforme 47
 0;360;43;0;10
+FinEtage
+300;31

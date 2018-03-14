@@ -9,6 +9,7 @@ public class Personnage : MonoBehaviour
 {
     const int ACCÉLÉRATION = 5;
     const int ANGULAR_DRAG = 5;
+    const int VIE_INITIALE = 3;
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
@@ -64,7 +65,7 @@ public class Personnage : MonoBehaviour
         //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         jump = crouch = reculer = avancer = block = false;
-        Vie = 3;
+        Vie = VIE_INITIALE;
     }
 
     
@@ -97,7 +98,7 @@ public class Personnage : MonoBehaviour
     // wall jump toute à changer pour adam
     void Jumper()
     {
-        if ((wallJump && nbWallJump < 2) || (DataÉtage.GodMod && wallJump)) // BUG
+        if ((wallJump && nbWallJump < 2) || (DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode && wallJump)) // BUG
         {
             if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject)
             { ++nbWallJump; }
@@ -107,7 +108,7 @@ public class Personnage : MonoBehaviour
             Debug.Log("wall jump successful");
             dernierCollisionObject = nouveauCollisionObject;
         }
-        else if (nbJumps < 2 || DataÉtage.GodMod) // est ce que le saut est valide
+        else if (nbJumps < 2 || DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode) // est ce que le saut est valide
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
@@ -138,29 +139,32 @@ public class Personnage : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("jumps: " + nbJumps.ToString());
-        InputMouvement();
-        DéterminerVitesse();
-        EffectuerDéplacementEtRotation();
-        if (jump) { Jumper(); }
-        jump = crouch = reculer = avancer = block = false;
+        if (!DataÉtage.pause)
+        {
+            //Debug.Log("jumps: " + nbJumps.ToString());
+            InputMouvement();
+            DéterminerVitesse();
+            EffectuerDéplacementEtRotation();
+            if (jump) { Jumper(); }
+            jump = crouch = reculer = avancer = block = false;
 
-        // replacer la balle sur sa trajectoire
-        Vector3 vecteurPolaireOrigine = Maths.VecteurCartésienÀPolaire(VecteurOrigineBalle);
-        transform.right = VecteurOrigineBalle;
-        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x/2), 0, 0);
-        transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+            // replacer la balle sur sa trajectoire
+            Vector3 vecteurPolaireOrigine = Maths.VecteurCartésienÀPolaire(VecteurOrigineBalle);
+            transform.right = VecteurOrigineBalle;
+            transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
+            transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+        }       
     }
 
     public void Die()
     {
         Debug.Log("Die");
-        if (!DataÉtage.GodMod)
+        if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode))
         {
             transform.position = positionInitial;
             transform.rotation = rotationInitial;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            Vie = 3;
+            Vie = VIE_INITIALE;
         }
     }
 
@@ -179,5 +183,12 @@ public class Personnage : MonoBehaviour
         GetComponent<Renderer>().material.color = couleur;
         yield return new WaitForSeconds(5);
         GetComponent<Renderer>().material.color = couleurOrigine;
+    }
+
+    public void Réinitialiser()
+    {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        transform.position = positionInitial;
+        Vie = VIE_INITIALE;
     }
 }
