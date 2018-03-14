@@ -59,8 +59,31 @@ public class Plateforme : MonoBehaviour
 
         CréationObject(material);
         Positionnement();
+        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        //Debug.Log(SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z);
+        Vector3 PositionRelativeAuMonde = new Vector3((float)Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
+                                                      Hauteur,
+                                                      (float)Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
+
+
+        SommetGaucheBasInférieur = Sommets[nbSommets - 8] + PositionRelativeAuMonde; 
+        SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] + PositionRelativeAuMonde;
+        SommetGaucheHautInférieur = Sommets[nbSommets - 6] + PositionRelativeAuMonde;
+        SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] + PositionRelativeAuMonde;
+        SommetDroiteBasInférieur = Sommets[nbSommets - 4] + PositionRelativeAuMonde;
+        SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] + PositionRelativeAuMonde;
+        SommetDroiteHautInférieur = Sommets[nbSommets - 2] + PositionRelativeAuMonde;
+        SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] + PositionRelativeAuMonde;
+
+
+        Debug.Log("SommetGaucheBasInférieur: (" + SommetGaucheBasInférieur.x + ", " + SommetGaucheBasInférieur.y + ", " + SommetGaucheBasInférieur.z + ")");
+        Debug.Log("SommetGaucheBasSuppérieur: (" + SommetGaucheBasSuppérieur.x + ", " + SommetGaucheBasSuppérieur.y + ", " + SommetGaucheBasSuppérieur.z + ")");
+        Debug.Log("SommetGaucheHautInférieur: (" + SommetGaucheHautInférieur.x + ", " + SommetGaucheHautInférieur.y + ", " + SommetGaucheHautInférieur.z + ")");
+        Debug.Log("SommetGaucheHautSuppérieur: (" + SommetGaucheHautSuppérieur.x + ", " + SommetGaucheHautSuppérieur.y + ", " + SommetGaucheHautSuppérieur.z + ")");
+        Debug.Log("SommetDroiteBasInférieur: (" + SommetDroiteBasInférieur.x + ", " + SommetDroiteBasInférieur.y + ", " + SommetDroiteBasInférieur.z + ")");
+        Debug.Log("SommetDroiteBasSuppérieur: (" + SommetDroiteBasSuppérieur.x + ", " + SommetDroiteBasSuppérieur.y + ", " + SommetDroiteBasSuppérieur.z + ")");
+        Debug.Log("SommetDroiteHautInférieur: (" + SommetDroiteHautInférieur.x + ", " + SommetDroiteHautInférieur.y + ", " + SommetDroiteHautInférieur.z + ")");
+        Debug.Log("SommetDroiteHautSuppérieur: (" + SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z + ")");
     }
 
     public void Positionnement()
@@ -92,40 +115,40 @@ public class Plateforme : MonoBehaviour
 
     bool IsPointDessus(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessus, INCERTITUDE_COLLISION));
+        return (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessus));
     }
     bool IsPointDessous(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, PositionDessous, PositionDessous, INCERTITUDE_COLLISION));
+        return (Maths.EstDansLeRange(point.y, PositionDessous, PositionDessous));
     }
     bool IsPointCôté(Vector3 point)
     {
         int x = 0;
         return IsPointCôté(point, ref x);
     }
-    //bool IsPointCôté(Vector3 point, ref int côtéCollision)
-    //{
-    //    bool c = false; // ne marche pas avec rotation
-    //    if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -INCERTITUDE_COLLISION))
-    //    {
-    //        if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
-    //            Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
-    //            { c = true; côtéCollision = -1; } 
-    //        else if (Maths.EstDansLeRange(point.x, SommetDroiteBasInférieur.x, SommetDroiteBasSuppérieur.x, INCERTITUDE_COLLISION) &&
-    //                 Maths.EstDansLeRange(point.z, SommetDroiteBasInférieur.z, SommetDroiteBasSuppérieur.z, INCERTITUDE_COLLISION))
-    //            { c = true; côtéCollision = 1; }
-    //    }
-    //    if (Rotation == 180) { côtéCollision = -côtéCollision; }
-    //    return c;
-    //}
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
-        bool estNiDessusNiDessous = false;
-        if (!IsPointDessus(point) && !IsPointDessous(point)) { estNiDessusNiDessous = true; }
-        if ((point - SommetGaucheBasInférieur).magnitude < (point - SommetDroiteBasInférieur).magnitude) { côtéCollision = -1; }
-        else { côtéCollision = 1; }
-        return estNiDessusNiDessous;
+        bool c = false; // ne marche pas avec rotation
+        if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -INCERTITUDE_COLLISION))
+        {
+            if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+                Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
+            { c = true; côtéCollision = -1; }
+            else if (Maths.EstDansLeRange(point.x, SommetDroiteBasInférieur.x, SommetDroiteBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+                     Maths.EstDansLeRange(point.z, SommetDroiteBasInférieur.z, SommetDroiteBasSuppérieur.z, INCERTITUDE_COLLISION))
+            { c = true; côtéCollision = 1; }
+        }
+        if (Rotation == 180) { côtéCollision = -côtéCollision; }
+        return c;
     }
+    //bool IsPointCôté(Vector3 point, ref int côtéCollision)
+    //{
+    //    bool estNiDessusNiDessous = false;
+    //    if (!IsPointDessus(point) && !IsPointDessous(point)) { estNiDessusNiDessous = true; }
+    //    if ((point - SommetGaucheBasInférieur).magnitude < (point - SommetDroiteBasInférieur).magnitude) { côtéCollision = -1; }
+    //    else { côtéCollision = 1; }
+    //    return estNiDessusNiDessous;
+    //}
 
 
     public bool CollisionDessus(Collision collision)
@@ -154,15 +177,6 @@ public class Plateforme : MonoBehaviour
             if (!IsPointDessous(cp.point)) { auPasDessous = true; }
         }
         return auPasDessous;
-    }
-    public bool CollisionDessusAvecPics(Collision collision)
-    {
-        bool pasDessousNiCôté = false;
-        foreach (ContactPoint cp in collision.contacts)
-        {
-            if (!IsPointDessous(cp.point) && !IsPointCôté(cp.point)) { pasDessousNiCôté = true; }
-        }
-        return pasDessousNiCôté;
     }
 
 
@@ -208,15 +222,15 @@ public class Plateforme : MonoBehaviour
         Vector3 testerSommet = new Vector3(3, 3, 3);
 
         // Sommets des deux bouts
-        SommetGaucheBasInférieur = Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
-        SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
-        SommetGaucheHautInférieur = Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
-        SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
+        Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
+        Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
+        Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
+        Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
 
-        SommetDroiteBasInférieur = Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
-        SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
-        SommetDroiteHautInférieur = Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) *2 - 1];  // droit haut inférieur
-        SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
+        Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
+        Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
+        Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) *2 - 1];  // droit haut inférieur
+        Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
 
         
 
