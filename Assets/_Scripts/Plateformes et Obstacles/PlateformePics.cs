@@ -49,6 +49,7 @@ public class PlateformePics : Plateforme
         //GetComponent<Rigidbody>().isKinematic = true;
 
         Positionnement();
+        CréationPointCollision();
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
 
@@ -64,6 +65,33 @@ public class PlateformePics : Plateforme
 
 
     }
+
+
+    //public void CréationPointCollision()
+    //{
+    //    PositionDessus = Hauteur;
+    //    PositionDessous = Hauteur - Épaisseur;
+    //    if (Rotation == 180)
+    //    {
+    //        PositionDessus = Hauteur - Épaisseur;
+    //        PositionDessous = Hauteur;
+    //    }
+
+    //    Vector3 PositionRelativeAuMonde = new Vector3((float)Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
+    //                                                  Hauteur,
+    //                                                  (float)Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
+
+    //    SommetGaucheBasInférieur = Sommets[nbSommets - 8] + PositionRelativeAuMonde;
+    //    SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] + PositionRelativeAuMonde;
+    //    SommetGaucheHautInférieur = Sommets[nbSommets - 6] + PositionRelativeAuMonde;
+    //    SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] + PositionRelativeAuMonde;
+    //    SommetDroiteBasInférieur = Sommets[nbSommets - 4] + PositionRelativeAuMonde;
+    //    SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] + PositionRelativeAuMonde;
+    //    SommetDroiteHautInférieur = Sommets[nbSommets - 2] + PositionRelativeAuMonde;
+    //    SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] + PositionRelativeAuMonde;
+    //}
+
+
 
     // MAILLAGE
     override protected void CalculerDonnéesDeBase()
@@ -110,15 +138,16 @@ public class PlateformePics : Plateforme
             Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPointePic(angleAjouté + DeltaAngle / 2, HauteurPic, élévationAjouté);
         }
 
-        SommetGaucheBasInférieur = Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
-        SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
-        SommetGaucheHautInférieur = Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
-        SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
+        // Sommets des extrémités
+        Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
+        Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
+        Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
+        Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
 
-        SommetDroiteBasInférieur = Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
-        SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
-        SommetDroiteHautInférieur = Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) * 2 - 1];  // droit haut inférieur
-        SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
+        Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
+        Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
+        Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) * 2 - 1]; // droit haut inférieur
+        Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
 
         Maillage.vertices = Sommets;
     }

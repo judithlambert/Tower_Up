@@ -48,32 +48,11 @@ public class Plateforme : MonoBehaviour
         Rayon = rayon;
         Rotation = rotation;
 
-        PositionDessus = Hauteur;
-        PositionDessous = Hauteur - Épaisseur;
-        if(rotation==180)
-        {
-            PositionDessus = Hauteur - Épaisseur;
-            PositionDessous = Hauteur;
-        }
-
 
         CréationObject(material);
         Positionnement();
+
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-        Vector3 PositionRelativeAuMonde = new Vector3((float)Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
-                                                      Hauteur,
-                                                      (float)Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
-
-
-        SommetGaucheBasInférieur = Sommets[nbSommets - 8] + PositionRelativeAuMonde; 
-        SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] + PositionRelativeAuMonde;
-        SommetGaucheHautInférieur = Sommets[nbSommets - 6] + PositionRelativeAuMonde;
-        SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] + PositionRelativeAuMonde;
-        SommetDroiteBasInférieur = Sommets[nbSommets - 4] + PositionRelativeAuMonde;
-        SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] + PositionRelativeAuMonde;
-        SommetDroiteHautInférieur = Sommets[nbSommets - 2] + PositionRelativeAuMonde;
-        SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] + PositionRelativeAuMonde;
 
 
         Debug.Log("SommetGaucheBasInférieur: (" + SommetGaucheBasInférieur.x + ", " + SommetGaucheBasInférieur.y + ", " + SommetGaucheBasInférieur.z + ")");
@@ -91,6 +70,30 @@ public class Plateforme : MonoBehaviour
         transform.position = new Vector3(0, Hauteur, 0);
         transform.RotateAround(Vector3.zero, Vector3.down, AngleDébut);
         transform.Rotate(new Vector3(Rotation, 0, 0));
+    }
+
+    public void CréationPointCollision()
+    {
+        PositionDessus = Hauteur;
+        PositionDessous = Hauteur - Épaisseur;
+        if (Rotation == 180)
+        {
+            PositionDessus = Hauteur - Épaisseur;
+            PositionDessous = Hauteur;
+        }
+        
+        Vector3 PositionRelativeAuMonde = new Vector3((float)Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
+                                                      Hauteur,
+                                                      (float)Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
+
+        SommetGaucheBasInférieur = Sommets[nbSommets - 8] + PositionRelativeAuMonde;
+        SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] + PositionRelativeAuMonde;
+        SommetGaucheHautInférieur = Sommets[nbSommets - 6] + PositionRelativeAuMonde;
+        SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] + PositionRelativeAuMonde;
+        SommetDroiteBasInférieur = Sommets[nbSommets - 4] + PositionRelativeAuMonde;
+        SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] + PositionRelativeAuMonde;
+        SommetDroiteHautInférieur = Sommets[nbSommets - 2] + PositionRelativeAuMonde;
+        SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] + PositionRelativeAuMonde;
     }
 
     public void CréationObject(Material material)
@@ -115,11 +118,11 @@ public class Plateforme : MonoBehaviour
 
     bool IsPointDessus(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessus));
+        return (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessus, INCERTITUDE_COLLISION));
     }
     bool IsPointDessous(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, PositionDessous, PositionDessous));
+        return (Maths.EstDansLeRange(point.y, PositionDessous, PositionDessous, INCERTITUDE_COLLISION));
     }
     bool IsPointCôté(Vector3 point)
     {
@@ -221,7 +224,7 @@ public class Plateforme : MonoBehaviour
 
         Vector3 testerSommet = new Vector3(3, 3, 3);
 
-        // Sommets des deux bouts
+        // Sommets des deux extrémités
         Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
         Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
         Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
