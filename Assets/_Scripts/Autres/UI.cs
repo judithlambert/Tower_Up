@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    Text tempsTxt, pointsEtMultiplicateurTxt, multiplicateurTxt, scoreTxt, vieTxt;
+    Text tempsTxt, pointsEtMultiplicateurTxt, multiplicateurTxt, scoreTxt;
     bool pointsUpdate, multiplicateurUpdate;
     char[] trim = new char[] { '.' };
 
@@ -27,7 +27,6 @@ public class UI : MonoBehaviour
         tempsTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Temps").First();
         pointsEtMultiplicateurTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Points et Multiplicateur").First();
         scoreTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Score").First();
-        vieTxt = GetComponentsInChildren<Text>().Where(x => x.name == "nbVie").First();
 
         pointsUpdate = multiplicateurUpdate = true;
     }
@@ -40,11 +39,6 @@ public class UI : MonoBehaviour
             pointsEtMultiplicateurTxt.text = Points.ToString() + " pts" + " + " + Multiplicateur.ToString() + " %";
             pointsUpdate = false;
             multiplicateurUpdate = false;
-        }
-        if (DataÉtage.PersonnageScript.updateVie)
-        {
-            vieTxt.text = "nb de vies: " + DataÉtage.PersonnageScript.Vie;
-            DataÉtage.PersonnageScript.updateVie = false;
         }
         tempsTxt.text = TempsPassé;
         scoreTxt.text = Score;
