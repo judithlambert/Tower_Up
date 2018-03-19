@@ -47,7 +47,7 @@ public class Personnage : MonoBehaviour
     bool wallJump = false;
     int côtéCollision; // -1=gauche 1=droit
 
-    Vector3 VecteurOrigineBalle
+    Vector3 VecteurOrigineÀPosition
     {
         get { return transform.position - new Vector3(DataÉtage.Origine.x, transform.position.y, DataÉtage.Origine.z); }
     }
@@ -90,8 +90,10 @@ public class Personnage : MonoBehaviour
 
     void EffectuerDéplacementEtRotation()
     {
-        float angle = Vitesse / DataÉtage.RayonTrajectoirePersonnage;
-        transform.RotateAround(Vector3.zero, Vector3.down, angle);
+        float angleAutourTour = Vitesse / DataÉtage.RayonTrajectoirePersonnage;
+        transform.RotateAround(Vector3.zero, Vector3.down, angleAutourTour);
+        float angleAvancementPersonnage = Vitesse / transform.lossyScale.y;
+        //transform.RotateAround(transform.position, transform.right, angleAvancementPersonnage);
     }
 
     GameObject dernierCollisionObject;
@@ -159,16 +161,35 @@ public class Personnage : MonoBehaviour
             InputMouvement();
             DéterminerVitesse();
             EffectuerDéplacementEtRotation();
+            Repositionnement();
+
             if (jump) { Jumper(); }
             jump = crouch = reculer = avancer = block = false;
-
-            // replacer la balle sur sa trajectoire
-            Vector3 vecteurPolaireOrigine = Maths.VecteurCartésienÀPolaire(VecteurOrigineBalle);
-            transform.right = VecteurOrigineBalle;
-            transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
-            transform.Translate(-(VecteurOrigineBalle.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
         }       
     }
+
+    void Repositionnement() // replacer la balle sur sa trajectoire
+    {
+        transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+        transform.right = VecteurOrigineÀPosition.normalized;
+        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
+    }
+    //void Repositionnement() // replacer la balle sur sa trajectoire
+    //{
+    //    transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+    //    //if (VecteurOrigineÀPosition.magnitude != DataÉtage.RayonTrajectoirePersonnage) { float angle = Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x); transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, transform.position.y, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage); }
+
+    //    if (transform.right != VecteurOrigineÀPosition.normalized)
+    //    {
+    //        float rotationX = transform.rotation.eulerAngles.x;
+    //        transform.right = VecteurOrigineÀPosition.normalized;
+    //        transform.RotateAround(transform.position, transform.right, rotationX);
+
+    //        //Vector3 VecteurPositionÀRight = -transform.right +VecteurOrigineÀPosition.normalized;
+    //        //transform.Rotate(new Vector3(0, -Mathf.Atan2(VecteurPositionÀRight.z, VecteurPositionÀRight.x), 0));
+    //        //transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
+    //    }
+    //}
 
     public void Die()
     {

@@ -55,14 +55,14 @@ public class Plateforme : MonoBehaviour
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
 
-        Debug.Log("SommetGaucheBasInférieur: (" + SommetGaucheBasInférieur.x + ", " + SommetGaucheBasInférieur.y + ", " + SommetGaucheBasInférieur.z + ")");
-        Debug.Log("SommetGaucheBasSuppérieur: (" + SommetGaucheBasSuppérieur.x + ", " + SommetGaucheBasSuppérieur.y + ", " + SommetGaucheBasSuppérieur.z + ")");
-        Debug.Log("SommetGaucheHautInférieur: (" + SommetGaucheHautInférieur.x + ", " + SommetGaucheHautInférieur.y + ", " + SommetGaucheHautInférieur.z + ")");
-        Debug.Log("SommetGaucheHautSuppérieur: (" + SommetGaucheHautSuppérieur.x + ", " + SommetGaucheHautSuppérieur.y + ", " + SommetGaucheHautSuppérieur.z + ")");
-        Debug.Log("SommetDroiteBasInférieur: (" + SommetDroiteBasInférieur.x + ", " + SommetDroiteBasInférieur.y + ", " + SommetDroiteBasInférieur.z + ")");
-        Debug.Log("SommetDroiteBasSuppérieur: (" + SommetDroiteBasSuppérieur.x + ", " + SommetDroiteBasSuppérieur.y + ", " + SommetDroiteBasSuppérieur.z + ")");
-        Debug.Log("SommetDroiteHautInférieur: (" + SommetDroiteHautInférieur.x + ", " + SommetDroiteHautInférieur.y + ", " + SommetDroiteHautInférieur.z + ")");
-        Debug.Log("SommetDroiteHautSuppérieur: (" + SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z + ")");
+        //Debug.Log("SommetGaucheBasInférieur: (" + SommetGaucheBasInférieur.x + ", " + SommetGaucheBasInférieur.y + ", " + SommetGaucheBasInférieur.z + ")");
+        //Debug.Log("SommetGaucheBasSuppérieur: (" + SommetGaucheBasSuppérieur.x + ", " + SommetGaucheBasSuppérieur.y + ", " + SommetGaucheBasSuppérieur.z + ")");
+        //Debug.Log("SommetGaucheHautInférieur: (" + SommetGaucheHautInférieur.x + ", " + SommetGaucheHautInférieur.y + ", " + SommetGaucheHautInférieur.z + ")");
+        //Debug.Log("SommetGaucheHautSuppérieur: (" + SommetGaucheHautSuppérieur.x + ", " + SommetGaucheHautSuppérieur.y + ", " + SommetGaucheHautSuppérieur.z + ")");
+        //Debug.Log("SommetDroiteBasInférieur: (" + SommetDroiteBasInférieur.x + ", " + SommetDroiteBasInférieur.y + ", " + SommetDroiteBasInférieur.z + ")");
+        //Debug.Log("SommetDroiteBasSuppérieur: (" + SommetDroiteBasSuppérieur.x + ", " + SommetDroiteBasSuppérieur.y + ", " + SommetDroiteBasSuppérieur.z + ")");
+        //Debug.Log("SommetDroiteHautInférieur: (" + SommetDroiteHautInférieur.x + ", " + SommetDroiteHautInférieur.y + ", " + SommetDroiteHautInférieur.z + ")");
+        //Debug.Log("SommetDroiteHautSuppérieur: (" + SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z + ")");
     }
 
     public void Positionnement()
@@ -82,9 +82,9 @@ public class Plateforme : MonoBehaviour
             PositionDessous = Hauteur;
         }
         
-        Vector3 PositionRelativeAuMonde = new Vector3((float)Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
+        Vector3 PositionRelativeAuMonde = new Vector3(Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
                                                       Hauteur,
-                                                      (float)Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
+                                                      Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
 
         SommetGaucheBasInférieur = Sommets[nbSommets - 8] + PositionRelativeAuMonde;
         SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] + PositionRelativeAuMonde;
