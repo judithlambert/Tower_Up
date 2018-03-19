@@ -49,6 +49,7 @@ public class PlateformeTemporaire : Plateforme
         GetComponent<Rigidbody>().isKinematic = true;
 
         Positionnement();
+        CréationPointCollision();
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
         ratio = ((DataÉtage.LARGEUR_PLATEFORME / 2 + DataÉtage.PersonnageGameObject.transform.lossyScale.y) / (DataÉtage.RAYON_TOUR + DataÉtage.LARGEUR_PLATEFORME));

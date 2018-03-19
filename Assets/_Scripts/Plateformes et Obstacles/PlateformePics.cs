@@ -13,7 +13,10 @@ public class PlateformePics : Plateforme
 
     protected float HauteurPic;
 
-   
+    float PositionDessus, PositionDessous, PositionPics;
+    Vector3 SommetDroiteHautSuppérieur, SommetDroiteHautInférieur, SommetDroiteBasSuppérieur, SommetDroiteBasInférieur, SommetGaucheHautSuppérieur, SommetGaucheHautInférieur, SommetGaucheBasSuppérieur, SommetGaucheBasInférieur;
+
+
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, float rotation, Material material)
     {
         AngleDébut = angleDébut;
@@ -46,8 +49,49 @@ public class PlateformePics : Plateforme
         //GetComponent<Rigidbody>().isKinematic = true;
 
         Positionnement();
+        CréationPointCollision();
+        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
+
+        PositionDessus = Hauteur;
+        PositionDessous = Hauteur - Épaisseur;
+        PositionPics = Hauteur + HauteurPic;
+        if (rotation == 180)
+        {
+            PositionDessus = Hauteur - Épaisseur;
+            PositionDessous = Hauteur;
+            PositionPics = Hauteur - Épaisseur - HauteurPic;
+        }
+
 
     }
+
+
+    //public void CréationPointCollision()
+    //{
+    //    PositionDessus = Hauteur;
+    //    PositionDessous = Hauteur - Épaisseur;
+    //    if (Rotation == 180)
+    //    {
+    //        PositionDessus = Hauteur - Épaisseur;
+    //        PositionDessous = Hauteur;
+    //    }
+
+    //    Vector3 PositionRelativeAuMonde = new Vector3((float)Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
+    //                                                  Hauteur,
+    //                                                  (float)Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
+
+    //    SommetGaucheBasInférieur = Sommets[nbSommets - 8] + PositionRelativeAuMonde;
+    //    SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] + PositionRelativeAuMonde;
+    //    SommetGaucheHautInférieur = Sommets[nbSommets - 6] + PositionRelativeAuMonde;
+    //    SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] + PositionRelativeAuMonde;
+    //    SommetDroiteBasInférieur = Sommets[nbSommets - 4] + PositionRelativeAuMonde;
+    //    SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] + PositionRelativeAuMonde;
+    //    SommetDroiteHautInférieur = Sommets[nbSommets - 2] + PositionRelativeAuMonde;
+    //    SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] + PositionRelativeAuMonde;
+    //}
+
+
 
     // MAILLAGE
     override protected void CalculerDonnéesDeBase()
@@ -94,15 +138,16 @@ public class PlateformePics : Plateforme
             Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPointePic(angleAjouté + DeltaAngle / 2, HauteurPic, élévationAjouté);
         }
 
-        // Sommets des deux bouts
-        Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2];
-        Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3];
-        Sommets[nbSommets - 6] = Sommets[nbTranches + 1];
-        Sommets[nbSommets - 5] = Sommets[0];
-        Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1];
-        Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1];
-        Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) * 2 - 1];
-        Sommets[nbSommets - 1] = Sommets[nbTranches];
+        // Sommets des extrémités
+        Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
+        Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
+        Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
+        Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
+
+        Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
+        Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
+        Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) * 2 - 1]; // droit haut inférieur
+        Sommets[nbSommets - 1] = Sommets[nbTranches];               // droit haut suppérieur
 
         Maillage.vertices = Sommets;
     }
@@ -197,4 +242,82 @@ public class PlateformePics : Plateforme
             DataÉtage.PersonnageGameObject.GetComponent<Personnage>().Dommage(1, collision);
         }
     }
+
+
+    bool IsPointDessus(Vector3 point)
+    {
+        return (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessus));
+    }
+    bool IsPointDessous(Vector3 point)
+    {
+        return (Maths.EstDansLeRange(point.y, PositionDessous, PositionDessous));
+    }
+    bool IsPointCôté(Vector3 point)
+    {
+        int x = 0;
+        return IsPointCôté(point, ref x);
+    }
+    bool IsPointCôté(Vector3 point, ref int côtéCollision)
+    {
+        bool c = false; // ne marche pas avec rotation
+        if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -INCERTITUDE_COLLISION))
+        {
+            if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+                Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
+            { c = true; côtéCollision = -1; }
+            else //if (Maths.EstDansLeRange(point.x, SommetDroiteBasInférieur.x, SommetDroiteBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+                 //    Maths.EstDansLeRange(point.z, SommetDroiteBasInférieur.z, SommetDroiteBasSuppérieur.z, INCERTITUDE_COLLISION))
+            { c = true; côtéCollision = 1; }
+        }
+        if (Rotation == 180) { côtéCollision = -côtéCollision; }
+        return c;
+    }
+    //bool IsPointCôté(Vector3 point, ref int côtéCollision)
+    //{
+    //    bool estNiDessusNiDessous = false;
+    //    if (!IsPointDessus(point) && !IsPointDessous(point)) { estNiDessusNiDessous = true; }
+    //    if ((point - SommetGaucheBasInférieur).magnitude < (point - SommetDroiteBasInférieur).magnitude) { côtéCollision = -1; }
+    //    else { côtéCollision = 1; }
+    //    return estNiDessusNiDessous;
+    //}
+
+
+    public bool CollisionDessus(Collision collision)
+    {
+        bool auDessus = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointDessus(cp.point)) { auDessus = true; }
+        }
+        return auDessus;
+    }
+    public bool CollisionCôté(Collision collision, ref int côtéCollision)
+    {
+        bool surCôté = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointCôté(cp.point, ref côtéCollision)) { surCôté = true; }
+        }
+        return surCôté;
+    }
+    public bool CollisionDessusEtCôté(Collision collision)
+    {
+        bool auPasDessous = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (!IsPointDessous(cp.point)) { auPasDessous = true; }
+        }
+        return auPasDessous;
+    }
+
+    public bool CollisionDessusAvecPics(Collision collision)
+    {
+        bool estAuPic = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (Maths.EstDansLeRange(cp.point.y, PositionDessus, PositionPics)) { estAuPic = true; }
+        }
+        return estAuPic;
+    }
+
 }

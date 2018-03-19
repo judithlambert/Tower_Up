@@ -34,6 +34,7 @@ public class PlateformeMobile : Plateforme
         //Distance = Distance * DataÉtage.DELTA_HAUTEUR;
 
         Positionnement();
+        CréationPointCollision();
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
     }
