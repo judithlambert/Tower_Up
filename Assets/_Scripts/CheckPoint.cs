@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinÉtage : MonoBehaviour // : Plateforme
+public class CheckPoint : MonoBehaviour
 {
     GameObject drapeau;
 
     // position et rotation
 
-    public const string String = "FinEtage";
-    public void Initialisation(float angle, float hauteur)
+    public const string String = "Checkpoint";
+    public void Initialisation(float angle, float hauteur) // presque même que FinÉtage
     {
-        Vector3 position = transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, 
-                                                            hauteur + DataÉtage.DELTA_HAUTEUR, 
-                                                            Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
+        Vector3 position = transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage,
+                                                            hauteur + DataÉtage.DELTA_HAUTEUR,
+                                                            Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage); // même chose que plus bas
 
         transform.rotation = Quaternion.Euler(0, -angle, 0);
 
@@ -30,10 +30,10 @@ public class FinÉtage : MonoBehaviour // : Plateforme
         Maths.SetGlobalScale(transform, new Vector3(DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR * 2, 1));
 
         drapeau = new GameObject("Drapeau");
-        drapeau.AddComponent<DrapeauAnimé>().Initialisation(new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR,
+        drapeau.AddComponent<DrapeauAnimé>().Initialisation(new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR, // même chose que plus haut
                                          hauteur + DataÉtage.DELTA_HAUTEUR / 2,
                                          Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR),
-                                         Materials.Get((int)NomMaterial.FinÉtage));
+                                         Materials.Get((int)NomMaterial.CheckPoint));
         drapeau.transform.rotation = Quaternion.Euler(0, -angle, 0);
 
     }
@@ -43,9 +43,14 @@ public class FinÉtage : MonoBehaviour // : Plateforme
     {
         if (other.gameObject.name.Contains("Personnage"))
         {
-            Debug.Log("fin étage");
-            DataÉtage.étageFini = true;
-            Destroy(drapeau);
+            Debug.Log("checkPoint");
+            DataÉtage.PersonnageScript.PositionCheckPoint = transform.position;
         }
+    }
+
+    public void Destroy()
+    {
+        Destroy(drapeau);
+        Destroy(gameObject);
     }
 }

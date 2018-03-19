@@ -22,5 +22,8 @@ angle;hauteur
 Point
 angle;hauteur;multiplicateur(0=false,1=true);points
 
+Checkpoint
+angle;hauteur
+
 // tout est en degré et seconde
 // les position sont placer comme si la hauteur de étage = 1 et que un tour = 360

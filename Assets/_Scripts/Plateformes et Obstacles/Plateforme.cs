@@ -103,29 +103,29 @@ public class Plateforme : MonoBehaviour
         int x = 0;
         return IsPointCôté(point, ref x);
     }
-    //bool IsPointCôté(Vector3 point, ref int côtéCollision)
-    //{
-    //    bool c = false; // ne marche pas avec rotation
-    //    if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -INCERTITUDE_COLLISION))
-    //    {
-    //        if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
-    //            Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
-    //            { c = true; côtéCollision = -1; } 
-    //        else if (Maths.EstDansLeRange(point.x, SommetDroiteBasInférieur.x, SommetDroiteBasSuppérieur.x, INCERTITUDE_COLLISION) &&
-    //                 Maths.EstDansLeRange(point.z, SommetDroiteBasInférieur.z, SommetDroiteBasSuppérieur.z, INCERTITUDE_COLLISION))
-    //            { c = true; côtéCollision = 1; }
-    //    }
-    //    if (Rotation == 180) { côtéCollision = -côtéCollision; }
-    //    return c;
-    //}
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
-        bool estNiDessusNiDessous = false;
-        if (!IsPointDessus(point) && !IsPointDessous(point)) { estNiDessusNiDessous = true; }
-        if ((point - SommetGaucheBasInférieur).magnitude < (point - SommetDroiteBasInférieur).magnitude) { côtéCollision = -1; }
-        else { côtéCollision = 1; }
-        return estNiDessusNiDessous;
+        bool c = false; // ne marche pas avec rotation
+        if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -INCERTITUDE_COLLISION))
+        {
+            if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+                Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
+            { c = true; côtéCollision = -1; }
+            else if (Maths.EstDansLeRange(point.x, SommetDroiteBasInférieur.x, SommetDroiteBasSuppérieur.x, INCERTITUDE_COLLISION) &&
+                     Maths.EstDansLeRange(point.z, SommetDroiteBasInférieur.z, SommetDroiteBasSuppérieur.z, INCERTITUDE_COLLISION))
+            { c = true; côtéCollision = 1; }
+        }
+        if (Rotation == 180) { côtéCollision = -côtéCollision; }
+        return c;
     }
+    //bool IsPointCôté(Vector3 point, ref int côtéCollision)
+    //{
+    //    bool estNiDessusNiDessous = false;
+    //    if (!IsPointDessus(point) && !IsPointDessous(point)) { estNiDessusNiDessous = true; }
+    //    if ((point - SommetGaucheBasInférieur).magnitude < (point - SommetDroiteBasInférieur).magnitude) { côtéCollision = -1; }
+    //    else { côtéCollision = 1; }
+    //    return estNiDessusNiDessous;
+    //}
 
 
     public bool CollisionDessus(Collision collision)

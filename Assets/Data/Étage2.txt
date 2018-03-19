@@ -72,6 +72,8 @@ Plateforme 35
 180;5;13.3;0;5
 Plateforme 36
 130;20;15;0;0.5
+Checkpoint
+130;15
 PlateformePics 37
 185;40;10;0;0;1
 PlateformeTemporaire 38

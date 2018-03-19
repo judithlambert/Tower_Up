@@ -13,7 +13,8 @@ public class Personnage : MonoBehaviour
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
-    public int Vie { get; private set; }
+    int vie;
+    public int Vie { get { return vie; } private set { vie = value; updateVie = true; } }
     public bool updateVie;
 
     float vitesseWallJump;
@@ -32,8 +33,9 @@ public class Personnage : MonoBehaviour
 
     float déplacementForce = 375;
   
-    Quaternion rotationInitial;
-    Vector3 positionInitial;
+    Quaternion rotationInitiale;
+    Vector3 positionInitiale;
+    public Vector3 PositionCheckPoint { get; set; }
 
     bool jump,
          crouch,
@@ -60,8 +62,9 @@ public class Personnage : MonoBehaviour
         GetComponent<Rigidbody>().angularDrag = 5;
 
         // ne dois pas bouger lors du respawn
-        transform.rotation = rotationInitial = Maths.Vector3àQuaternion(Vector3.zero);
-        positionInitial = transform.position;
+        transform.rotation = rotationInitiale = Maths.Vector3àQuaternion(Vector3.zero);
+        PositionCheckPoint = transform.position;
+        positionInitiale = transform.position;
         GetComponent<Rigidbody>().angularDrag = ANGULAR_DRAG;
 
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
@@ -109,7 +112,7 @@ public class Personnage : MonoBehaviour
     //}
 
     // TO BE FIXED
-    // wall jump toute à changer pour adam
+    // wall jump toute à changer pour adam :'(
     void Jumper()
     {
         if ((wallJump && nbWallJump < 2) || (DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode && wallJump)) // BUG
@@ -173,40 +176,45 @@ public class Personnage : MonoBehaviour
     public void Die()
     {
         Debug.Log("Die");
-        if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode))
-        {
-            transform.position = positionInitial;
-            transform.rotation = rotationInitial;
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            Vie = VIE_INITIALE;
-        }
+        Réinitialiser();
+        DataÉtage.UiScript.Réinitialiser();
     }
 
     public void Dommage(int dommage, Collision collision)
     {
         Debug.Log("dommage");
-        Vie -= dommage;
-        updateVie = true;
-        if (Vie <= 0) { Die(); }
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        gameObject.GetComponent<Rigidbody>().AddExplosionForce(déplacementForce*2, collision.contacts.First().point, RayonSphere);
-        FlashCouleur(Color.red);     
+        if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode))
+        {
+            Vie -= dommage;
+            if (Vie <= 0) { Die(); }
+            else { DernierCheckPoint(); }
+        }
     }
 
-    IEnumerator FlashCouleur(Color couleur) // ne rentre pas dans la methode
-    {
-        Color couleurOrigine = GetComponent<Renderer>().material.color;
-        GetComponent<Renderer>().material.color = couleur;
-        Debug.Log("outch");
-        yield return new WaitForSeconds(5);
-        Debug.Log("5 sec");
-        GetComponent<Renderer>().material.color = couleurOrigine;
-    }
+    //IEnumerator FlashCouleur(Color couleur) // ne rentre pas dans la methode
+    //{
+    //    Color couleurOrigine = GetComponent<Renderer>().material.color;
+    //    GetComponent<Renderer>().material.color = couleur;
+    //    Debug.Log("outch");
+    //    yield return new WaitForSeconds(5);
+    //    Debug.Log("5 sec");
+    //    GetComponent<Renderer>().material.color = couleurOrigine;
+    //}
 
     public void Réinitialiser()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-        transform.position = positionInitial;
+        Vitesse = 0;
+        transform.position = positionInitiale;
+        transform.rotation = rotationInitiale;
         Vie = VIE_INITIALE;
+    }
+
+    public void DernierCheckPoint()
+    {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        Vitesse = 0;
+        transform.position = PositionCheckPoint;
+        transform.rotation = rotationInitiale;
     }
 }

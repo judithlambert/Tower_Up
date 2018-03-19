@@ -27,7 +27,7 @@ public class UI : MonoBehaviour
         tempsTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Temps").First();
         pointsEtMultiplicateurTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Points et Multiplicateur").First();
         scoreTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Score").First();
-        vieTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Vie").First();
+        vieTxt = GetComponentsInChildren<Text>().Where(x => x.name == "nbVie").First();
 
         pointsUpdate = multiplicateurUpdate = true;
     }

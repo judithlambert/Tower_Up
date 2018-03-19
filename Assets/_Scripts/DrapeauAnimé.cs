@@ -9,7 +9,7 @@ public class DrapeauAnimé : MonoBehaviour {
 
     const float A = 1, S = 1;
     bool initialisé = false;
-    protected Vector2 Étendue, Charpente = new Vector2(50, 50);
+    protected Vector2 Étendue, Charpente = new Vector2(20, 1);
 
     protected Mesh Maillage;
     protected Vector3[] Sommets;
@@ -18,12 +18,12 @@ public class DrapeauAnimé : MonoBehaviour {
     protected int NbColonnes, NbLignes, NbSommets, NbTriangles;
 
 
-    public void Initialisation(Vector3 position)
+    public void Initialisation(Vector3 position, Material material)
     {
         transform.position = position;
 
         gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        gameObject.AddComponent<MeshRenderer>().material = Materials.Get((int)NomMaterial.Drapeau);
+        gameObject.AddComponent<MeshRenderer>().material = material;
 
         Maillage = new Mesh
         {

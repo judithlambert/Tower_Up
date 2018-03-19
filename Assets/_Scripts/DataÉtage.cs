@@ -57,7 +57,7 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        //nbÉtage = TEST_ÉTAGE;
+        nbÉtage = TEST_ÉTAGE;
         if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
         //---
 
@@ -123,6 +123,7 @@ public class DataÉtage : MonoBehaviour
             obj = obj.Split(' ')[0]; // obj.Remove(' ');
             switch (obj)
             {
+                //Gestion Angle ne sert à rien
                 case Plateforme.String:
                     ListGameObject.Last().AddComponent<Plateforme>().Initialisation(Maths.GestionAngle(attributs[0]), 
                                                                                     attributs[1], 
@@ -192,6 +193,9 @@ public class DataÉtage : MonoBehaviour
                 case Point.String:
                     ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR + 0.5f * DELTA_HAUTEUR, attributs[2] == 0 ? false : true, attributs[3], attributs[2] == 0 ? Materials.Get((int)NomMaterial.Point) : Materials.Get((int)NomMaterial.Multiplicateur));
                     break;
+                case CheckPoint.String:
+                    ListGameObject.Last().AddComponent<CheckPoint>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR);
+                    break;
             }
 
         } while (!étageReader.EndOfStream);
@@ -219,9 +223,10 @@ public class DataÉtage : MonoBehaviour
     {
         foreach (GameObject g in ListGameObject)
         {
-
-            if (g != null && g.name.Contains("Point"))
+            if (g != null && (g.name.Contains("Point")))
             { g.GetComponent<Point>().Destroy(); }
+            else if (g != null && g.name.Contains("Check"))
+            { g.GetComponent<CheckPoint>().Destroy(); }
             else { Destroy(g); };
         }
         ListGameObject.Clear();
