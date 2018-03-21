@@ -86,7 +86,7 @@ public class Personnage : MonoBehaviour
 
     public void DéterminerVitesse()
     {
-        if (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
+        if      (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
         else if (reculer) { Vitesse = Vitesse - Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse > 0 ? 2 : 1) * (jump ? 2 : 1)); }
         else              { float vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2) * (Vitesse < 0 ? 1 : -1);
                             Vitesse = vitesse * Vitesse <= 0 ? 0 : vitesse; }
@@ -95,14 +95,12 @@ public class Personnage : MonoBehaviour
     void EffectuerDéplacementEtRotation()
     {
         transform.RotateAround(Vector3.zero, Vector3.down, Vitesse / DataÉtage.RayonTrajectoirePersonnage);
-        transform.Rotate(VecteurOrigineÀPosition, Vitesse / transform.lossyScale.y);
+        transform.Rotate(VecteurOrigineÀPosition.normalized, Vitesse / RayonSphere);
     }
 
     GameObject dernierCollisionObject;
     GameObject nouveauCollisionObject;
 
-    // TO BE FIXED
-    // wall jump toute à changer pour adam :'(
     void Jumper()
     {
         if ((wallJump && nbWallJump < 2) || (DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode && wallJump)) // BUG
@@ -167,8 +165,14 @@ public class Personnage : MonoBehaviour
     //}
     void Repositionnement() // replacer la balle sur sa trajectoire
     {
-        transform.right = VecteurOrigineÀPosition.normalized;
-        transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+        //transform.right = VecteurOrigineÀPosition.normalized;
+        //transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+        if(VecteurOrigineÀPosition.magnitude != DataÉtage.RayonTrajectoirePersonnage)
+        {
+            transform.position = new Vector3(VecteurOrigineÀPosition.normalized.x * DataÉtage.RayonTrajectoirePersonnage,
+                                             transform.position.y,
+                                             VecteurOrigineÀPosition.normalized.z * DataÉtage.RayonTrajectoirePersonnage);
+        }
         //transform.Translate(VecteurOrigineÀPosition.normalized * (-VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage));
     }
 
