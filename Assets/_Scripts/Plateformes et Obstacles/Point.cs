@@ -10,7 +10,7 @@ public class Point : MonoBehaviour
     const int NB_TRIANGLES_PAR_TUILE = 2;
     const int NB_SOMMETS_PAR_TRIANGLE = 3;
     const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 180;
-    const int VITESSE_TRANSLATION = 4;
+    public const int VITESSE_TRANSLATION = 4;
     const int TEMPS_DESTRUCTION = 2;
 
     public const string String = "Point";
@@ -141,7 +141,7 @@ public class Point : MonoBehaviour
                 ComposanteTexte.SetActive(false);
             }
             transform.Rotate(new Vector3(0, NB_DEGRÉS_ROTATION_PAR_SECONDE, 0) * Time.deltaTime);
-            transform.position = new Vector3(Position.x, Étendue / 3 * Mathf.Sin(Time.time * VITESSE_TRANSLATION) + Position.y, Position.z);
+            transform.position = new Vector3(Position.x, Étendue / 3 * Sin.Point + Position.y, Position.z);
             // Y aurait-il une facon de rendre plus efficace: chaque cube doit faire le calcul à chaque update
         }
     }

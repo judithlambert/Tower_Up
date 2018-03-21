@@ -8,7 +8,7 @@ public class PlateformeMobile : Plateforme
 
     bool touching=false;
 
-    float Temps, Distance, Vitesse, rotation, translation;
+    static public float Temps, Distance, Vitesse, rotation, translation;
     // distance est une amplitude, en degré
     int TypeMouvement;
     enum Mouvement { horizontal, vertical, diagonal}
@@ -56,12 +56,12 @@ public class PlateformeMobile : Plateforme
         switch (TypeMouvement)
         {
             case 0:
-                rotation = -(((Distance - Amplitude) / 2) * (Mathf.Sin(Time.time * Vitesse / 10)) + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y - AngleDébut;
+                rotation = -(((Distance - Amplitude) / 2) * Sin.PMobile + ((Distance - Amplitude) / 2)) - transform.rotation.eulerAngles.y - AngleDébut;
                 transform.Rotate(Vector3.up, rotation);
                 if (touching) { DataÉtage.PersonnageGameObject.transform.RotateAround(Vector3.zero, Vector3.up, rotation); }
                 break;
             case 1:
-                transform.position = new Vector3(0, Distance / 2 * Mathf.Sin(Time.time * Vitesse / 10) + Hauteur - Distance / 2, 0);
+                transform.position = new Vector3(0, Distance / 2 * Sin.PMobile + Hauteur - Distance / 2, 0);
                 //transform.Translate(new Vector3(0, translation, 0)); //maybbeee idk
                 //if (transform.position.y >= Distance + Hauteur || transform.position.y <= Hauteur)
                 //{ translation = -translation; Debug.Log("translation changed"); }

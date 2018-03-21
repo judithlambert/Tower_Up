@@ -23,13 +23,7 @@
  * 
  * bug avec la lumiere si on part de ScnMenu
  * 
- * ligne de vie
- * 
- * finir FinÉtage
- * 
  * fleche poir chemin
  * 
  * rendre sin commun
- * 
- * fps
  */
