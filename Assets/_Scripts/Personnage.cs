@@ -86,32 +86,19 @@ public class Personnage : MonoBehaviour
 
     public void DéterminerVitesse()
     {
-        if      (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
+        if (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
         else if (reculer) { Vitesse = Vitesse - Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse > 0 ? 2 : 1) * (jump ? 2 : 1)); }
-        else              { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2)                    * (Vitesse < 0 ? 1 : -1); }
+        else { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2) * (Vitesse < 0 ? 1 : -1); }
     }
 
     void EffectuerDéplacementEtRotation()
     {
-        float angleAutourTour = Vitesse / DataÉtage.RayonTrajectoirePersonnage;
-        transform.RotateAround(Vector3.zero, Vector3.down, angleAutourTour);
-        float angleAvancementPersonnage = Vitesse / transform.lossyScale.y;
-        //transform.RotateAround(transform.position, transform.right, angleAvancementPersonnage);
+        transform.RotateAround(Vector3.zero, Vector3.down, Vitesse / DataÉtage.RayonTrajectoirePersonnage);
+        transform.Rotate(VecteurOrigineÀPosition, Vitesse / transform.lossyScale.y);
     }
 
     GameObject dernierCollisionObject;
     GameObject nouveauCollisionObject;
-
-    //bool JumpValide(int n)
-    //{
-    //    bool x;
-    //    if (DataÉtage.GodMode)
-    //        x = truè;
-    //    else
-    //    {
-    //        if()
-    //    }
-    //}
 
     // TO BE FIXED
     // wall jump toute à changer pour adam :'(
@@ -171,28 +158,18 @@ public class Personnage : MonoBehaviour
         }
     }
 
-    void Repositionnement() // replacer la balle sur sa trajectoire
-    {
-        transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
-        transform.right = VecteurOrigineÀPosition.normalized;
-        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
-    }
     //void Repositionnement() // replacer la balle sur sa trajectoire
     //{
     //    transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
-    //    //if (VecteurOrigineÀPosition.magnitude != DataÉtage.RayonTrajectoirePersonnage) { float angle = Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x); transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, transform.position.y, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage); }
-
-    //    if (transform.right != VecteurOrigineÀPosition.normalized)
-    //    {
-    //        float rotationX = transform.rotation.eulerAngles.x;
-    //        transform.right = VecteurOrigineÀPosition.normalized;
-    //        transform.RotateAround(transform.position, transform.right, rotationX);
-
-    //        //Vector3 VecteurPositionÀRight = -transform.right +VecteurOrigineÀPosition.normalized;
-    //        //transform.Rotate(new Vector3(0, -Mathf.Atan2(VecteurPositionÀRight.z, VecteurPositionÀRight.x), 0));
-    //        //transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
-    //    }
+    //    transform.right = VecteurOrigineÀPosition.normalized;
+    //    transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
     //}
+    void Repositionnement() // replacer la balle sur sa trajectoire
+    {
+        transform.right = VecteurOrigineÀPosition.normalized;
+        transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+        //transform.Translate(VecteurOrigineÀPosition.normalized * (-VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage));
+    }
 
     public void Die()
     {
