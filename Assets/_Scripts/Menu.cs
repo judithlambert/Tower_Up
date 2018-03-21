@@ -7,7 +7,7 @@ using System.Linq;
 
 public class Menu : MonoBehaviour {
 
-    public const string CHEMIN_SAVE = "Assets/Ressources/SaveFile.txt";
+    public const string CHEMIN_SAVE = "Assets/Resources/SaveFile.txt";
 
     StreamReader saveReader;
     int étage = 1;
@@ -21,7 +21,6 @@ public class Menu : MonoBehaviour {
         MessageErreur = GameObject.FindGameObjectWithTag("MessageErreur");
         MssgErreurTxt = MessageErreur.GetComponentInChildren<Text>();
         MessageErreur.SetActive(false);
-
     }
 
     public void NewGame()

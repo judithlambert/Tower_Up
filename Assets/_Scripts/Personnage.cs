@@ -88,14 +88,15 @@ public class Personnage : MonoBehaviour
     {
         if      (avancer) { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse < 0 ? 2 : 1) * (jump ? 2 : 1)); }
         else if (reculer) { Vitesse = Vitesse - Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, (Vitesse > 0 ? 2 : 1) * (jump ? 2 : 1)); }
-        else              { Vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2)                    * (Vitesse < 0 ? 1 : -1); }
+        else              { float vitesse = Vitesse + Time.deltaTime * Mathf.Pow(ACCÉLÉRATION, 2) * (Vitesse < 0 ? 1 : -1);
+                            Vitesse = vitesse * Vitesse <= 0 ? 0 : vitesse; }
     }
 
     void EffectuerDéplacementEtRotation()
     {
         float angleAutourTour = Vitesse / DataÉtage.RayonTrajectoirePersonnage;
         transform.RotateAround(Vector3.zero, Vector3.down, angleAutourTour);
-        float angleAvancementPersonnage = Vitesse / transform.lossyScale.y;
+        //float angleAvancementPersonnage = Vitesse / transform.lossyScale.y;
         //transform.RotateAround(transform.position, transform.right, angleAvancementPersonnage);
     }
 
@@ -177,8 +178,8 @@ public class Personnage : MonoBehaviour
         transform.right = VecteurOrigineÀPosition.normalized;
         transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
     }
-    //void Repositionnement() // replacer la balle sur sa trajectoire
-    //{
+    //void Repositionnnt() // replacer la balle sur sa trajectoire
+    //{eme
     //    transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
     //    //if (VecteurOrigineÀPosition.magnitude != DataÉtage.RayonTrajectoirePersonnage) { float angle = Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x); transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, transform.position.y, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage); }
 
