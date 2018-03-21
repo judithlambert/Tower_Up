@@ -7,9 +7,11 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    Text tempsTxt, pointsEtMultiplicateurTxt, multiplicateurTxt, scoreTxt;
+    Text tempsTxt, pointsEtMultiplicateurTxt, scoreTxt;
     bool pointsUpdate, multiplicateurUpdate;
     char[] trim = new char[] { '.' };
+
+    static public Text FPSText;
 
     public string Score { get { return "SCORE : " + ((int)(Points * (1 + Multiplicateur / 100) /tempsPassé * 10)).ToString(); } }
 
@@ -24,6 +26,7 @@ public class UI : MonoBehaviour
 
     void Start ()
     {
+        FPSText = GetComponentsInChildren<Text>().Where(x => x.name == "FPS").First();
         tempsTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Temps").First();
         pointsEtMultiplicateurTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Points et Multiplicateur").First();
         scoreTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Score").First();
@@ -42,6 +45,9 @@ public class UI : MonoBehaviour
         }
         tempsTxt.text = TempsPassé;
         scoreTxt.text = Score;
+
+        FPSText.text = (1 / Time.smoothDeltaTime).ToString("0.00") + " FPS";
+
     }
 
     public void Réinitialiser()

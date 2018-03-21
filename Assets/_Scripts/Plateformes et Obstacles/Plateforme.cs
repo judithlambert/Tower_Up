@@ -56,14 +56,14 @@ public class Plateforme : MonoBehaviour
 
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        Debug.Log("SommetGaucheBasInférieur: (" + SommetGaucheBasInférieur.x + ", " + SommetGaucheBasInférieur.y + ", " + SommetGaucheBasInférieur.z + ")");
-        Debug.Log("SommetGaucheBasSuppérieur: (" + SommetGaucheBasSuppérieur.x + ", " + SommetGaucheBasSuppérieur.y + ", " + SommetGaucheBasSuppérieur.z + ")");
-        Debug.Log("SommetGaucheHautInférieur: (" + SommetGaucheHautInférieur.x + ", " + SommetGaucheHautInférieur.y + ", " + SommetGaucheHautInférieur.z + ")");
-        Debug.Log("SommetGaucheHautSuppérieur: (" + SommetGaucheHautSuppérieur.x + ", " + SommetGaucheHautSuppérieur.y + ", " + SommetGaucheHautSuppérieur.z + ")");
-        Debug.Log("SommetDroiteBasInférieur: (" + SommetDroiteBasInférieur.x + ", " + SommetDroiteBasInférieur.y + ", " + SommetDroiteBasInférieur.z + ")");
-        Debug.Log("SommetDroiteBasSuppérieur: (" + SommetDroiteBasSuppérieur.x + ", " + SommetDroiteBasSuppérieur.y + ", " + SommetDroiteBasSuppérieur.z + ")");
-        Debug.Log("SommetDroiteHautInférieur: (" + SommetDroiteHautInférieur.x + ", " + SommetDroiteHautInférieur.y + ", " + SommetDroiteHautInférieur.z + ")");
-        Debug.Log("SommetDroiteHautSuppérieur: (" + SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z + ")");
+        //Debug.Log("SommetGaucheBasInférieur: (" + SommetGaucheBasInférieur.x + ", " + SommetGaucheBasInférieur.y + ", " + SommetGaucheBasInférieur.z + ")");
+        //Debug.Log("SommetGaucheBasSuppérieur: (" + SommetGaucheBasSuppérieur.x + ", " + SommetGaucheBasSuppérieur.y + ", " + SommetGaucheBasSuppérieur.z + ")");
+        //Debug.Log("SommetGaucheHautInférieur: (" + SommetGaucheHautInférieur.x + ", " + SommetGaucheHautInférieur.y + ", " + SommetGaucheHautInférieur.z + ")");
+        //Debug.Log("SommetGaucheHautSuppérieur: (" + SommetGaucheHautSuppérieur.x + ", " + SommetGaucheHautSuppérieur.y + ", " + SommetGaucheHautSuppérieur.z + ")");
+        //Debug.Log("SommetDroiteBasInférieur: (" + SommetDroiteBasInférieur.x + ", " + SommetDroiteBasInférieur.y + ", " + SommetDroiteBasInférieur.z + ")");
+        //Debug.Log("SommetDroiteBasSuppérieur: (" + SommetDroiteBasSuppérieur.x + ", " + SommetDroiteBasSuppérieur.y + ", " + SommetDroiteBasSuppérieur.z + ")");
+        //Debug.Log("SommetDroiteHautInférieur: (" + SommetDroiteHautInférieur.x + ", " + SommetDroiteHautInférieur.y + ", " + SommetDroiteHautInférieur.z + ")");
+        //Debug.Log("SommetDroiteHautSuppérieur: (" + SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z + ")");
     }
     
     public void Positionnement()

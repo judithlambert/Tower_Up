@@ -2,6 +2,7 @@
 using System.IO;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 using System.Linq;
 
 public class Menu : MonoBehaviour {
@@ -11,9 +12,16 @@ public class Menu : MonoBehaviour {
     StreamReader saveReader;
     int étage = 1;
 
-    void Start ()
+    GameObject MessageErreur;
+    Text MssgErreurTxt;
+
+    void Start()
     {
         saveReader = new StreamReader(CHEMIN_SAVE);
+        MessageErreur = GameObject.FindGameObjectWithTag("MessageErreur");
+        MssgErreurTxt = MessageErreur.GetComponentInChildren<Text>();
+        MessageErreur.SetActive(false);
+
     }
 
     public void NewGame()
@@ -25,7 +33,12 @@ public class Menu : MonoBehaviour {
     public void ResumeGame()
     {
         string save = saveReader.ReadLine();
-        if (save == null) { Debug.Log("il n'y a aucune partie de déja commencer"); NewGame(); }
+        if (save == null)
+        {
+            MessageErreur.SetActive(true);
+            MssgErreurTxt.text = "il n'y a aucune partie de déja commencer";
+            StartCoroutine(WaitUtilOK());
+        }
         else { DataÉtage.nbÉtage = int.Parse(save); SceneManager.LoadScene("ScnÉtage"); }
     }
 
@@ -44,4 +57,18 @@ public class Menu : MonoBehaviour {
     {
         DataÉtage.difficulté = GetComponentsInChildren<Dropdown>().Where(x => x.name.Contains("Difficulté")).First().value;
     }
+
+    bool OK = false;
+
+    public void BtnOk()
+    {
+        OK = true;
+    }
+
+    IEnumerator WaitUtilOK()
+    {
+        yield return new WaitUntil(() => OK);
+        NewGame();
+    }
+
 }

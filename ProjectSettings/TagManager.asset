@@ -6,6 +6,7 @@ TagManager:
   tags:
   - UI
   - "UIFin\xC9tage"
+  - MessageErreur
   layers:
   - Default
   - TransparentFX

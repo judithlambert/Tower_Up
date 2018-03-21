@@ -168,7 +168,7 @@ public class Personnage : MonoBehaviour
 
             if (jump) { Jumper(); }
             jump = crouch = reculer = avancer = block = false;
-        }       
+        }
     }
 
     void Repositionnement() // replacer la balle sur sa trajectoire

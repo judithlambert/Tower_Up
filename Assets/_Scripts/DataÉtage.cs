@@ -9,6 +9,10 @@ using UnityEngine.UI;
 
 public class DataÉtage : MonoBehaviour
 {
+
+
+
+
     [SerializeField] bool GODMOD;
 
     [SerializeField] int TEST_ÉTAGE;
@@ -57,8 +61,8 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        nbÉtage = TEST_ÉTAGE;
-        if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
+        //nbÉtage = TEST_ÉTAGE;
+        //if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
         //---
 
 
@@ -217,6 +221,7 @@ public class DataÉtage : MonoBehaviour
         if (étageFini) { FinirÉtage(); }
         if (nouvelÉtage) { NouvelÉtage(); }
         if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))) { pause = !pause; PauseUnPause(); }
+
     }
 
     void FinirÉtage()

@@ -27,6 +27,8 @@ Plateforme
 190;20;10;0;1
 Plateforme mur
 210;10;10;0;10
+Checkpoint
+215;10
 
 PlateformeTemporaire 1
 220;10;1;0;0.5;0.75
@@ -59,22 +61,61 @@ PlateformePics 7
 
 Plateforme séparateur
 350;5;14.5;0;14.5
+Plateforme
+350;20;15;0;0.5
+Checkpoint
+360;15
 PlateformeTemporaire long
-355;110;15;0;0.5;5
+370;70;15;0;0.5;5
 PlateformePics
-355;110;13;0;0.5;1
+355;85;13;0;0.5;1
+
+Plateforme 1
+80;40;16;0;0.5
+Pic g1
+86;1;16
+Pic d1
+116;1;16
+Plateforme 2
+120;40;14;0;0.5
+Pic g2
+126;1;14
+Pic d2
+154;1;14
+Plateforme 3
+160;40;13;0;0.5
+Pic g3
+166;1;13
+Pic d3
+194;1;13
+Plateforme 4
+200;40;14;0;0.5
+Pic g4
+206;1;14
+Pic d4
+234;1;14
 
 PlateformeMobile
-250;55;21;0;1;5;7;1
+250;50;22;0;1;5;7;1
+Point 1
+260;15;0;5
+Point 2
+275;16;0;5
 Point 3
-290;16;0;5
+290;17;0;5
 Point 4
-260;18;0;5
+275;18;0;5
 Point 5
-295;20;0;5
+260;19;0;5
+Point 6
+275;20;0;5
+Point 7
+290;21;0;5
 
 Plateforme debut tunel
 300;30;22;-4;1
+Checkpoint
+305;21.1
 Plateforme debut tunel
 300;30;24;-4;1
 Plateforme
@@ -138,9 +179,11 @@ PlateformeMobile 5
 
 Plateforme mur
 -40;5;32;0;8
-Plateforme plancher
+Plateforme final
 40;120;33;0;1
 
+FinEtage
+160;33
 
 dfsvfd
 

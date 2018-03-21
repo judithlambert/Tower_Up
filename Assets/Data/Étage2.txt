@@ -22,8 +22,12 @@ Point 5
 230;0.5;1;30
 PlateformeTemporaire 6
 220;20;4;0;0.5;5
+Fleche
+230;2;-90
 Plateforme 7
 240;5;10;0;7
+Fleche
+240;12;180
 Point 7
 255;9;0;20
 Point 7.1
@@ -38,6 +42,10 @@ Point 7.5
 260;4;1;20
 Plateforme 8
 240;35;1;0;1
+Fleche
+262.5;1;90
+Fleche
+280;1;0
 PlateformeMobile 9
 340;10;6;0;0.5;7;260
 Point 9
@@ -88,6 +96,8 @@ Plateforme 21
 275;15;10;-2;0.25
 Plateforme 22
 330;10;10;0;1.25
+Fleche
+335;10;0
 Plateforme 23
 120;25;10;0;1
 PlateformeTemporaire 24
