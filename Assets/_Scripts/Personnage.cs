@@ -95,7 +95,8 @@ public class Personnage : MonoBehaviour
     void EffectuerDéplacementEtRotation()
     {
         transform.RotateAround(Vector3.zero, Vector3.down, Vitesse / DataÉtage.RayonTrajectoirePersonnage);
-        transform.Rotate(VecteurOrigineÀPosition, Vitesse / transform.lossyScale.y);
+        transform.Rotate(transform.right, Vitesse / transform.localScale.y);
+        //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(Vitesse, 0, 0));
     }
 
     GameObject dernierCollisionObject;
@@ -167,7 +168,7 @@ public class Personnage : MonoBehaviour
     //}
     void Repositionnement() // replacer la balle sur sa trajectoire
     {
-        transform.right = VecteurOrigineÀPosition.normalized;
+        //transform.right = VecteurOrigineÀPosition.normalized;
         transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
         //transform.Translate(VecteurOrigineÀPosition.normalized * (-VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage));
     }
