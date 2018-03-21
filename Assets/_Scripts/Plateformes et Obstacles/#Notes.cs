@@ -7,8 +7,6 @@
  * 
  * class to string pas efficace
  * 
- * personnage continue a rouler apres avoir ete en collison avec quelque chose
- * 
  * on peut pas utiliser 'using UnityEditor' dans un build (class materials)
  * 
  * bug avec le personnage qui tourne sur lui-même sur une plateform mobile
@@ -21,17 +19,9 @@
  * 
  * wall jump ***
  * 
- * collision plateforme temporaire ne marche pas 
- * 
  * les collision avec un plateforme temporaire deja tombé
  * 
- * plateforme mobile de haut en bas
- * 
- * inclinaison des plateforme ne marche pas
- * 
  * bug avec la lumiere si on part de ScnMenu
- * 
- * collision plateforme
  * 
  * ligne de vie
  * 
@@ -39,5 +29,5 @@
  * 
  * fleche poir chemin
  * 
- * checkpoint
+ * fps
  */

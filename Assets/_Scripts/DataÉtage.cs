@@ -26,7 +26,7 @@ public class DataÉtage : MonoBehaviour
     static public GameObject PersonnageGameObject, PlancherGameObject, TourGameObject;
     static public Camera Caméra;
     public static Personnage PersonnageScript;
-    public static Plateforme PlancherScript;   
+    public static Plateforme PlancherScript;
     [SerializeField] GameObject prefabPersonnage;
     public static GameObject Ui;
     public static UI UiScript;
@@ -83,11 +83,7 @@ public class DataÉtage : MonoBehaviour
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
-        //---test--------------------------------
-        //GameObject fusil = new GameObject("fusil");
-        //fusil.AddComponent<Fusil>().Initialisation(-1, 0, 0, Materials.Get((int)NomMaterial.Plateforme));
-        //---------------------------------------
-
+       
         LoadÉtage();
         étageEnCour = true;
     }
@@ -196,6 +192,10 @@ public class DataÉtage : MonoBehaviour
                 case CheckPoint.String:
                     ListGameObject.Last().AddComponent<CheckPoint>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR);
                     break;
+                case Flèche.String:
+                    ListGameObject.Last().AddComponent<Flèche>().Initialisation(attributs[0], attributs[1]*DELTA_HAUTEUR, RAYON_TOUR, attributs[2]);
+                    break;
+
             }
 
         } while (!étageReader.EndOfStream);
