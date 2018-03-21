@@ -112,7 +112,7 @@ public class DrapeauAnimé : MonoBehaviour {
     {
         for (int i = 0; i < Sommets.Length; ++i)
         {
-            Sommets[i].z = A * ((Sommets[i].x) / Étendue.x) * ((Mathf.Sin(-Sommets[i].x / S + Time.time)));
+            Sommets[i].z = A * ((Sommets[i].x) / Étendue.x) * ((Mathf.Sin(-Sommets[i].x / S + Time.time * 3)));
             Maillage.vertices = Sommets;
         }
     }
