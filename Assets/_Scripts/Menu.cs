@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour {
     public void ResumeGame()
     {
         string save = saveReader.ReadLine();
-        if (save == null) { Debug.Log("il n'y a aucune game de déja commencer"); NewGame(); }
+        if (save == null) { Debug.Log("il n'y a aucune partie de déja commencer"); NewGame(); }
         else { DataÉtage.nbÉtage = int.Parse(save); SceneManager.LoadScene("ScnÉtage"); }
     }
 
