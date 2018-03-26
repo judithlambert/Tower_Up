@@ -8,8 +8,8 @@ public class Sin
     {
         return Mathf.Sin(UI.tempsPassé * Point.VITESSE_TRANSLATION);
     }
-    public static float PMobiles()
+    public static float PMobiles(float vitesse)
     {
-        return Mathf.Sin(UI.tempsPassé * PlateformeMobile.Vitesse / 10);
+        return Mathf.Sin(UI.tempsPassé * vitesse / 10);
     }
 }
