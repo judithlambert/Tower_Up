@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pic : Obstacle
+public class Pic : MonoBehaviour
 {
     public const string String = "Pic";
 

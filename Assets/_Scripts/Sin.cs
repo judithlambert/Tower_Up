@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Sin
+public class Sin
 {
-    public static float Point, PMobile;
-}
-
-public class Temps : MonoBehaviour
-{
-    void Update()
+    public static float Points()
     {
-        Sin.Point = Mathf.Sin(Time.time * Point.VITESSE_TRANSLATION);
-        Sin.PMobile = Mathf.Cos(Time.time * PlateformeMobile.Vitesse / 10);
+        return Mathf.Sin(UI.tempsPassé * Point.VITESSE_TRANSLATION);
+    }
+    public static float PMobiles()
+    {
+        return Mathf.Sin(UI.tempsPassé * PlateformeMobile.Vitesse / 10);
     }
 }

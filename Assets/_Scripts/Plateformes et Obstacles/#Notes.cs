@@ -26,4 +26,6 @@
  * fleche poir chemin
  * 
  * rendre sin commun
+ * 
+ * Deg2Rad et Rad2Deg
  */

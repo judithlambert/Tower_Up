@@ -15,7 +15,7 @@ public class UI : MonoBehaviour
 
     public string Score { get { return "SCORE : " + ((int)(Points * (1 + Multiplicateur / 100) /tempsPassé * 10)).ToString(); } }
 
-    float tempsPassé = 0;
+    static public float tempsPassé = 0;
     public string TempsPassé { get { return ((int)(tempsPassé / 60)).ToString() + ":" + ((int)(tempsPassé % 60)).ToString("00") + ":" + tempsPassé.ToString().Split(trim).Last().Substring(0, 2); } }
 
     int points = 0;

@@ -2,7 +2,7 @@ Plateforme
 angleDébut;amplitude;hauteur;inclinaison;épaisseur(;rotation)
 
 PlateformeMobile
-angleDébut;amplitude;hauteurMax;inclinaison;épaisseur;vitesse;distance(;typeMouvement(;rotation))
+angleDébut;amplitude;hauteur(Max);inclinaison;épaisseur;vitesse;distance(;typeMouvement(;rotation))
 
 PlateformeTemporaire
 angleDébut;amplitude;hauteur;inclinaison;épaisseur;temps(;typeDeUpdate(;rotation))

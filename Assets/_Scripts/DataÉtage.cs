@@ -58,6 +58,7 @@ public class DataÉtage : MonoBehaviour
     public static int difficulté = DIFFICULTÉ_DE_BASE;
     public enum Difficulté { GodMode, Normale };
 
+        
     private void Awake()
     {
         // for testing

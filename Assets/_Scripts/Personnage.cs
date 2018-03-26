@@ -94,17 +94,16 @@ public class Personnage : MonoBehaviour
 
     void EffectuerDéplacementEtRotation()
     {
+        //Vector3 vecPosIn, VecPosFin;
+        //vecPosIn = new Vector3(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.y, VecteurOrigineÀPosition.z); // pour pas que transmet réference ???
+        //transform.RotateAround(Vector3.zero, Vector3.down, Vitesse / DataÉtage.RayonTrajectoirePersonnage);
+        //VecPosFin = new Vector3(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.y, VecteurOrigineÀPosition.z); // pour pas que transmet réference ???
+        //transform.Rotate(VecteurOrigineÀPosition.normalized, Mathf.Atan2((VecPosFin - vecPosIn).z, (VecPosFin - vecPosIn).x));
+
         transform.RotateAround(Vector3.zero, Vector3.down, Vitesse / DataÉtage.RayonTrajectoirePersonnage);
-        //transform.Rotate(VecteurOrigineÀPosition.normalized, Vitesse / RayonSphere);
-
-        //Vector3 posIn, posFin;
-        //float angleDéplacementTour = (Vitesse) / DataÉtage.RayonTrajectoirePersonnage;
-        //posIn = transform.position;
-        //transform.RotateAround(Vector3.zero, Vector3.down, angleDéplacementTour);
-        //posFin = transform.position;
-        //float angleRotationPersonnage = Mathf.Atan2((posFin - posIn).z, (posFin - posIn).x);
-        //transform.Rotate(VecteurOrigineÀPosition.normalized, angleRotationPersonnage);
-
+        //transform.right = VecteurOrigineÀPosition.normalized;
+        ////transform.Rotate(VecteurOrigineÀPosition.normalized, Vitesse / RayonSphere);
+        //transform.Rotate(Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x),0, 0);
         Debug.Log("VecteurOrigineÀPosition: (" + VecteurOrigineÀPosition.x + ", " + VecteurOrigineÀPosition.y + ", " + VecteurOrigineÀPosition.z + ")");
 
     }
@@ -168,25 +167,30 @@ public class Personnage : MonoBehaviour
         }
     }
 
-    void Repositionnement() // replacer la balle sur sa trajectoire
-    {
-        transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
-        transform.right = VecteurOrigineÀPosition.normalized;
-        transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
-    }
     //void Repositionnement() // replacer la balle sur sa trajectoire
     //{
-    //    //transform.right = VecteurOrigineÀPosition.normalized;
-    //    //transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
-    //    if (VecteurOrigineÀPosition.magnitude != DataÉtage.RayonTrajectoirePersonnage)
-    //    {
-    //        transform.position = new Vector3(VecteurOrigineÀPosition.normalized.x * DataÉtage.RayonTrajectoirePersonnage,
-    //                                         transform.position.y,
-    //                                         VecteurOrigineÀPosition.normalized.z * DataÉtage.RayonTrajectoirePersonnage);
-    //    }
-    //    //transform.Rotate(VecteurOrigineÀPosition, Mathf.Atan2(transform.position.z, transform.position.x));
-    //    //transform.Translate(VecteurOrigineÀPosition.normalized * (-VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage));
+    //    transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+    //    transform.right = VecteurOrigineÀPosition.normalized;
+    //    transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
+
+    //            transform.Rotate(Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x),0, 0);
+
     //}
+    void Repositionnement() // replacer la balle sur sa trajectoire
+    {
+        //transform.right = VecteurOrigineÀPosition.normalized;
+        //transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
+        if (VecteurOrigineÀPosition.magnitude != DataÉtage.RayonTrajectoirePersonnage)
+        {
+            transform.position = new Vector3(VecteurOrigineÀPosition.normalized.x * DataÉtage.RayonTrajectoirePersonnage,
+                                             transform.position.y,
+                                             VecteurOrigineÀPosition.normalized.z * DataÉtage.RayonTrajectoirePersonnage);
+        }
+        transform.right = VecteurOrigineÀPosition.normalized;
+
+        transform.Rotate(new Vector3(Mathf.Atan2(transform.right.z, transform.right.x) * Mathf.Rad2Deg * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0));
+        //transform.Translate(VecteurOrigineÀPosition.normalized * (-VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage));
+    }
 
     public void Die()
     {

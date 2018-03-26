@@ -141,7 +141,7 @@ public class Point : MonoBehaviour
                 ComposanteTexte.SetActive(false);
             }
             transform.Rotate(new Vector3(0, NB_DEGRÉS_ROTATION_PAR_SECONDE, 0) * Time.deltaTime);
-            transform.position = new Vector3(Position.x, Étendue / 3 * Sin.Point + Position.y, Position.z);
+            transform.position = new Vector3(Position.x, Étendue / 3 * Sin.Points() + Position.y, Position.z);
             // Y aurait-il une facon de rendre plus efficace: chaque cube doit faire le calcul à chaque update
         }
     }
