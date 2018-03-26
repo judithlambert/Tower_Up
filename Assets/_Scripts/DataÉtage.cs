@@ -56,7 +56,7 @@ public class DataÉtage : MonoBehaviour
     public static bool étageEnCour { get; private set; }
 
     public static int difficulté = DIFFICULTÉ_DE_BASE;
-    public enum Difficulté { GodMode, Normale };
+    public enum Difficulté { GodMode, Normale, Difficile };
 
         
     private void Awake()

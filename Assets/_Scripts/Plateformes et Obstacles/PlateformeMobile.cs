@@ -8,7 +8,7 @@ public class PlateformeMobile : Plateforme
 
     bool touching=false;
 
-    public float Temps, Distance, Vitesse, rotation, translation;
+    float Temps, Distance, Vitesse, rotation, translation;
     // distance est une amplitude, en degré
     int TypeMouvement;
     enum Mouvement { horizontal, vertical, diagonal}

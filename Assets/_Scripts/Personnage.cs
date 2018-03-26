@@ -9,7 +9,6 @@ public class Personnage : MonoBehaviour
 {
     const int ACCÉLÉRATION = 5;
     const int ANGULAR_DRAG = 5;
-    const int VIE_INITIALE = 3;
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
@@ -45,6 +44,7 @@ public class Personnage : MonoBehaviour
 
     int nbJumps = 0;
     int nbWallJump = 0;
+    int vieInitiale;
 
     bool wallJump = false;
     int côtéCollision; // -1=gauche 1=droit
@@ -71,7 +71,7 @@ public class Personnage : MonoBehaviour
         //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
         //new WaitUntil(()=>TouchingGround());
         jump = crouch = reculer = avancer = block = false;
-        Vie = VIE_INITIALE;
+        Vie = vieInitiale = DataÉtage.difficulté == (int)DataÉtage.Difficulté.Difficile ? 1 : 3;
     }
 
     
@@ -206,7 +206,7 @@ public class Personnage : MonoBehaviour
         {
             Vie -= dommage;
             if (Vie <= 0) { Die(); }
-            else { DernierCheckPoint(); }
+            else { RetourDernierCheckPoint(); }
         }
     }
 
@@ -226,10 +226,11 @@ public class Personnage : MonoBehaviour
         Vitesse = 0;
         transform.position = positionInitiale;
         transform.rotation = rotationInitiale;
-        Vie = VIE_INITIALE;
+        PositionCheckPoint = transform.position;
+        Vie = vieInitiale;
     }
 
-    public void DernierCheckPoint()
+    public void RetourDernierCheckPoint()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         Vitesse = 0;
