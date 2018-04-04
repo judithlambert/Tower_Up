@@ -38,6 +38,10 @@ public class DataÉtage : MonoBehaviour
     public static UIFinÉtage UiFinÉtageScript;
     List<GameObject> ListGameObject;
 
+    [SerializeField] GameObject prefabBoss;
+    GameObject BossGameObject;
+    Boss BossScript;
+
     const float DISTANCE_CAMERA_PERSONNAGE = 10; // ratio avec tour 
     public static float RayonTrajectoirePersonnage;
     public static float RayonCamera;
@@ -88,7 +92,11 @@ public class DataÉtage : MonoBehaviour
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
-       
+
+        //--- BOSS ---
+        BossGameObject = Instantiate(prefabBoss, new Vector3(0, 0, 0), Quaternion.Euler(Vector3.zero));
+
+
         LoadÉtage();
         étageEnCour = true;
     }
@@ -181,11 +189,6 @@ public class DataÉtage : MonoBehaviour
                                                                              attributs[2] * DELTA_HAUTEUR, 
                                                                              LARGEUR_PLATEFORME / 2.4f,
                                                                              Materials.Get((int)NomMaterial.Pic));
-                    break;
-                case LanceurProjectiles.String:
-                    ListGameObject.Last().AddComponent<LanceurProjectiles>().Initialisation(Maths.GestionAngle(attributs[0]), 
-                                                                                            attributs[1] * DELTA_HAUTEUR, 
-                                                                                            Materials.Get((int)NomMaterial.Plateforme));
                     break;
                 case FinÉtage.String:
                     ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(Maths.GestionAngle(attributs[0]), 

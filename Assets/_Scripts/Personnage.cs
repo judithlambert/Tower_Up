@@ -104,7 +104,7 @@ public class Personnage : MonoBehaviour
         //transform.right = VecteurOrigineÀPosition.normalized;
         ////transform.Rotate(VecteurOrigineÀPosition.normalized, Vitesse / RayonSphere);
         //transform.Rotate(Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x),0, 0);
-        Debug.Log("VecteurOrigineÀPosition: (" + VecteurOrigineÀPosition.x + ", " + VecteurOrigineÀPosition.y + ", " + VecteurOrigineÀPosition.z + ")");
+        //Debug.Log("VecteurOrigineÀPosition: (" + VecteurOrigineÀPosition.x + ", " + VecteurOrigineÀPosition.y + ", " + VecteurOrigineÀPosition.z + ")");
 
     }
 
