@@ -49,7 +49,7 @@ public class Personnage : MonoBehaviour
     bool wallJump = false;
     int côtéCollision; // -1=gauche 1=droit
 
-    Vector3 VecteurOrigineÀPosition
+    public Vector3 VecteurOrigineÀPosition
     {
         get { return transform.position - new Vector3(DataÉtage.Origine.x, transform.position.y, DataÉtage.Origine.z); }
     }
@@ -59,7 +59,6 @@ public class Personnage : MonoBehaviour
         //gameObject.AddComponent<Rigidbody>().useGravity = true;
         //gameObject.AddComponent<MeshRenderer>().material = material;
         //gameObject.AddComponent<SphereCollider>();
-        GetComponent<Rigidbody>().angularDrag = 5;
 
         // ne dois pas bouger lors du respawn
         transform.rotation = rotationInitiale = Maths.Vector3àQuaternion(Vector3.zero);

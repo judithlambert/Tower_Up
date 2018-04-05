@@ -66,19 +66,6 @@ public class PlateformePics : Plateforme
             PositionDessous = Hauteur;
             PositionPics = Hauteur - Épaisseur - HauteurPic;
         }
-
-        Vector3 PositionRelativeAuMonde = new Vector3((float)Mathf.Cos(Maths.DegréEnRadian(AngleDébut)),
-                                                      Hauteur,
-                                                      (float)Mathf.Sin(Maths.DegréEnRadian(AngleDébut)));
-
-        SommetGaucheBasInférieur = Sommets[nbSommets - 8] + PositionRelativeAuMonde;
-        SommetGaucheBasSuppérieur = Sommets[nbSommets - 7] + PositionRelativeAuMonde;
-        SommetGaucheHautInférieur = Sommets[nbSommets - 6] + PositionRelativeAuMonde;
-        SommetGaucheHautSuppérieur = Sommets[nbSommets - 5] + PositionRelativeAuMonde;
-        SommetDroiteBasInférieur = Sommets[nbSommets - 4] + PositionRelativeAuMonde;
-        SommetDroiteBasSuppérieur = Sommets[nbSommets - 3] + PositionRelativeAuMonde;
-        SommetDroiteHautInférieur = Sommets[nbSommets - 2] + PositionRelativeAuMonde;
-        SommetDroiteHautSuppérieur = Sommets[nbSommets - 1] + PositionRelativeAuMonde;
     }
 
 

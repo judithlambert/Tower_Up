@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3e8717c2c6b6744087e5a63dff599e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GODMOD: 0
+  "TEST_\xC9TAGE": 0
   prefabPersonnage: {fileID: 1755459956330604, guid: c63596c069dd1954b9c3d76b84fff937,
     type: 2}
-  MaterialPlatforme: {fileID: 2100000, guid: da115a7764398234792c6e4650f89fad, type: 2}
+  prefabBoss: {fileID: 153050, guid: c17de107fcc263e49807b4b34f2ee999, type: 2}

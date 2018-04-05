@@ -6,27 +6,35 @@ using UnityEngine.Animations;
 
 public class Boss : MonoBehaviour {
     Animator animator;
-
-
-
-    // Use this for initialization
+    GameObject Tongue;
     void Start() {
         animator = GetComponent<Animator>();
-        gameObject.AddComponent<Rigidbody>();
-	}
+        //Tongue = GameObject.FindGameObjectWithTag("Rino").GetComponentsInChildren<GameObject>().Where(x => x.name == "Tongue").First();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         GetHit();
     }
 
-    // Update is called once per frame
+    float deltaTemps;
+
     void Update () {
-		
-	}
+        deltaTemps += Time.deltaTime;
+        if (deltaTemps >= 2)
+        {
+            Attaquer();
+            deltaTemps = 0;
+        }
+    }
 
 
-
+    public void CracheProjectile()
+    {
+        ////transform.LookAt(DataÉtage.PersonnageGameObject.transform);
+        //animator.SetTrigger("Shout");
+        //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), Tongue.transform.localToWorldMatrix * Tongue.transform.position, Quaternion.identity);
+    }
     public void Attack()
     {
         animator.SetTrigger("Attack");
@@ -50,5 +58,14 @@ public class Boss : MonoBehaviour {
     public void GetHit()
     {
         animator.SetTrigger("GetHit");
+    }
+
+    public void Attaquer()
+    {
+        transform.rotation= Maths.Vector3àQuaternion(new Vector3(DataÉtage.PersonnageGameObject.transform.position.x,0, DataÉtage.PersonnageGameObject.transform.position.z));
+        Walk();
+        //transform.Translate(DataÉtage.PersonnageGameObject.transform.position - (transform.position*2));
+        Attack();
+        transform.position = new Vector3(0, -4, 0);
     }
 }

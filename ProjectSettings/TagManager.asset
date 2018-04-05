@@ -7,6 +7,7 @@ TagManager:
   - UI
   - "UIFin\xC9tage"
   - MessageErreur
+  - Rino
   layers:
   - Default
   - TransparentFX
