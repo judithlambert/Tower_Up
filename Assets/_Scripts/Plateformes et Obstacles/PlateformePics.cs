@@ -10,6 +10,16 @@ public class PlateformePics : Plateforme
 {
     public const string String = Plateforme.String + "Pics";
 
+    Vector3 sommetPic;
+    public Vector3 SommetPic
+    {
+        get
+        {
+           return new Vector3(Mathf.Cos(Maths.DegréEnRadian(AngleDébut + Amplitude / 2)) * (Rayon + Largeur / 2),
+                              Hauteur + HauteurPic,
+                              Mathf.Sin(Maths.DegréEnRadian(AngleDébut + Amplitude / 2)) * (Rayon + Largeur / 2));
+        }
+    }
 
     protected float HauteurPic;
 
