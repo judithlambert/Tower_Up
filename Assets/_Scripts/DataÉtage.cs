@@ -296,19 +296,19 @@ public class DataÉtage : MonoBehaviour
         int nbPic = 7;
         for(int i = 0; i < nbPic; ++i)
         {
-            ListGameObject.Add(new GameObject(obj2 + i));
+            ListGameObject.Add(new GameObject(obj2 + " 1er " + i));
             ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 3, 1, 0, 20, 1, RAYON_TOUR + 6, 2, 0, Materials.Get((int)NomMaterial.Tour));
         }
         nbPic = 16;
         for (int i = 0; i < nbPic; ++i)
         {
-            ListGameObject.Add(new GameObject(obj2 + i));
+            ListGameObject.Add(new GameObject(obj2 + " 2e " + i));
             ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 4, 0, 40, 2, RAYON_TOUR + 14, 4, 0, Materials.Get((int)NomMaterial.Plateforme));
         }
         nbPic = 5;
         for (int i = 0; i < nbPic; ++i)
         {
-            ListGameObject.Add(new GameObject(obj2 + i));
+            ListGameObject.Add(new GameObject(obj2 + " 3e " + i));
             ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 20, 0, 50, 2, RAYON_TOUR + 35, 8, 0, Materials.Get((int)NomMaterial.Tour));
         }
     }
