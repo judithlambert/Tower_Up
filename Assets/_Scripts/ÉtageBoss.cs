@@ -23,7 +23,7 @@ public class ÉtageBoss : MonoBehaviour
     //void Update()
     //{
     //    deltaTemps += Time.deltaTime;
-    //    if (deltaTemps >= 1/3f)
+    //    if (deltaTemps >= 1 / 3f)
     //    {
     //        CercleSeulAléatoire(ListSommetsPics2e);
     //        deltaTemps = 0;
@@ -38,7 +38,9 @@ public class ÉtageBoss : MonoBehaviour
             int index = Mathf.RoundToInt(Random.value * (list.Count - 1));
             if (!Physics.CheckSphere(list[index] + new Vector3(0, 2, 0), 1))
             {
-                Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[index] + new Vector3(0, 2, 0), Quaternion.identity);
+                Projectile proj = new Projectile();
+                proj.Initialisation(list[index] + new Vector3(0, 2, 0), 50, 3, 20);
+                //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[index] + new Vector3(0, 2, 0), Quaternion.identity);
                 instancié = true;
             }
         }    
@@ -48,7 +50,9 @@ public class ÉtageBoss : MonoBehaviour
     {
         for(int i = 0; i < list.Count; ++i)
         {
-            Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[i] + new Vector3(0, 2, 0), Quaternion.identity);
+            Projectile proj = new Projectile();
+            proj.Initialisation(list[i] + new Vector3(0, 2, 0), 50, 3, 20);
+            //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[i] + new Vector3(0, 2, 0), Quaternion.identity);
         }
     }
 }

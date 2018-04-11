@@ -10,6 +10,8 @@ public class Boss : MonoBehaviour {
     float différenceAngle;
     float angleRotation;
 
+    const float INTERVALLE_APPARITION_PROJECTILE = 5;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -36,16 +38,18 @@ public class Boss : MonoBehaviour {
         else
         {
             animator.ResetTrigger("Walk");
-            Shout();
+            //Shout();
+
+            deltaTemps += Time.deltaTime;
+            if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE)
+            {
+                CracheProjectile();
+                deltaTemps = 0;
+            }
         }
 
 
-        //deltaTemps += Time.deltaTime;
-        //if (deltaTemps >= 2)
-        //{
-        //    Attaquer();
-        //    deltaTemps = 0;
-        //}
+        
     }
 
     void DéplacementVersPersonnage()
@@ -86,19 +90,10 @@ public class Boss : MonoBehaviour {
         animator.SetTrigger("GetHit");
     }
 
-    public void Attaquer()
-    {
-        transform.rotation= Maths.Vector3àQuaternion(new Vector3(DataÉtage.PersonnageGameObject.transform.position.x,0, DataÉtage.PersonnageGameObject.transform.position.z));
-        Walk();
-        //transform.Translate(DataÉtage.PersonnageGameObject.transform.position - (transform.position*2));
-        Attack();
-        CracheProjectile();
-        transform.position = new Vector3(0, -4, 0);
-    }
     public void CracheProjectile()
     {
         animator.SetTrigger("Shout");
-        Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), transform.position + transform.forward, Quaternion.identity);
-
+        Projectile proj = new Projectile();
+        proj.Initialisation(transform.position + 10*transform.forward + 10*Vector3.up, 50, 1, 20);
     }
 }
