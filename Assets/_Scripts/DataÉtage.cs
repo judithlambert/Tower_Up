@@ -271,10 +271,10 @@ public class DataÉtage : MonoBehaviour
     }
 
     void LoadÉtageBoss()
-    {
-        BossGameObject = Instantiate(prefabBoss, new Vector3(0, 0, 0), Quaternion.Euler(Vector3.zero));
-        TourGameObject.transform.position = new Vector3(0, PlancherGameObject.transform.position.y - 4);
+    {        
+        TourGameObject.transform.position = new Vector3(0, PlancherGameObject.transform.position.y - 2);
         TourGameObject.AddComponent<ÉtageBoss>();
+        BossGameObject = Instantiate(prefabBoss, new Vector3(0, TourGameObject.transform.position.y, -4), Quaternion.Euler(Vector3.zero));
         Plane.transform.position = new Vector3(0, -250);
         string obj = "support";
         string obj1 = "élévation";

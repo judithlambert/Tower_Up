@@ -54,6 +54,13 @@ public class Personnage : MonoBehaviour
         get { return transform.position - new Vector3(DataÉtage.Origine.x, transform.position.y, DataÉtage.Origine.z); }
     }
 
+    float angleOrigineÀPosition;
+    public float AngleOrigineÀPosition
+    {
+        get { angleOrigineÀPosition = Mathf.Rad2Deg * Mathf.Atan2(-transform.position.z, transform.position.x);
+            return angleOrigineÀPosition += angleOrigineÀPosition < 0 ? 360 : 0; }
+    }
+
     void Awake() // devrait pt pas etre instancier dans unity mais ici comme les autres objets
     {
         //gameObject.AddComponent<Rigidbody>().useGravity = true;
