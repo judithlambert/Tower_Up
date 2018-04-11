@@ -60,12 +60,7 @@ public class Boss : MonoBehaviour {
         }
     }
 
-    public void CracheProjectile()
-    {
-        ////transform.LookAt(DataÉtage.PersonnageGameObject.transform);
-        //animator.SetTrigger("Shout");
-        //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), Tongue.transform.localToWorldMatrix * Tongue.transform.position, Quaternion.identity);
-    }
+    
     public void Attack()
     {
         animator.SetTrigger("Attack");
@@ -97,6 +92,13 @@ public class Boss : MonoBehaviour {
         Walk();
         //transform.Translate(DataÉtage.PersonnageGameObject.transform.position - (transform.position*2));
         Attack();
+        CracheProjectile();
         transform.position = new Vector3(0, -4, 0);
+    }
+    public void CracheProjectile()
+    {
+        animator.SetTrigger("Shout");
+        Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), transform.position + transform.forward, Quaternion.identity);
+
     }
 }
