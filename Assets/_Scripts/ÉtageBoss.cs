@@ -23,7 +23,7 @@ public class ÉtageBoss : MonoBehaviour
     //void Update()
     //{
     //    deltaTemps += Time.deltaTime;
-    //    if (deltaTemps >= 1/3f)
+    //    if (deltaTemps >= 1 / 3f)
     //    {
     //        CercleSeulAléatoire(ListSommetsPics2e);
     //        deltaTemps = 0;

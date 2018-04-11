@@ -32,7 +32,8 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Instantiate(Resources.Load<GameObject>("Effects/ProjectileExplosion"), transform.position, Quaternion.identity);
+        GameObject Explosion = Instantiate(Resources.Load<GameObject>("Effects/ProjectileExplosion"), transform.position, Quaternion.identity);
+        Destroy(Explosion, 5);
         if (collision.gameObject.name == "Personnage")
         {
             DataÉtage.PersonnageScript.Dommage(1, collision);
