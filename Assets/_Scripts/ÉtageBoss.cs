@@ -30,6 +30,14 @@ public class ÉtageBoss : MonoBehaviour
     //    }
     //}
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Instantiate(Resources.Load<GameObject>("Prefabs/ProjectilePersonnage"), (new Vector3(0, DataÉtage.PersonnageGameObject.transform.position.y, 0) - DataÉtage.PersonnageGameObject.transform.position).normalized * DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f + DataÉtage.PersonnageGameObject.transform.position + new Vector3(0, DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f, 0), Random.rotation);
+        }
+    }
+
     void CercleSeulAléatoire(List<Vector3> list)
     {
         bool instancié = false;
