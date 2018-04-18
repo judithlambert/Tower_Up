@@ -2,10 +2,16 @@ Plateforme mur
 60;10;10;0;10
 Plateforme
 20;40;2;0;1
+Point
+55;2;0;10
 Plateforme
 20;40;4.5;0;1
+Point
+55;4.5;0;10
 Plateforme
 20;40;7;0;1
+Point
+55;7;0;10
 Plateforme
 20;40;10;0;1
 Plateforme
@@ -30,30 +36,48 @@ Plateforme mur
 Checkpoint
 215;10
 
+Fleche
+225;10;270
+
+//JUMPS RAPIDE PICS
+Point 1
+225;1;0;20
 PlateformeTemporaire 1
 220;10;1;0;0.5;0.75
 PlateformePics plancher
 220;130;0;0;1;0.75
+Point 2
+255;3;0;25
 PlateformeTemporaire 2
 250;10;3;0;0.5;0.75
 PlateformePics 2
 250;10;1.5;0;0.1;0.75
+Point 3
+285;5;0;30
 PlateformeTemporaire 3
 280;10;5;0;0.5;0.75
 PlateformePics 3
 280;10;3.5;0;0.1;0.75
+Point 4
+315;7;0;35
 PlateformeTemporaire 4
 310;10;7;0;0.5;0.75
 PlateformePics 4
 310;10;5.5;0;0.1;0.75
+Point 5
+340;9;0;40
 PlateformeTemporaire 5
 340;10;9;0;0.5;0.75
 PlateformePics 5
 340;10;7.5;0;0.1;0.75
+Point 6
+315;11;0;45
 PlateformeTemporaire 6
 310;10;11;0;0.5;0.75
 PlateformePics 6
 310;10;9.5;0;0.1;0.75
+Point 7
+345;13;0;50
 PlateformeTemporaire 7
 340;10;13;0;0.5;0.75
 PlateformePics 7
@@ -69,49 +93,64 @@ PlateformeTemporaire long
 370;70;15;0;0.5;5
 PlateformePics
 355;85;13;0;0.5;1
+Fleche
+375;15;0
 
+//PLATEFORME PIC CHQ COTÉ
 Plateforme 1
 80;40;16;0;0.5
+Point 1
+100;16;0;50
 Pic g1
 86;1;16
 Pic d1
 116;1;16
 Plateforme 2
 120;40;14;0;0.5
+Point 2
+140;14;0;50
 Pic g2
 126;1;14
 Pic d2
 154;1;14
 Plateforme 3
 160;40;13;0;0.5
+Point 3
+180;13;0;50
 Pic g3
 166;1;13
 Pic d3
 194;1;13
 Plateforme 4
 200;40;14;0;0.5
+Point 4
+220;14;0;50
 Pic g4
 206;1;14
 Pic d4
 234;1;14
 
+//PLATEFORME MONTANTE
 PlateformeMobile
 250;50;22;0;1;5;7;1
 Point 1
-260;15;0;5
+260;15;1;10
 Point 2
 275;16;0;5
 Point 3
-290;17;0;5
+290;17;1;10
 Point 4
 275;18;0;5
 Point 5
-260;19;0;5
+260;19;1;10
 Point 6
 275;20;0;5
 Point 7
-290;21;0;5
+290;21;1;10
+Fleche
+275;18;90
 
+//TUNNEL
 Plateforme debut tunel
 300;30;22;-4;1
 Checkpoint
@@ -124,6 +163,8 @@ PlateformePics plafond
 360;29;23;0;0;1;180
 Pic tunel
 345;1;20
+Point tunel
+345;21;1;15
 Plateforme coté 1
 325;5;23;0;1
 Plateforme coté 2
@@ -133,6 +174,7 @@ Plateforme fin tunel
 Plateforme fin tunel
 360;30;22;4;1
 
+//WALLJUMP PIC
 Plateforme chemin walljump pics
 30;110;22;0;1
 Plateforme plafond
@@ -143,11 +185,18 @@ Plateforme d
 130;10;32;0;10
 PlateformePics g1
 100;18;25;0;1;1;90
+Point d
+125;24;1;20
 PlateformePics d2
 130;18;26;0;1;1;-90
+Point g
+105;26.4;1;20
 PlateformePics g3
 100;18;30.9;0;1;1;90
+Point
+125;30;1;20
 
+//PLATEFORMES ÉCRASSANTES
 Plateforme ecrassement d
 40;15;32;0;7
 PlateformeMobile g
@@ -163,9 +212,12 @@ PlateformeMobile g
 PlateformeMobile d
 70;15;26;0;0.5;-35;30
 
+Fleche
+280;110;0
 Plateforme plancher
 270;120;24;0;1
 
+//PILON HAUT-BAS
 PlateformeMobile 1
 30;10;33;0;6;30;3;1
 PlateformeMobile 2
@@ -176,6 +228,18 @@ PlateformeMobile 4
 0;10;30;0;3;-30;3;1
 PlateformeMobile 5
 -10;10;29;0;2;30;3;1
+Point 1
+35;30;1;10
+Point 2
+25;29;1;10
+Point 3
+15;28;1;10
+Point 4
+5;27;1;10
+Point 5
+-5;26;1;10
+Fleche
+-16.5;26;45
 
 Plateforme mur
 -40;5;32;0;8
@@ -184,38 +248,3 @@ Plateforme final
 
 FinEtage
 160;33
-
-dfsvfd
-
-Plateforme escalier 1
-350;10;14;0;1
-Plateforme escalier 2
-0;10;15;0;1
-Plateforme escalier 3
-10;10;16;0;1
-Plateforme escalier 4
-20;10;17;0;1
-Plateforme escalier 5
-30;10;18;0;1
-Plateforme escalier 6
-40;10;19;0;1
-Plateforme escalier 7
-50;10;20;0;1
-Plateforme mur h1 et h2
-120;5;20;0;2.5
-PlateformeTemporaire mur h3
-120;17;16;0;0.5;0.5;0;-90
-Plateforme h1
-60;30;20;0;0.5
-PlateformeTemporaire h1
-90;20;20;0;0.5;0.5
-Plateforme h1
-110;10;20;0;0.5
-Plateforme h2
-40;10;18;0;0.5
-PlateformeTemporaire h2
-50;20;18;0;0.5;0.5
-Plateforme h2
-70;50;18;0;0.5
-Plateforme h3
-20;100;16;0;0.5
