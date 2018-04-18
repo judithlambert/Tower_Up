@@ -16,6 +16,10 @@ public class Boss : MonoBehaviour
     const float ANGLE_VIS_À_VIS = 0.5f;
     const float INTERVALLE_APPARITION_PROJECTILE = 5;
 
+
+    const float NbDeVieInitial = 100, DommageParCoup = 5;
+    float NbDeVie;
+
     Animator animator;
     GameObject Tongue;
 
@@ -44,6 +48,7 @@ public class Boss : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GetHit();
+        //Dommage();
     }
 
     void Update()
@@ -55,8 +60,7 @@ public class Boss : MonoBehaviour
             Shout();
             NouvelleVitesseAléatoire();
             NouvelleAvancéAléatoire();
-        }
-        else { // vis à vis le personnage
+     
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
             {
                 if (lastTimeShout + 4.667f <= Time.time)
@@ -66,7 +70,17 @@ public class Boss : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Shout"))
+                RotationVersPersonnage();
+        }
     }
+
+    //void Dommage()
+    //{
+       
+    //}
 
     bool VisÀVisPersonnage()
     {
