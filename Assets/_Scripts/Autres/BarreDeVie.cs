@@ -12,28 +12,23 @@ public class BarreDeVie : MonoBehaviour {
     Vector2 Dimension = new Vector2(250, 25);
     float offset = 1;
 
-    RectTransform Encadré;
-    Image Vie;
+    RectTransform Encadré, Vie;
     void Start() {
 
         Encadré = GetComponent<Image>().GetComponent<RectTransform>();
-        Vie = GetComponentInChildren<Image>();
+        Vie = GameObject.Find("Vie").GetComponent<Image>().GetComponent<RectTransform>();
 
         Encadré.pivot = new Vector2(0.5f, -1);
-        //GetComponent<Image>().transform.position = new Vector2(0, 0);
         Encadré.localPosition = new Vector2(0, 0);
-        //Encadré.anchoredPosition.Set(0, 0);
         Encadré.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 5, 10);
         Encadré.sizeDelta = Dimension;
+        Vie.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 1, 250);
 
-        //Encadré.position = new Vector2(50,10);
-
-
-        //Vie.GetComponent<RectTransform>().localPosition = new Vector2(offset / 2, 0);
+        //Vie.localPosition = new Vector2(offset / 2, 0);
 
     }
-	
-	void Update ()
+
+    void Update ()
     {
 
         Vie.GetComponent<RectTransform>().localScale = new Vector2(NbDeVie/NbDeVieInitial, 1);
