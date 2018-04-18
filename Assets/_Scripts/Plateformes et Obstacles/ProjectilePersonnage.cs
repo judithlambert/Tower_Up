@@ -18,7 +18,7 @@ public class ProjectilePersonnage : MonoBehaviour
         gameObject.transform.Translate(direction * VITESSE * Time.deltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision detected proj");
         GameObject Explosion = Instantiate(Resources.Load<GameObject>("Effects/ProjectilePersonnageExplosion"), transform.position, Quaternion.identity);

@@ -45,11 +45,6 @@ public class Boss : MonoBehaviour
         Tongue = GameObject.Find("Tongue");
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        GetHit();
-        //Dommage();
-    }
 
     void Update()
     {
@@ -63,7 +58,7 @@ public class Boss : MonoBehaviour
 
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
             {
-                RotationVersPersonnage();
+                //RotationVersPersonnage();
                 //if (lastTimeShout + 4.667f <= Time.time)
                 //{
                 //    CracheProjectile();
@@ -153,4 +148,5 @@ public class Boss : MonoBehaviour
         GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), PositionTongue, Quaternion.identity);
         proj.AddComponent<Projectile>().Initialisation(0.5f, 30, 0, 20);
     }
+ 
 }
