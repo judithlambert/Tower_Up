@@ -15,9 +15,9 @@ public class PlateformePics : Plateforme
     {
         get
         {
-           return new Vector3(Mathf.Cos(Maths.DegréEnRadian(AngleDébut + Amplitude / 2)) * (Rayon + Largeur / 2),
+           return new Vector3(Mathf.Cos(Mathf.Deg2Rad * (AngleDébut + Amplitude / 2)) * (Rayon + Largeur / 2),
                               Hauteur + HauteurPic,
-                              Mathf.Sin(Maths.DegréEnRadian(AngleDébut + Amplitude / 2)) * (Rayon + Largeur / 2));
+                              Mathf.Sin(Mathf.Deg2Rad * (AngleDébut + Amplitude / 2)) * (Rayon + Largeur / 2));
         }
     }
 
@@ -84,13 +84,13 @@ public class PlateformePics : Plateforme
     override protected void CalculerDonnéesDeBase()
     {
         Origine = transform.position;
-        nbTranches = (int)Mathf.Ceil(Maths.DegréEnRadian(Amplitude) * DataÉtage.RayonTrajectoirePersonnage / DataÉtage.LARGEUR_PLATEFORME);
+        nbTranches = (int)Mathf.Ceil((Mathf.Deg2Rad * Amplitude) * DataÉtage.RayonTrajectoirePersonnage / DataÉtage.LARGEUR_PLATEFORME);
         //AngleDébut = Maths.DegréEnRadian(AngleDébut);
         //Amplitude = Maths.DegréEnRadian(Amplitude);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS + nbTranches;
         nbTriangles = (nbTranches * 3 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE + nbTranches * 4;
-        DeltaAngle = Maths.DegréEnRadian(Amplitude) / nbTranches;
-        DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
+        DeltaAngle = (Mathf.Deg2Rad * Amplitude) / nbTranches;
+        DeltaTexture = DeltaAngle / (Mathf.Deg2Rad * NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
     }
 
     override protected void GénérerTriangles()

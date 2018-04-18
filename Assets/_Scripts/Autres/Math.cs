@@ -7,12 +7,12 @@ using UnityEngine;
 public static class Maths
 {
     /// <summary>permet d'arranger "-20" ou "380"</summary>
-    public static float GestionAngle(float angle)
-    {
-        angle = angle % 360;
-        if (angle < 0) angle = 360 + angle;
-        return angle;
-    }
+    //public static float GestionAngle(float angle)
+    //{
+    //    angle = angle % 360;
+    //    if (angle < 0) angle = 360 + angle;
+    //    return angle;
+    //}
 
     public static void SetGlobalScale(this Transform transform, Vector3 globalScale)
     {
@@ -20,15 +20,15 @@ public static class Maths
         transform.localScale = new Vector3(globalScale.x / transform.lossyScale.x, globalScale.y / transform.lossyScale.y, globalScale.z / transform.lossyScale.z);
     }
 
-    const float FACTEUR_CONVERSION_DEGRÉ_RADIAN = 2 * Mathf.PI / 360;
-    static public float DegréEnRadian(float angleDegré)
-    {
-        return angleDegré * FACTEUR_CONVERSION_DEGRÉ_RADIAN;
-    }
-    static public float RadianEnDegré(float angleRadian)
-    {
-        return angleRadian * (1/FACTEUR_CONVERSION_DEGRÉ_RADIAN);
-    }
+    //const float FACTEUR_CONVERSION_DEGRÉ_RADIAN = 2 * Mathf.PI / 360;
+    //static public float DegréEnRadian(float angleDegré)
+    //{
+    //    return angleDegré * FACTEUR_CONVERSION_DEGRÉ_RADIAN;
+    //}
+    //static public float RadianEnDegré(float angleRadian)
+    //{
+    //    return angleRadian * (1/FACTEUR_CONVERSION_DEGRÉ_RADIAN);
+    //}
     /// <summary>x,y,z = rayon,longitude,latitude</summary>
     static public Vector3 VecteurCartésienÀPolaire(Vector3 vecteur)
     {
@@ -58,10 +58,10 @@ public static class Maths
         return angle * rayon;
     }
 
-    static public Quaternion Vector3àQuaternion(Vector3 vector)
-    {
-        return Quaternion.Euler(vector);
-    }
+    //static public Quaternion Vector3àQuaternion(Vector3 vector)
+    //{
+    //    return Quaternion.Euler(vector);
+    //}
 
     public static bool EstDansLeRange(float n, float borne1, float borne2)
     {

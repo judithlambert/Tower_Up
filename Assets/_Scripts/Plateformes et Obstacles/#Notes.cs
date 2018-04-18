@@ -1,19 +1,13 @@
 ﻿/* 
  * Mort si plateforme temporaire tombe sur personnage
  * 
- * faire methode pour creation d'un objet
- * 
- * tour devrait avoir rigidbody
+ * faire methode pour creation d'un object
  * 
  * class to string pas efficace
- * 
- * on peut pas utiliser 'using UnityEditor' dans un build (class materials)
  * 
  * bug avec le personnage qui tourne sur lui-même sur une plateform mobile
  * 
  * plateform angle et amplitude en radian ou degré
- * 
- * plateforme mobile qui tourne en rond (tour complet)
  * 
  * boost when jumping
  * 
@@ -23,13 +17,11 @@
  * 
  * bug avec la lumiere si on part de ScnMenu
  * 
- * fleche poir chemin
- * 
- * rendre sin commun
- * 
  * Deg2Rad et Rad2Deg
  * 
  * saut plafond
  * 
  * boule de feu
+ * 
+ * barre de vie montre coup, descned graduellement
  */

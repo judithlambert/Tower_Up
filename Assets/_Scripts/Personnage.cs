@@ -68,7 +68,7 @@ public class Personnage : MonoBehaviour
         //gameObject.AddComponent<SphereCollider>();
 
         // ne dois pas bouger lors du respawn
-        transform.rotation = rotationInitiale = Maths.Vector3àQuaternion(Vector3.zero);
+        transform.rotation = rotationInitiale = Quaternion.Euler(Vector3.zero);
         PositionCheckPoint = transform.position;
         positionInitiale = transform.position;
         GetComponent<Rigidbody>().angularDrag = ANGULAR_DRAG;

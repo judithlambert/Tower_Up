@@ -12,9 +12,12 @@ public class BarreDeVie : MonoBehaviour {
     Vector2 Dimension = new Vector2(100,10);
     float offset = 1;
 
-    [SerializeField] Image Encadré, Vie;
+    Image Encadré, Vie;
     void Start() {
-    
+
+        Encadré = gameObject.GetComponentInChildren<Image>();
+        Vie = Encadré.GetComponentInChildren<Image>();
+        
         //Encadré.transform.SetGlobalScale((Ratio + new Vector2(0.1f, 0.1f)) * Dimension);
         //Vie.transform.SetGlobalScale(Ratio * Dimension);
 

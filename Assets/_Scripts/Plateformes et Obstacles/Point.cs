@@ -28,7 +28,7 @@ public class Point : MonoBehaviour
 
     public void Initialisation(float angle, float hauteur, bool multiplicateur, float points, Material material)
     {
-        Position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, hauteur, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
+        Position = new Vector3(Mathf.Cos((Mathf.Deg2Rad * angle)) * DataÉtage.RayonTrajectoirePersonnage, hauteur, Mathf.Sin((Mathf.Deg2Rad * angle)) * DataÉtage.RayonTrajectoirePersonnage);
         Multiplicateur = multiplicateur;
         Points = points;
 

@@ -83,14 +83,14 @@ public class Plateforme : MonoBehaviour
             PositionDessous = Hauteur;
         }
 
-        SommetGaucheBasInférieur = Sommet(Maths.DegréEnRadian(AngleDébut), 0, true, false);
-        SommetGaucheBasSuppérieur = Sommet(Maths.DegréEnRadian(AngleDébut), 0, true, true);
-        SommetGaucheHautInférieur = Sommet(Maths.DegréEnRadian(AngleDébut), 0, false, false);
-        SommetGaucheHautSuppérieur = Sommet(Maths.DegréEnRadian(AngleDébut), 0, false, true);
-        SommetDroiteBasInférieur = Sommet(Maths.DegréEnRadian((AngleDébut + Amplitude)), 0, true, false);
-        SommetDroiteBasSuppérieur = Sommet(Maths.DegréEnRadian((AngleDébut + Amplitude)), 0, true, true);
-        SommetDroiteHautInférieur = Sommet(Maths.DegréEnRadian((AngleDébut + Amplitude)), 0, false, false);
-        SommetDroiteHautSuppérieur = Sommet(Maths.DegréEnRadian((AngleDébut + Amplitude)), 0, false, true);
+        SommetGaucheBasInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false);
+        SommetGaucheBasSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true);
+        SommetGaucheHautInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, false);
+        SommetGaucheHautSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, true);
+        SommetDroiteBasInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, false);
+        SommetDroiteBasSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, true);
+        SommetDroiteHautInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, false);
+        SommetDroiteHautSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, true);
 
     }
 
@@ -184,8 +184,8 @@ public class Plateforme : MonoBehaviour
         nbTranches = (int)Mathf.Ceil(Amplitude * NB_TUILES_PAR_CERCLE_COMPLET / 360);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS;
         nbTriangles = (nbTranches * 4 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE;
-        DeltaAngle = Maths.DegréEnRadian(Amplitude) / nbTranches;
-        DeltaTexture = DeltaAngle / Maths.DegréEnRadian(NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
+        DeltaAngle = (Mathf.Deg2Rad * Amplitude) / nbTranches;
+        DeltaTexture = DeltaAngle / (Mathf.Deg2Rad * NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
         DeltaÉlévation = Inclinaison / nbTranches;
     }
 
