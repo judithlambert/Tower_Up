@@ -20,7 +20,9 @@ public class DataÉtage : MonoBehaviour
     const string CHEMIN_DATA_ÉTAGE= "Assets/Data/";
     const char SÉPARATEUR = ';';
     const int ÉTAGE_BOSS = 5;
+    const float DISTANCE_CAMERA_PERSONNAGE = 10; // ratio avec tour 
     public const int DIFFICULTÉ_DE_BASE = (int)Difficulté.Normale;
+
 
     int NB_MAX_JUMP = 2;
 
@@ -40,7 +42,6 @@ public class DataÉtage : MonoBehaviour
     static public GameObject BossGameObject;
     public static Boss BossScript;
     public static GameObject BarreDeVieBoss;
-    const float DISTANCE_CAMERA_PERSONNAGE = 10; // ratio avec tour 
     public static float RayonTrajectoirePersonnage;
     public static float RayonCamera;
 

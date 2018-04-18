@@ -24,8 +24,8 @@ public class BarreDeVie : MonoBehaviour {
 
     }
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
         Vie.GetComponent<RectTransform>().localScale = new Vector2(NbDeVie/NbDeVieInitial, 1);
     }
