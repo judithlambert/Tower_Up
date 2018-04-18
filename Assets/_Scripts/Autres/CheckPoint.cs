@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    GameObject drapeau;
+    protected GameObject Drapeau;
 
     // position et rotation
 
     public const string String = "Checkpoint";
     public void Initialisation(float angle, float hauteur) // presque même que FinÉtage
     {
-        Vector3 position = transform.position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage,
+        Vector3 position = transform.position = new Vector3(Mathf.Cos((Mathf.Deg2Rad * angle)) * DataÉtage.RayonTrajectoirePersonnage,
                                                             hauteur + DataÉtage.DELTA_HAUTEUR,
-                                                            Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage); // même chose que plus bas
+                                                            Mathf.Sin((Mathf.Deg2Rad * angle)) * DataÉtage.RayonTrajectoirePersonnage); // même chose que plus bas
 
         transform.rotation = Quaternion.Euler(0, -angle, 0);
 
@@ -29,12 +29,12 @@ public class CheckPoint : MonoBehaviour
 
         Maths.SetGlobalScale(transform, new Vector3(DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR * 2, 1));
 
-        drapeau = new GameObject("Drapeau");
-        drapeau.AddComponent<DrapeauAnimé>().Initialisation(new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR, // même chose que plus haut
+        Drapeau = new GameObject("Drapeau");
+        Drapeau.AddComponent<DrapeauAnimé>().Initialisation(new Vector3(Mathf.Cos((Mathf.Deg2Rad * angle)) * DataÉtage.RAYON_TOUR, // même chose que plus haut
                                          hauteur + DataÉtage.DELTA_HAUTEUR / 2,
-                                         Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RAYON_TOUR),
+                                         Mathf.Sin((Mathf.Deg2Rad * angle)) * DataÉtage.RAYON_TOUR),
                                          Materials.Get((int)NomMaterial.CheckPoint));
-        drapeau.transform.rotation = Quaternion.Euler(0, -angle, 0);
+        Drapeau.transform.rotation = Quaternion.Euler(0, -angle, 0);
 
     }
 
@@ -50,7 +50,7 @@ public class CheckPoint : MonoBehaviour
 
     public void Destroy()
     {
-        Destroy(drapeau);
+        Destroy(Drapeau);
         Destroy(gameObject);
     }
 }

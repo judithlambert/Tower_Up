@@ -25,7 +25,7 @@ public class Pic : MonoBehaviour
 
     public void Initialisation(float angle, float hauteur, float élévationEnY, float rayon, Material material)
     {
-        Position = new Vector3(Mathf.Cos(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage, élévationEnY, Mathf.Sin(Maths.DegréEnRadian(angle)) * DataÉtage.RayonTrajectoirePersonnage);
+        Position = new Vector3(Mathf.Cos((Mathf.Deg2Rad * angle)) * DataÉtage.RayonTrajectoirePersonnage, élévationEnY, Mathf.Sin((Mathf.Deg2Rad * angle)) * DataÉtage.RayonTrajectoirePersonnage);
         Rayon = rayon;
         Hauteur = hauteur;
 

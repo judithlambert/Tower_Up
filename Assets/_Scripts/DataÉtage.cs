@@ -30,7 +30,8 @@ public class DataÉtage : MonoBehaviour
     static public Camera Caméra;
     public static Personnage PersonnageScript;
     public static Plateforme PlancherScript;
-    [SerializeField] GameObject prefabPersonnage;
+    //[SerializeField] GameObject prefabPersonnage;
+    GameObject prefabPersonnage;
     public static GameObject Ui;
     public static UI UiScript;
     public static GameObject UiFinÉtage;
@@ -38,7 +39,7 @@ public class DataÉtage : MonoBehaviour
     List<GameObject> ListGameObject;
     public static GameObject Plane;
 
-    [SerializeField] GameObject prefabBoss;
+    //[SerializeField] GameObject prefabBoss;
     static public GameObject BossGameObject;
     public static Boss BossScript;
     public static GameObject BarreDeVieBoss;
@@ -81,6 +82,7 @@ public class DataÉtage : MonoBehaviour
         TourGameObject.AddComponent<Plateforme>().Initialisation(0, 360, HAUTEUR_TOUR * DELTA_HAUTEUR, 0, HAUTEUR_TOUR * DELTA_HAUTEUR, RAYON_TOUR,0, 0, Materials.Get((int)NomMaterial.Tour));
         RayonTrajectoirePersonnage = RAYON_TOUR + PlancherGameObject.GetComponent<Plateforme>().Largeur / 2;
         RayonCamera = RayonTrajectoirePersonnage + DISTANCE_CAMERA_PERSONNAGE;
+        prefabPersonnage = Resources.Load<GameObject>("Prefabs/Personnage");
         PersonnageGameObject = Instantiate(prefabPersonnage, new Vector3(RayonTrajectoirePersonnage, prefabPersonnage.transform.lossyScale.y/2, 0), Quaternion.Euler(Vector3.zero));
         PersonnageScript = PersonnageGameObject.GetComponent<Personnage>();
         Ui = GameObject.FindGameObjectWithTag("UI");
@@ -135,7 +137,7 @@ public class DataÉtage : MonoBehaviour
                 {
                     //Gestion Angle ne sert à rien
                     case Plateforme.String:
-                        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(Maths.GestionAngle(attributs[0]),
+                        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(attributs[0],
                                                                                         attributs[1],
                                                                                         attributs[2] * DELTA_HAUTEUR,
                                                                                         attributs[3],
@@ -146,7 +148,7 @@ public class DataÉtage : MonoBehaviour
                                                                                         Materials.Get((int)NomMaterial.Plateforme));
                         break;
                     case PlateformeMobile.String:
-                        ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(Maths.GestionAngle(attributs[0]),
+                        ListGameObject.Last().AddComponent<PlateformeMobile>().Initialisation(attributs[0],
                                                                                               attributs[1],
                                                                                               attributs[2] * DELTA_HAUTEUR,
                                                                                               attributs[3],
@@ -160,7 +162,7 @@ public class DataÉtage : MonoBehaviour
                                                                                               Materials.Get((int)NomMaterial.Plateforme));
                         break;
                     case PlateformeTemporaire.String:
-                        ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(Maths.GestionAngle(attributs[0]),
+                        ListGameObject.Last().AddComponent<PlateformeTemporaire>().Initialisation(attributs[0],
                                                                                                   attributs[1],
                                                                                                   attributs[2] * DELTA_HAUTEUR,
                                                                                                   attributs[3],
@@ -173,7 +175,7 @@ public class DataÉtage : MonoBehaviour
                                                                                                   Materials.Get((int)NomMaterial.Plateforme));
                         break;
                     case PlateformePics.String:
-                        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(Maths.GestionAngle(attributs[0]),
+                        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(attributs[0],
                                                                                             attributs[1],
                                                                                             attributs[2] * DELTA_HAUTEUR,
                                                                                             attributs[3],
@@ -185,14 +187,14 @@ public class DataÉtage : MonoBehaviour
                                                                                             Materials.Get((int)NomMaterial.Plateforme));
                         break;
                     case Pic.String:
-                        ListGameObject.Last().AddComponent<Pic>().Initialisation(Maths.GestionAngle(attributs[0]),
+                        ListGameObject.Last().AddComponent<Pic>().Initialisation(attributs[0],
                                                                                  attributs[1] * DELTA_HAUTEUR,
                                                                                  attributs[2] * DELTA_HAUTEUR,
                                                                                  LARGEUR_PLATEFORME / 2.4f,
                                                                                  Materials.Get((int)NomMaterial.Pic));
                         break;
                     case FinÉtage.String:
-                        ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(Maths.GestionAngle(attributs[0]),
+                        ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(attributs[0],
                                                                                       attributs[1] * DELTA_HAUTEUR);
                         break;
                     case Point.String:
@@ -275,10 +277,11 @@ public class DataÉtage : MonoBehaviour
     {        
         TourGameObject.transform.position = new Vector3(0, PlancherGameObject.transform.position.y - 2);
         TourGameObject.AddComponent<ÉtageBoss>();
-        BossGameObject = Instantiate(prefabBoss, new Vector3(0, TourGameObject.transform.position.y,0), Quaternion.Euler(Vector3.zero));
+        BossGameObject = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, TourGameObject.transform.position.y,0), Quaternion.Euler(Vector3.zero));
+        BossScript = BossGameObject.GetComponent<Boss>();
         Plane.transform.position = new Vector3(0, -250);
 
-        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectilePersonnage"));
+        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0,0), Quaternion.Euler(Vector3.zero));
 
 
         string obj = "support";
