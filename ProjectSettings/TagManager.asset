@@ -8,6 +8,7 @@ TagManager:
   - "UIFin\xC9tage"
   - MessageErreur
   - Rino
+  - Boss
   layers:
   - Default
   - TransparentFX
