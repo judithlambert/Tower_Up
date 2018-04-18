@@ -281,7 +281,9 @@ public class DataÉtage : MonoBehaviour
         BossScript = BossGameObject.GetComponent<Boss>();
         Plane.transform.position = new Vector3(0, -250);
 
+        
         BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0,0), Quaternion.Euler(Vector3.zero));
+        BarreDeVieBoss.transform.parent = Ui.transform;
 
 
         string obj = "support";

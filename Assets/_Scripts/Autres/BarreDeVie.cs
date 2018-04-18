@@ -15,8 +15,8 @@ public class BarreDeVie : MonoBehaviour {
     Image Encadré, Vie;
     void Start() {
 
-        Encadré = gameObject.GetComponentInChildren<Image>();
-        Vie = Encadré.GetComponentInChildren<Image>();
+        Encadré = gameObject.GetComponent<Image>();
+        Vie = Encadré.GetComponent<Image>();
         
         //Encadré.transform.SetGlobalScale((Ratio + new Vector2(0.1f, 0.1f)) * Dimension);
         //Vie.transform.SetGlobalScale(Ratio * Dimension);
