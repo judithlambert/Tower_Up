@@ -7,18 +7,25 @@ public class Projectile : MonoBehaviour
     // valeurs de Adam (bonnes valeurs) : vitesse = 50, temps apparition = 3, temps pour mourrir = 20
     Vector3 direction;
     float deltaTemps;
-    GameObject gameObject;
-    Vector3 Position;
-    float Vitesse, TempsApparition, TempsMourrir; 
+    float Diamètre, Vitesse, TempsApparition, TempsMourrir;
 
-    public void Initialisation(Vector3 position, float vitesse, float tempsApparition, float tempsMourrir)
+
+
+    public void Initialisation(float diamètre, float vitesse, float tempsApparition, float tempsMourrir)
     {
-        Position = position;
+        Debug.Log("initialisation");
+        deltaTemps = 0;
+        Diamètre = diamètre;
         Vitesse = vitesse;
         TempsApparition = tempsApparition;
         TempsMourrir = tempsMourrir;
 
-        gameObject = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), Position, Quaternion.identity);
+        if (TempsApparition == 0)
+        {
+            Debug.Log("apparue");
+            Maths.SetGlobalScale(transform, new Vector3(Diamètre, Diamètre, Diamètre)); // apparition
+            direction = (DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized;
+        }
 
         //direction = (DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized;
         Destroy(gameObject, TempsMourrir);
@@ -27,17 +34,22 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+        
         if (deltaTemps >= TempsApparition)
+        //if (pourcentageTemps >= 1)
         {
             //transform.Translate((DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized * vitesse * Time.deltaTime);
-            gameObject.transform.Translate(direction * Vitesse * Time.deltaTime);
+            transform.Translate(direction * Vitesse * Time.deltaTime);
         }
         else
         {
-            gameObject.transform.localScale = gameObject.transform.lossyScale * (1 + Time.deltaTime/1.5f); // apparition
-            direction = (DataÉtage.PersonnageGameObject.transform.position - gameObject.transform.position).normalized;
+            float pourcentageTemps = deltaTemps / TempsApparition;
+            Debug.Log("en apparition");
+            Maths.SetGlobalScale(transform, new Vector3(Diamètre * pourcentageTemps, Diamètre * pourcentageTemps, Diamètre * pourcentageTemps)); // apparition
+            direction = (DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized;
         }
         deltaTemps += Time.deltaTime;
+        
     }
 
     private void OnCollisionEnter(Collision collision)

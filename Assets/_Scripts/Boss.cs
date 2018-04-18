@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.Animations;
 
 public class Boss : MonoBehaviour
-
 {
+    float lastTimeShout;
     const int VITESSE_ROTATION = 30; //degré par sec
     const float ANGLE_VIS_À_VIS = 0.5f;
     Animator animator;
     GameObject Tongue;
+
 
     public float VitesseRotation { get; private set; }
 
@@ -31,7 +32,7 @@ public class Boss : MonoBehaviour
     {
         VitesseRotation = VITESSE_ROTATION;
         animator = GetComponent<Animator>();
-        //Tongue = GameObject.FindGameObjectWithTag("Rino").GetComponentsInChildren<GameObject>().Where(x => x.name == "Tongue").First();
+        Tongue = GameObject.Find("Tongue");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -47,24 +48,22 @@ public class Boss : MonoBehaviour
         {
             DéplacementVersPersonnage();
         }
-        else
-        {
-            animator.GetCurrentAnimatorStateInfo(0).IsName("Shout");
-            Shout();
-
-            //deltaTemps += Time.deltaTime;
-            //if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE)
-            //{
-            //    CracheProjectile();
-            //    deltaTemps = 0;
-            //}
+        else { // vis à vis le personnage
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            {
+                if (lastTimeShout + 4.667f <= Time.time)
+                {
+                    CracheProjectile();
+                    lastTimeShout = Time.time;
+                }
+            }
         }
     }
 
     bool VisÀVisPersonnage()
     {
         bool b = false;
-        if (Mathf.Abs(AngleBossPersonnage) <= 0.5f) { b = true; }
+        if (Mathf.Abs(AngleBossPersonnage) <= ANGLE_VIS_À_VIS) { b = true; }
         return b;
     }
 
@@ -102,8 +101,19 @@ public class Boss : MonoBehaviour
 
     public void CracheProjectile()
     {
-        animator.SetTrigger("Shout");
-        Projectile proj = new Projectile();
-        proj.Initialisation(transform.position + 10*transform.forward + 10*Vector3.up, 50, 1, 20);
+        Shout();
+        StartCoroutine(Wait());
+       
+        //GameObject proj = new GameObject("projectile");
+        //proj.AddComponent<Projectile>().Initialisation(transform.position + 10*transform.forward + 10*Vector3.up, 1, 50, 2, 20);
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1.3f);
+        Vector3 PositionTongue = GameObject.FindGameObjectWithTag("Rino").transform.worldToLocalMatrix * Tongue.transform.position;
+        //Vector3 PositionTongue = GameObject.FindGameObjectWithTag("Rino").transform.worldToLocalMatrix * (Tongue.transform.localToWorldMatrix * Tongue.transform.position);
+        GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), PositionTongue, Quaternion.identity);
+        proj.AddComponent<Projectile>().Initialisation(0.5f, 30, 0, 20);
     }
 }

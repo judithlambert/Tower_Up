@@ -77,4 +77,10 @@ public static class Maths
         else { max = borne2; min = borne1; }
         return (n >= min-incertitude && n <= max+incertitude);
     }
+
+
+    public static string Vecteur2String(Vector3 vector, string nom)
+    {
+        return nom + " : (" + vector.x + ", " + vector.y + ", " + vector.z + ")";
+    }
 }

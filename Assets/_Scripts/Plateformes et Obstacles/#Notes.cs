@@ -30,4 +30,6 @@
  * Deg2Rad et Rad2Deg
  * 
  * saut plafond
+ * 
+ * boule de feu
  */
