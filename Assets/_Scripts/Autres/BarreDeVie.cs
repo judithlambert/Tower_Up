@@ -9,21 +9,27 @@ public class BarreDeVie : MonoBehaviour {
     float NbDeVie { get { return DataÉtage.BossScript.NbDeVie; } }
     float NbDeVieInitial { get { return Boss.NbDeVieInitial; } }
 
-    Vector2 Dimension = new Vector2(100,10);
+    Vector2 Dimension = new Vector2(250, 25);
     float offset = 1;
 
-    Image Encadré, Vie;
+    RectTransform Encadré;
+    Image Vie;
     void Start() {
 
-        Encadré = gameObject.GetComponent<Image>();
-        Vie = Encadré.GetComponent<Image>();
-        
-        //Encadré.transform.SetGlobalScale((Ratio + new Vector2(0.1f, 0.1f)) * Dimension);
-        //Vie.transform.SetGlobalScale(Ratio * Dimension);
+        Encadré = GetComponent<Image>().GetComponent<RectTransform>();
+        Vie = GetComponentInChildren<Image>();
 
-        Encadré.GetComponent<RectTransform>().sizeDelta = Dimension;
+        Encadré.pivot = new Vector2(0.5f, -1);
+        //GetComponent<Image>().transform.position = new Vector2(0, 0);
+        Encadré.localPosition = new Vector2(0, 0);
+        //Encadré.anchoredPosition.Set(0, 0);
+        Encadré.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 5, 10);
+        Encadré.sizeDelta = Dimension;
 
-        //Vie.GetComponent<RectTransform>().localPosition = new Vector2(offset/2,0);
+        //Encadré.position = new Vector2(50,10);
+
+
+        //Vie.GetComponent<RectTransform>().localPosition = new Vector2(offset / 2, 0);
 
     }
 	
