@@ -17,8 +17,8 @@ public class Boss : MonoBehaviour
     const float INTERVALLE_APPARITION_PROJECTILE = 5;
 
 
-    const float NbDeVieInitial = 100, DommageParCoup = 5;
-    float NbDeVie;
+    public const float NbDeVieInitial = 100, DommageParCoup = 5;
+    public float NbDeVie;
 
     Animator animator;
     GameObject Tongue;
@@ -43,33 +43,31 @@ public class Boss : MonoBehaviour
         VitesseRotation = VITESSE_ROTATION_MIN;
         animator = GetComponent<Animator>();
         Tongue = GameObject.Find("Tongue");
+        NbDeVie = NbDeVieInitial;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         GetHit();
-        //Dommage();
+        Dommage();
     }
 
     void Update()
     {
         if (VisÀVisPersonnage())
         {
-            //GetHit();
-            //Attack();
             Shout();
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            {
+                if (lastTimeShout + 4.667f <= Time.time)
+                {
+                    CracheProjectile();
+                    lastTimeShout = Time.time;
+                }
+            }
             NouvelleVitesseAléatoire();
             NouvelleAvancéAléatoire();
 
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-            {
-                RotationVersPersonnage();
-                //if (lastTimeShout + 4.667f <= Time.time)
-                //{
-                //    CracheProjectile();
-                //    lastTimeShout = Time.time;
-                //}
-            }
         }
         else
         {
@@ -78,10 +76,10 @@ public class Boss : MonoBehaviour
         }
     }
 
-    //void Dommage()
-    //{
-       
-    //}
+    void Dommage()
+    {
+        NbDeVie -= 5;
+    }
 
     bool VisÀVisPersonnage()
     {
