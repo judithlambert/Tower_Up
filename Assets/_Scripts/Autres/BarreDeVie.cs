@@ -1,35 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
-public class BarreDeVie : MonoBehaviour
-{
-    const int ESPACEMENENT = 5;
-    [SerializeField] Image Coeur;
-    List<Image> ListeCoeurs;
-    float largeur;
+public class BarreDeVie : MonoBehaviour {
+    // créer seulement pour ÉtageBoss
 
-    private void Start()
-    {
-        ListeCoeurs = new List<Image>();
-        largeur = Coeur.rectTransform.rect.width;
-        for(int i = 1; i <= DataÉtage.PersonnageScript.Vie; ++i)
-        {
-            Image nouveauCoeur = Instantiate(Coeur, Vector3.zero, Quaternion.identity, transform);
-            nouveauCoeur.transform.position = new Vector3(nouveauCoeur.GetComponentInParent<Transform>().position.x + (largeur + ESPACEMENENT) * (i - 1), nouveauCoeur.transform.position.y);
-            ListeCoeurs.Add(nouveauCoeur);
-        }
+    float NbDeVie { get { return DataÉtage.BossScript.NbDeVie; } }
+    float NbDeVieInitial { get { return Boss.NbDeVieInitial; } }
+
+    Vector2 Dimension = new Vector2(100,10);
+    float offset = 1;
+
+    [SerializeField] Image Encadré, Vie;
+    void Start() {
+    
+        //Encadré.transform.SetGlobalScale((Ratio + new Vector2(0.1f, 0.1f)) * Dimension);
+        //Vie.transform.SetGlobalScale(Ratio * Dimension);
+
+        Encadré.GetComponent<RectTransform>().sizeDelta = Dimension;
+
+        //Vie.GetComponent<RectTransform>().localPosition = new Vector2(offset/2,0);
+
     }
+	
+	// Update is called once per frame
+	void Update () {
 
-    private void Update()
-    {
-        if (DataÉtage.PersonnageScript.updateVie)
-        {
-            foreach(var c in ListeCoeurs)
-            {
-                c.gameObject.SetActive(ListeCoeurs.IndexOf(c) < DataÉtage.PersonnageScript.Vie);
-            }
-        }
+        Vie.GetComponent<RectTransform>().localScale = new Vector2(NbDeVie/NbDeVieInitial, 1);
     }
 }

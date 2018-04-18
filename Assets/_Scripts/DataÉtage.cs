@@ -37,9 +37,9 @@ public class DataÉtage : MonoBehaviour
     public static GameObject Plane;
 
     [SerializeField] GameObject prefabBoss;
-    GameObject BossGameObject;
-    Boss BossScript;
-
+    static public GameObject BossGameObject;
+    public static Boss BossScript;
+    public static GameObject BarreDeVieBoss;
     const float DISTANCE_CAMERA_PERSONNAGE = 10; // ratio avec tour 
     public static float RayonTrajectoirePersonnage;
     public static float RayonCamera;
@@ -276,6 +276,10 @@ public class DataÉtage : MonoBehaviour
         TourGameObject.AddComponent<ÉtageBoss>();
         BossGameObject = Instantiate(prefabBoss, new Vector3(0, TourGameObject.transform.position.y,0), Quaternion.Euler(Vector3.zero));
         Plane.transform.position = new Vector3(0, -250);
+
+        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectilePersonnage"));
+
+
         string obj = "support";
         string obj1 = "élévation";
         string obj2 = "pic";
