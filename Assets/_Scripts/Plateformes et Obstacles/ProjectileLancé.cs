@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectilePersonnage : MonoBehaviour
+public class ProjectileLancé : MonoBehaviour
 {  
     const float VITESSE = 15;
     Vector3 direction;

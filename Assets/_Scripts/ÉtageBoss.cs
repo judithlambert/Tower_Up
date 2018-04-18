@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ÉtageBoss : MonoBehaviour
 {
-    const float INTERVALLE_APPARITION_PROJECTILE = 5;
+    const float INTERVALLE_APPARITION_PROJECTILE = 0.2f;
     float deltaTemps;
     public List<Vector3> ListSommetsPics1e, ListSommetsPics2e, ListSommetsPics3e;
 
@@ -21,23 +21,20 @@ public class ÉtageBoss : MonoBehaviour
         }
     }
 
-    //void Update()
-    //{
-    //    deltaTemps += Time.deltaTime;
-    //    if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE)
-    //    {
-    //        CercleSeul(ListSommetsPics2e);
-    //        deltaTemps = 0;
-    //    }
-    //}
-
     void Update()
     {
+        deltaTemps += Time.deltaTime;
+        if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE)
+        {
+            CercleSeulAléatoire(ListSommetsPics2e);
+            deltaTemps = 0;
+        }
         if (Input.GetKeyDown(KeyCode.X))
         {
             Instantiate(Resources.Load<GameObject>("Prefabs/ProjectilePersonnage"), (new Vector3(0, DataÉtage.PersonnageGameObject.transform.position.y, 0) - DataÉtage.PersonnageGameObject.transform.position).normalized * DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f + DataÉtage.PersonnageGameObject.transform.position + new Vector3(0, DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f, 0), Random.rotation);
         }
     }
+
 
     void CercleSeulAléatoire(List<Vector3> list)
     {

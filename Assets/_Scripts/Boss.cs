@@ -57,14 +57,14 @@ public class Boss : MonoBehaviour
         if (VisÀVisPersonnage())
         {
             Shout();
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-            {
-                //if (lastTimeShout + 4.667f <= Time.time)
-                //{
-                //    CracheProjectile();
-                //    lastTimeShout = Time.time;
-                //}
-            }
+            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            //{
+            //    if (lastTimeShout + 4.667f <= Time.time)
+            //    {
+            //        CracheProjectile();
+            //        lastTimeShout = Time.time;
+            //    }
+            //}
             NouvelleVitesseAléatoire();
             NouvelleAvancéAléatoire();
         }
