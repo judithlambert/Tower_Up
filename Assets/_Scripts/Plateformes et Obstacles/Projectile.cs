@@ -57,7 +57,7 @@ public class Projectile : MonoBehaviour
         Debug.Log("collision detected proj");
         GameObject Explosion = Instantiate(Resources.Load<GameObject>("Effects/ProjectileExplosion"), transform.position, Quaternion.identity);
         Destroy(Explosion, 5);
-        if (collision.gameObject.name == "Personnage")
+        if (collision.gameObject.name.Contains("Personnage"))
         {
             DataÉtage.PersonnageScript.Dommage(1, collision);
             Debug.Log("collision pers proj");

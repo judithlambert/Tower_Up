@@ -95,6 +95,6 @@ public class Pic : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.ToString() == "Personnage") { DataÉtage.PersonnageGameObject.GetComponent<Personnage>().Dommage(1,collision); }
+        if(collision.gameObject.ToString().Contains( "Personnage")) { DataÉtage.PersonnageGameObject.GetComponent<Personnage>().Dommage(1, collision); }
     }
 }
