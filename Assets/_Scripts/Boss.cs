@@ -48,7 +48,7 @@ public class Boss : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        GetHit();
+        //GetHit();
         Dommage();
     }
 
@@ -59,20 +59,18 @@ public class Boss : MonoBehaviour
             Shout();
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
             {
-                if (lastTimeShout + 4.667f <= Time.time)
-                {
-                    CracheProjectile();
-                    lastTimeShout = Time.time;
-                }
+                //if (lastTimeShout + 4.667f <= Time.time)
+                //{
+                //    CracheProjectile();
+                //    lastTimeShout = Time.time;
+                //}
             }
             NouvelleVitesseAléatoire();
             NouvelleAvancéAléatoire();
-
         }
-        else
+        else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Shout"))
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Shout"))
-                RotationVersPersonnage();
+            RotationVersPersonnage();
         }
     }
 
@@ -151,4 +149,5 @@ public class Boss : MonoBehaviour
         GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), PositionTongue, Quaternion.identity);
         proj.AddComponent<Projectile>().Initialisation(0.5f, 30, 0, 20);
     }
+ 
 }
