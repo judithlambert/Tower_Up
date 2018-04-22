@@ -17,8 +17,6 @@
  * 
  * bug avec la lumiere si on part de ScnMenu
  * 
- * saut plafond
- * 
  * boule de feu
  * 
  * barre de vie montre coup, descned graduellement
