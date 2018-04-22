@@ -221,6 +221,7 @@ public class Personnage : MonoBehaviour
     public void Dommage(int dommage, Collision collision) // collision sert a fuckall??
     {
         Debug.Log("dommage");
+        StartCoroutine(FlashCouleur(Color.red));
         if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode))
         {
             Vie -= dommage;
@@ -229,15 +230,14 @@ public class Personnage : MonoBehaviour
         }
     }
 
-    //IEnumerator FlashCouleur(Color couleur) // ne rentre pas dans la methode
-    //{
-    //    Color couleurOrigine = GetComponent<Renderer>().material.color;
-    //    GetComponent<Renderer>().material.color = couleur;
-    //    Debug.Log("outch");
-    //    yield return new WaitForSeconds(5);
-    //    Debug.Log("5 sec");
-    //    GetComponent<Renderer>().material.color = couleurOrigine;
-    //}
+    IEnumerator FlashCouleur(Color couleur) // ne rentre pas dans la methode
+    {
+        Color couleurOrigine = GetComponent<Renderer>().material.color;
+        GetComponent<Renderer>().material.color = couleur;
+        Debug.Log("outch");
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<Renderer>().material.color = couleurOrigine;
+    }
 
     public void Réinitialiser()
     {
