@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ÉtageBoss : MonoBehaviour
 {
-    const float INTERVALLE_APPARITION_PROJECTILE = 0.2f;
+    const float INTERVALLE_APPARITION_PROJECTILE = 0.6f;
+    const float HAUTEUR_ACTIVATION_PROJECTILES = 7.5f;
     float deltaTemps;
     public List<Vector3> ListSommetsPics1e, ListSommetsPics2e, ListSommetsPics3e;
 
@@ -23,15 +24,18 @@ public class ÉtageBoss : MonoBehaviour
 
     void Update()
     {
-        deltaTemps += Time.deltaTime;
-        if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE)
+        if (!DataÉtage.pause)
         {
-            CercleSeulAléatoire(ListSommetsPics2e);
-            deltaTemps = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Instantiate(Resources.Load<GameObject>("Prefabs/ProjectilePersonnage"), (new Vector3(0, DataÉtage.PersonnageGameObject.transform.position.y, 0) - DataÉtage.PersonnageGameObject.transform.position).normalized * DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f + DataÉtage.PersonnageGameObject.transform.position + new Vector3(0, DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f, 0), Random.rotation);
+            deltaTemps += Time.deltaTime;
+            if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE && DataÉtage.PersonnageGameObject.transform.position.y >= HAUTEUR_ACTIVATION_PROJECTILES)
+            {
+                CercleSeulAléatoire(ListSommetsPics2e);
+                deltaTemps = 0;
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileP"), (new Vector3(0, DataÉtage.PersonnageGameObject.transform.position.y, 0) - DataÉtage.PersonnageGameObject.transform.position).normalized * DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f + DataÉtage.PersonnageGameObject.transform.position + new Vector3(0, DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f, 0), Random.rotation);
+            }
         }
     }
 
@@ -45,7 +49,7 @@ public class ÉtageBoss : MonoBehaviour
             if (!Physics.CheckSphere(list[index] + new Vector3(0, 2, 0), 1))
             {
                 GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[index] + new Vector3(0, 2, 0), Quaternion.identity);
-                proj.AddComponent<Projectile>().Initialisation(1, 50, 3, 20);
+                proj.AddComponent<Projectile>().Initialisation(1, 40, 3, 20);
                 //Projectile proj = new Projectile();
                 //proj.Initialisation(list[index] + new Vector3(0, 2, 0), 1, 50, 3, 20);
                 //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[index] + new Vector3(0, 2, 0), Quaternion.identity);
@@ -59,7 +63,7 @@ public class ÉtageBoss : MonoBehaviour
         for(int i = 0; i < list.Count; ++i)
         {
             GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[i] + new Vector3(0, 2, 0), Quaternion.identity);
-            proj.AddComponent<Projectile>().Initialisation(1, 50, 3, 20);
+            proj.AddComponent<Projectile>().Initialisation(1, 40, 3, 20);
             //Projectile proj = new Projectile();
             //proj.Initialisation(list[i] + new Vector3(0, 2, 0), 1, 50, 3, 20);
             //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[i] + new Vector3(0, 2, 0), Quaternion.identity);

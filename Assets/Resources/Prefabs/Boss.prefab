@@ -56,6 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417792}
   - component: {fileID: 135596812910699184}
+  - component: {fileID: 114408734702171004}
   m_Layer: 0
   m_Name: CATRigHub001
   m_TagString: Untagged
@@ -92,6 +93,7 @@ GameObject:
   - component: {fileID: 136450924494806086}
   - component: {fileID: 136172332438553354}
   - component: {fileID: 136783190734849280}
+  - component: {fileID: 114624755854910978}
   m_Layer: 0
   m_Name: Rino
   m_TagString: Rino
@@ -198,6 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 411886}
   - component: {fileID: 136712727604937616}
+  - component: {fileID: 114535818820383384}
   m_Layer: 0
   m_Name: CATRigLArmIKTarget
   m_TagString: Untagged
@@ -229,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 414318}
   - component: {fileID: 136646366348900310}
+  - component: {fileID: 114520843578832432}
   m_Layer: 0
   m_Name: CATRigLLegPlatform
   m_TagString: Untagged
@@ -290,6 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498956}
   - component: {fileID: 136449792602718916}
+  - component: {fileID: 114455627568185896}
   m_Layer: 0
   m_Name: CATRigRLegPlatform
   m_TagString: Untagged
@@ -661,6 +666,7 @@ GameObject:
   m_Component:
   - component: {fileID: 476156}
   - component: {fileID: 136546101897591894}
+  - component: {fileID: 114118268407377276}
   m_Layer: 0
   m_Name: CATRigRArmIKTarget
   m_TagString: Untagged
@@ -1761,6 +1767,50 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 153050}
   m_IsPrefabParent: 1
+--- !u!114 &114118268407377276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1be5b967623b3045afbd33d6ed0440c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114408734702171004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70a82087412d484f96924fc355a8665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114455627568185896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1be5b967623b3045afbd33d6ed0440c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114520843578832432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1be5b967623b3045afbd33d6ed0440c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114535001117720924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1770,6 +1820,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31ebd608edec4e645a510671a5526874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+--- !u!114 &114535818820383384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1be5b967623b3045afbd33d6ed0440c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114624755854910978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af55212cbc2690b479e1ad6dd6ee7f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &135596812910699184

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileLancé : MonoBehaviour
+public class ProjectileP : MonoBehaviour
 {  
     const float VITESSE = 15;
     Vector3 direction;
@@ -15,13 +15,16 @@ public class ProjectileLancé : MonoBehaviour
 
     void Update()
     {
-        gameObject.transform.Translate(direction * VITESSE * Time.deltaTime);
+        if (!DataÉtage.pause)
+        {
+            gameObject.transform.Translate(direction * VITESSE * Time.deltaTime);
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision detected proj");
-        GameObject Explosion = Instantiate(Resources.Load<GameObject>("Effects/ProjectilePersonnageExplosion"), transform.position, Quaternion.identity);
+        GameObject Explosion = Instantiate(Resources.Load<GameObject>("Effects/ProjectilePExplosion"), transform.position, Quaternion.identity);
         Destroy(Explosion, 5);
         Destroy(gameObject);
     }

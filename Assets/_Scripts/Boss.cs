@@ -7,8 +7,8 @@ using UnityEngine.Animations;
 public class Boss : MonoBehaviour
 {
     float lastTimeShout;
-    const int VITESSE_ROTATION = 30; //degré par sec
-    const int VITESSE_ROTATION_MIN = 20; //degré par sec
+    const int VITESSE_ROTATION_BASE = 40; //degré par sec
+    const int VITESSE_ROTATION_MIN = 40; //degré par sec
     const int VITESSE_ROTATION_MAX = 90;
     const float VITESSE_AVANCÉ_Z = 1; //unité par sec
     const float AVANCÉ_MIN = -4.8f;
@@ -16,9 +16,11 @@ public class Boss : MonoBehaviour
     const float ANGLE_VIS_À_VIS = 0.5f;
     const float INTERVALLE_APPARITION_PROJECTILE = 5;
 
+    public bool isDead = false;
 
-    public const float NbDeVieInitial = 100, DommageParCoup = 5;
-    public float NbDeVie;
+    public const float NbDeVieInitial = 1000, DommageParCoup = 5;
+    float nbDeVie;
+    public float NbDeVie { get { return nbDeVie; } private set { nbDeVie = value; if (nbDeVie <= 0) { Die(); } } }
 
     Animator animator;
     GameObject Tongue;
@@ -46,37 +48,41 @@ public class Boss : MonoBehaviour
         NbDeVie = NbDeVieInitial;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        //GetHit();
-        Dommage();
-    }
+    //public void OnCollisionEnter(Collision collision)
+    //{
+    //    //GetHit();
+    //    Dommage();
+    //}
 
     void Update()
     {
-        if (VisÀVisPersonnage())
+        if (!DataÉtage.pause && !isDead)
         {
-            Shout();
-            //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-            //{
-            //    if (lastTimeShout + 4.667f <= Time.time)
-            //    {
-            //        CracheProjectile();
-            //        lastTimeShout = Time.time;
-            //    }
-            //}
-            NouvelleVitesseAléatoire();
-            NouvelleAvancéAléatoire();
-        }
-        else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Shout"))
-        {
-            RotationVersPersonnage();
-        }
+            if (VisÀVisPersonnage())
+            {
+                //Shout();
+                //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+                //{
+                if (lastTimeShout + 4.667f <= Time.time)
+                {
+                    CracheProjectile();
+                    lastTimeShout = Time.time;
+                }
+                //}
+                NouvelleVitesseAléatoire();
+                NouvelleAvancéAléatoire();
+            }
+            else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Shout"))
+            {
+                RotationVersPersonnage();
+            }
+        }     
     }
 
-    void Dommage()
+    public void Dommage(int dommage)
     {
-        NbDeVie -= 5;
+        NbDeVie -= dommage;
+        Debug.Log(NbDeVie);
     }
 
     bool VisÀVisPersonnage()
@@ -121,6 +127,7 @@ public class Boss : MonoBehaviour
     }
     public void Die()
     {
+        isDead = true;
         animator.SetTrigger("Die");
     }
     public void Shout()
@@ -144,10 +151,10 @@ public class Boss : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(1.3f);
-        Vector3 PositionTongue = GameObject.FindGameObjectWithTag("Rino").transform.worldToLocalMatrix * Tongue.transform.position;
+        Vector3 PositionTongue = transform.TransformPoint(new Vector3(0, 0.8f, 1.6f));
         //Vector3 PositionTongue = GameObject.FindGameObjectWithTag("Rino").transform.worldToLocalMatrix * (Tongue.transform.localToWorldMatrix * Tongue.transform.position);
-        GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), PositionTongue, Quaternion.identity);
-        proj.AddComponent<Projectile>().Initialisation(0.5f, 30, 0, 20);
+        GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileB"), PositionTongue, Quaternion.identity);
+        proj.AddComponent<ProjectileB>().Initialisation(0.8f, Random.Range(4,7), 20);
     }
  
 }

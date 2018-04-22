@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198067178278243680}
   - component: {fileID: 199235575567271242}
   m_Layer: 0
-  m_Name: ProjectilePersonnageExplosion
+  m_Name: ProjectilePExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

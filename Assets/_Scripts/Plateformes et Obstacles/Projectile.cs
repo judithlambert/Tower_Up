@@ -34,22 +34,23 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        
-        if (deltaTemps >= TempsApparition)
-        //if (pourcentageTemps >= 1)
+        if (!DataÉtage.pause)
         {
-            //transform.Translate((DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized * vitesse * Time.deltaTime);
-            transform.Translate(direction * Vitesse * Time.deltaTime);
+            if (deltaTemps >= TempsApparition)
+            //if (pourcentageTemps >= 1)
+            {
+                //transform.Translate((DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized * vitesse * Time.deltaTime);
+                transform.Translate(direction * Vitesse * Time.deltaTime);
+            }
+            else
+            {
+                float pourcentageTemps = deltaTemps / TempsApparition;
+                Debug.Log("en apparition");
+                Maths.SetGlobalScale(transform, new Vector3(Diamètre * pourcentageTemps, Diamètre * pourcentageTemps, Diamètre * pourcentageTemps)); // apparition
+                direction = (DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized;
+            }
+            deltaTemps += Time.deltaTime;
         }
-        else
-        {
-            float pourcentageTemps = deltaTemps / TempsApparition;
-            Debug.Log("en apparition");
-            Maths.SetGlobalScale(transform, new Vector3(Diamètre * pourcentageTemps, Diamètre * pourcentageTemps, Diamètre * pourcentageTemps)); // apparition
-            direction = (DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized;
-        }
-        deltaTemps += Time.deltaTime;
-        
     }
 
     private void OnCollisionEnter(Collision collision)
