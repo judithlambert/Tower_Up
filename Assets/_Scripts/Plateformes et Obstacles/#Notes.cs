@@ -17,8 +17,6 @@
  * 
  * bug avec la lumiere si on part de ScnMenu
  * 
- * Deg2Rad et Rad2Deg
- * 
  * saut plafond
  * 
  * boule de feu
@@ -38,9 +36,5 @@
  * les drapeux de finÉtage ne sont plus là (il sont mal instancié, ils sont dedans le .txt)
  * 
  * le changement de difficulté en pause ne fonctionne pas
- * 
- * il y a une erreur quand les projectiles touchent le personnage
- * 
- * parfois le boss fait apparaitre un projectile sans shout
  * 
  */

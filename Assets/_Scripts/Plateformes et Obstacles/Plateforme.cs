@@ -130,7 +130,7 @@ public class Plateforme : MonoBehaviour
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
         bool c = false; // ne marche pas avec rotation
-        if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -INCERTITUDE_COLLISION))
+        if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -2*INCERTITUDE_COLLISION))
         {
             if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
                 Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
@@ -163,12 +163,17 @@ public class Plateforme : MonoBehaviour
     }
     public bool CollisionDessusEtCôté(Collision collision)
     {
-        bool auPasDessous = false;
+        //bool auPasDessous = false;
+        //foreach (ContactPoint cp in collision.contacts)
+        //{
+        //    if (!IsPointDessous(cp.point)) { auPasDessous = true; }
+        //}
+        bool dessusOuCoté = false;
         foreach (ContactPoint cp in collision.contacts)
         {
-            if (!IsPointDessous(cp.point)) { auPasDessous = true; }
+            if (IsPointDessus(cp.point) || IsPointCôté(cp.point)) { dessusOuCoté = true; }
         }
-        return auPasDessous;
+        return dessusOuCoté;
     }
 
 

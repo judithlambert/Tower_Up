@@ -12,6 +12,7 @@ public class Point : MonoBehaviour
     const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 180;
     public const int VITESSE_TRANSLATION = 4;
     const int TEMPS_DESTRUCTION = 2;
+    const int MAX_FONT_SIZE = 30;
 
     public const string String = "Point";
 
@@ -45,10 +46,18 @@ public class Point : MonoBehaviour
 
         ComposanteTexte = new GameObject(name + " ComposanteTexte");
         Texte = ComposanteTexte.AddComponent<Text>();
-        Texte.text = points.ToString();
+        if (Multiplicateur)
+        {
+            Texte.text = "×" + points.ToString();
+        }
+        else
+        {
+            Texte.text = points.ToString() + "pts";
+        }
+        //Texte.text = points.ToString();
         Texte.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
         Texte.alignment = TextAnchor.MiddleCenter;
-        Texte.color = Color.yellow;
+        Texte.color = Color.white;
         ComposanteTexte.transform.SetParent(DataÉtage.Ui.transform);
     }
 
@@ -134,7 +143,8 @@ public class Point : MonoBehaviour
             {
                 ComposanteTexte.SetActive(true);
                 ComposanteTexte.GetComponent<RectTransform>().position = DataÉtage.Caméra.WorldToScreenPoint(gameObject.transform.position);
-                Texte.fontSize = (int)(500 / (transform.position - DataÉtage.Caméra.transform.position).magnitude);
+                Texte.fontSize = (int)(MAX_FONT_SIZE * ((DataÉtage.PersonnageGameObject.transform.position - DataÉtage.Caméra.transform.position).magnitude / (transform.position - DataÉtage.Caméra.transform.position).magnitude));
+                //Texte.fontSize = (int)(500 / (transform.position - DataÉtage.Caméra.transform.position).magnitude);
             }
             else
             {

@@ -44,6 +44,8 @@ public class CheckPoint : MonoBehaviour
         if (other.gameObject.name.Contains("Personnage"))
         {
             Debug.Log("checkPoint");
+            Drapeau.GetComponent<MeshRenderer>().material = Materials.Get((int)NomMaterial.CheckPointDéclanché); // devrait etre fait dans drapeur animé
+
             DataÉtage.PersonnageScript.PositionCheckPoint = transform.position;
         }
     }

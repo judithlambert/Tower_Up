@@ -17,6 +17,8 @@ public static class Materials
         ListMaterials.Add(Resources.Load<Material>(PATH + "Point"));
         ListMaterials.Add(Resources.Load<Material>(PATH + "Multiplicateur"));
         ListMaterials.Add(Resources.Load<Material>(PATH + "CheckPoint"));
+        ListMaterials.Add(Resources.Load<Material>(PATH + "CheckPointDéclanché"));
+
     }
 
     static public Material Get(int n) 
@@ -35,4 +37,5 @@ public enum NomMaterial
     Point,
     Multiplicateur,
     CheckPoint,
+    CheckPointDéclanché
 }
