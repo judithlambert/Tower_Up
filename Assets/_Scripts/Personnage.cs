@@ -10,6 +10,8 @@ public class Personnage : MonoBehaviour
     const int ACCÉLÉRATION = 5;
     const int ANGULAR_DRAG = 5;
 
+    const int DOMMAGE_PAR_BOSS = 1; //***
+
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
     int vie;
@@ -143,7 +145,7 @@ public class Personnage : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.Contains("Pla") || collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
+        if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
         {
             Debug.Log("collision jump");
             if (collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision) && nbJumps!=0)
@@ -155,7 +157,11 @@ public class Personnage : MonoBehaviour
             }
             else { nbJumps = 0; nbWallJump = 0; }
         }
-        else { Debug.Log("collision jump fail"); }
+        else if (collision.gameObject.name.Contains("Proj"))
+        {
+            Dommage(DOMMAGE_PAR_BOSS,collision); // est ce que dommage parreil pour prjectile venant des pic et du boss?
+        }
+        else { Debug.Log("collision personnage fail"); }
     }
     void OnCollisionExit(Collision collision)
     {
@@ -209,7 +215,7 @@ public class Personnage : MonoBehaviour
         DataÉtage.UiScript.Réinitialiser();
     }
 
-    public void Dommage(int dommage, Collision collision)
+    public void Dommage(int dommage, Collision collision) // collision sert a fuckall??
     {
         Debug.Log("dommage");
         if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode))

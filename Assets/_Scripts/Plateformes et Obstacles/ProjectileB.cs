@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileB : MonoBehaviour
+public class ProjectileB : Projectile
 {
-
-    float Diamètre, Vitesse, TempsMourrir;
-
-
-
     public void Initialisation(float diamètre, float vitesse, float tempsMourrir)
     {
         Debug.Log("initialisation");

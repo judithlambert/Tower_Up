@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileP : MonoBehaviour
+public class ProjectileP : Projectile
 {  
     const float VITESSE = 15;
-    Vector3 direction;
 
     void Start()
     {
+        Vitesse = VITESSE;
         Destroy(gameObject, 10);
         direction = transform.InverseTransformVector(new Vector3(0, GameObject.FindGameObjectWithTag("Boss").transform.lossyScale.y / 2, 0) - transform.position).normalized;
     }

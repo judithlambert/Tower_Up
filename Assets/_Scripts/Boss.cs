@@ -60,15 +60,15 @@ public class Boss : MonoBehaviour
         {
             if (VisÀVisPersonnage())
             {
-                //Shout();
-                //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-                //{
-                if (lastTimeShout + 4.667f <= Time.time)
+                Shout();
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
                 {
-                    CracheProjectile();
-                    lastTimeShout = Time.time;
+                    if (lastTimeShout + 4.667f <= Time.time || lastTimeShout==0)
+                    {
+                        StartCoroutine(ProjectileWait());
+                        lastTimeShout = Time.time;
+                    }
                 }
-                //}
                 NouvelleVitesseAléatoire();
                 NouvelleAvancéAléatoire();
             }
@@ -141,14 +141,13 @@ public class Boss : MonoBehaviour
 
     public void CracheProjectile()
     {
-        Shout();
-        StartCoroutine(Wait());
+
        
         //GameObject proj = new GameObject("projectile");
         //proj.AddComponent<Projectile>().Initialisation(transform.position + 10*transform.forward + 10*Vector3.up, 1, 50, 2, 20);
     }
 
-    IEnumerator Wait()
+    IEnumerator ProjectileWait()
     {
         yield return new WaitForSeconds(1.3f);
         Vector3 PositionTongue = transform.TransformPoint(new Vector3(0, 0.8f, 1.6f));

@@ -283,8 +283,7 @@ public class DataÉtage : MonoBehaviour
 
         
         BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0,0), Quaternion.Euler(Vector3.zero));
-        BarreDeVieBoss.transform.parent = Ui.transform;
-
+        BarreDeVieBoss.transform.SetParent(Ui.transform);
 
         string obj = "support";
         string obj1 = "élévation";

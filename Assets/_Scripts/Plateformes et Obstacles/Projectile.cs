@@ -5,11 +5,11 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     // valeurs de Adam (bonnes valeurs) : vitesse = 50, temps apparition = 3, temps pour mourrir = 20
-    Vector3 direction;
-    float deltaTemps;
-    float Diamètre, Vitesse, TempsApparition, TempsMourrir;
+    protected Vector3 direction;
+    protected float deltaTemps;
+    protected float Diamètre, Vitesse, TempsApparition, TempsMourrir;
 
-
+    string String = "Projectile";
 
     public void Initialisation(float diamètre, float vitesse, float tempsApparition, float tempsMourrir)
     {
