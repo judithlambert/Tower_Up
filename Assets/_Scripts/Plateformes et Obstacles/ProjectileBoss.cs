@@ -24,7 +24,7 @@ public class ProjectileBoss : Projectile
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision detected proj");
         if (collision.gameObject.name.Contains("Personnage"))

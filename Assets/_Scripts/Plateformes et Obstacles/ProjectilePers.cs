@@ -21,7 +21,7 @@ public class ProjectilePers : Projectile
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision detected proj");
         GameObject Explosion = Instantiate(Resources.Load<GameObject>("Effects/ProjectilePExplosion"), transform.position, Quaternion.identity);

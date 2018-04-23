@@ -48,7 +48,7 @@ public class Point : MonoBehaviour
         Texte = ComposanteTexte.AddComponent<Text>();
         if (Multiplicateur)
         {
-            Texte.text = "×" + points.ToString();
+            Texte.text = points.ToString() + "%";
         }
         else
         {
