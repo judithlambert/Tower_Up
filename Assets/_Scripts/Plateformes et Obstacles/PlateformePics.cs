@@ -29,13 +29,35 @@ public class PlateformePics : Plateforme
 
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, float rotation, Material material)
     {
-        Initialisation(angleDébut, amplitude, hauteur, inclinaison, épaisseur, largeur, rayon, rotation, material);
-
+        AngleDébut = angleDébut;
+        Amplitude = amplitude; ;
+        Largeur = largeur;
+        Épaisseur = épaisseur;
+        Hauteur = hauteur;
+        Inclinaison = inclinaison;
+        Rayon = rayon;
+        Rotation = rotation;
         HauteurPic = hauteurPic;
 
-        CréationPointCollision();
+        Maillage = new Mesh
+        {
+            name = "PlateformePics"
+        };
 
-        GetComponent<Rigidbody>().isKinematic = false;
+        CalculerDonnéesDeBase();
+        GénérerTriangles();
+
+        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        gameObject.AddComponent<Rigidbody>().isKinematic = true;
+        gameObject.AddComponent<MeshRenderer>().material = material;
+        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        //GetComponent<MeshCollider>().convex = true;         // <-- crée un mesh colider qui ne fit pas avec le mesh réel
+        //GetComponent<MeshCollider>().isTrigger = true;
+        //GetComponent<Rigidbody>().isKinematic = true;
+
+        Positionnement();
+        CréationPointCollision();
+        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
 

@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.IO;
 using System.Linq;
 using UnityEngine.UI;
+using System.IO;
 //using UnityEditor;
 
 public class DataÉtage : MonoBehaviour
 {
     [SerializeField] bool GODMOD;
-
+    public const string CHEMIN_DATA_ÉTAGE = "Assets/Data/";
     [SerializeField] int TEST_ÉTAGE;
 
     public const float HAUTEUR_TOUR = 35,
                        RAYON_TOUR = 10, // si distance < rayon
                        DELTA_HAUTEUR = 2, //Hauteur entre 2 plateformes
                        LARGEUR_PLATEFORME = 3; //Largeur des objets
-    const string CHEMIN_DATA_ÉTAGE= "Assets/Data/";
     const char SÉPARATEUR = ';';
     const int ÉTAGE_BOSS = 5;
     const float DISTANCE_CAMERA_PERSONNAGE = 10; // ratio avec tour 
     public const int DIFFICULTÉ_DE_BASE = (int)Difficulté.Normale;
 
-
+    public string PlayerName;
+    StreamReader étageReader;
     int NB_MAX_JUMP = 2;
 
     static public GameObject PersonnageGameObject, PlancherGameObject, TourGameObject;
@@ -48,9 +48,6 @@ public class DataÉtage : MonoBehaviour
 
     public static Vector3 Origine = Vector3.zero;
 
-    StreamReader étageReader;
-    StreamWriter saveWriter;
-
     static public bool étageFini = false;
     static public bool jeuFini = false;
     static public bool nouvelÉtage = false;
@@ -69,6 +66,8 @@ public class DataÉtage : MonoBehaviour
         //nbÉtage = TEST_ÉTAGE;
         //if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
         //---
+
+        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
 
 
         Materials.Init();
@@ -94,26 +93,15 @@ public class DataÉtage : MonoBehaviour
         Caméra.gameObject.AddComponent<CameraControlleur>();
         Plane = GameObject.Find("Plane");
 
-
-     
-
-
+        //Sauvegarde.Save();
         LoadÉtage();
         étageEnCour = true;
     }
     
-    private void Start()
-    {
-        saveWriter = new StreamWriter(Menu.CHEMIN_SAVE);
-        Save();
-    }
-
     public void LoadÉtage()
     {
         if(nbÉtage != ÉTAGE_BOSS)
         {
-            étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
-
             do
             {
                 string obj;
@@ -221,11 +209,6 @@ public class DataÉtage : MonoBehaviour
         else { LoadÉtageBoss(); }
     }
 
-    void Save()
-    {
-        saveWriter.Write(nbÉtage);
-    }
-
     int cptNaming = 0;
     string NewName(string n)
     {
@@ -239,7 +222,7 @@ public class DataÉtage : MonoBehaviour
         if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))) { pause = !pause; PausePlay(); }
     }
 
-    void FinirÉtage()
+    void FinirÉtage() // detruire objet, gestion UI
     {
         foreach (GameObject g in ListGameObject)
         {
@@ -250,7 +233,6 @@ public class DataÉtage : MonoBehaviour
             else { Destroy(g); };
         }
         ListGameObject.Clear();
-        Save();
         UiFinÉtage.SetActive(true);
         UiFinÉtageScript.FinÉtage();
         Ui.SetActive(false);
@@ -263,6 +245,7 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
         nbÉtage++;
+        //Sauvegarde.Save();
         LoadÉtage();
         Ui.SetActive(true);
         UiScript.Réinitialiser();

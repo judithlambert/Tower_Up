@@ -5,11 +5,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
 
-public class Menu : MonoBehaviour {
-
-    public const string CHEMIN_SAVE = "Assets/Resources/SaveFile.txt";
-
-    StreamReader saveReader;
+public class Menu : MonoBehaviour
+{
     int étage = 1;
 
     GameObject MessageErreur;
@@ -17,7 +14,7 @@ public class Menu : MonoBehaviour {
 
     void Start()
     {
-        saveReader = new StreamReader(CHEMIN_SAVE);
+        //Sauvegarde.Initialisation();
         MessageErreur = GameObject.FindGameObjectWithTag("MessageErreur");
         MssgErreurTxt = MessageErreur.GetComponentInChildren<Text>();
         MessageErreur.SetActive(false);
@@ -31,14 +28,14 @@ public class Menu : MonoBehaviour {
 
     public void ResumeGame()
     {
-        string save = saveReader.ReadLine();
-        if (save == null)
-        {
-            MessageErreur.SetActive(true);
-            MssgErreurTxt.text = "il n'y a aucune partie de déja commencer";
-            StartCoroutine(WaitUtilOK());
-        }
-        else { DataÉtage.nbÉtage = int.Parse(save); SceneManager.LoadScene("ScnÉtage"); }
+        //string save = Sauvegarde.saveReader.ReadLine();
+        //if (save == null) //if (File.Exists(path))
+        //{
+        //    MessageErreur.SetActive(true);
+        //    MssgErreurTxt.text = "il n'y a aucune partie de déja commencer";
+        //    StartCoroutine(WaitUtilOK());
+        //}
+        //else { DataÉtage.nbÉtage = int.Parse(save); SceneManager.LoadScene("ScnÉtage"); }
     }
 
     public void Niveaux()
