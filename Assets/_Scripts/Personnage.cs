@@ -9,8 +9,8 @@ public class Personnage : MonoBehaviour
 {
     const int ACCÉLÉRATION = 5;
     const int ANGULAR_DRAG = 5;
+    const int MULTIPLICATEUR_VITESSE = 50;
 
-    const int DOMMAGE_PAR_BOSS = 1; //***
 
     public float RayonSphere { get { return transform.lossyScale.x / 2; } }
 
@@ -108,7 +108,7 @@ public class Personnage : MonoBehaviour
         //VecPosFin = new Vector3(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.y, VecteurOrigineÀPosition.z); // pour pas que transmet réference ???
         //transform.Rotate(VecteurOrigineÀPosition.normalized, Mathf.Atan2((VecPosFin - vecPosIn).z, (VecPosFin - vecPosIn).x));
 
-        transform.RotateAround(Vector3.zero, Vector3.down, Vitesse / DataÉtage.RayonTrajectoirePersonnage);
+        transform.RotateAround(Vector3.zero, Vector3.down, Vitesse * MULTIPLICATEUR_VITESSE * Time.deltaTime / DataÉtage.RAYON_TOUR);
         //transform.right = VecteurOrigineÀPosition.normalized;
         ////transform.Rotate(VecteurOrigineÀPosition.normalized, Vitesse / RayonSphere);
         //transform.Rotate(Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x),0, 0);
@@ -127,7 +127,7 @@ public class Personnage : MonoBehaviour
             {
                 if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));
+                gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
                 //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
                 Vitesse = -vitesseWallJump * ACCÉLÉRATION;
 
@@ -140,7 +140,7 @@ public class Personnage : MonoBehaviour
                 GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
                 if (nbJumps == 1)
                 {
-                    Instantiate(Resources.Load<GameObject>("Effects/ParticuleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
+                    Instantiate(Resources.Load<GameObject>("Effects/ParticuleDoubleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
                 }
                 ++nbJumps;
             }
@@ -160,10 +160,6 @@ public class Personnage : MonoBehaviour
                 Debug.Log("collision wall jump");
             }
             else { nbJumps = 0; nbWallJump = 0; }
-        }
-        else if (collision.gameObject.name.Contains("Proj"))
-        {
-            Dommage(DOMMAGE_PAR_BOSS, collision); // est ce que dommage parreil pour prjectile venant des pic et du boss?
         }
         else if (collision.gameObject.name.Contains("Plancher"))
         {

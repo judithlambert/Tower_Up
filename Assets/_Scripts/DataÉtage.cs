@@ -207,6 +207,7 @@ public class DataÉtage : MonoBehaviour
             } while (!étageReader.EndOfStream);
         }
         else { LoadÉtageBoss(); }
+        pause = false;
     }
 
     int cptNaming = 0;
@@ -249,7 +250,7 @@ public class DataÉtage : MonoBehaviour
         LoadÉtage();
         Ui.SetActive(true);
         UiScript.Réinitialiser();
-        nouvelÉtage = false;
+        nouvelÉtage = pause = false;
         étageEnCour = true;
     }
 
@@ -274,9 +275,9 @@ public class DataÉtage : MonoBehaviour
         BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0,0), Quaternion.Euler(Vector3.zero));
         BarreDeVieBoss.transform.SetParent(Ui.transform);
 
-        string obj = "support";
-        string obj1 = "élévation";
-        string obj2 = "pic";
+        string obj = "PlateformesSupport";
+        string obj1 = "PlateformeÉlévation";
+        string obj2 = "PlateformePic";
         for(int i = 0; i < 3; ++i)
         {
             ListGameObject.Add(new GameObject(obj + i));
