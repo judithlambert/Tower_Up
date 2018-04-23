@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileP : Projectile
+public class ProjectilePers : Projectile
 {  
     const float VITESSE = 15;
 

@@ -193,20 +193,27 @@ public class DataÉtage : MonoBehaviour
                                                                                  LARGEUR_PLATEFORME / 2.4f,
                                                                                  Materials.Get((int)NomMaterial.Pic));
                         break;
-                    case FinÉtage.String:
-                        ListGameObject.Last().AddComponent<FinÉtage>().Initialisation(attributs[0],
-                                                                                      attributs[1] * DELTA_HAUTEUR);
-                        break;
+                    
                     case Point.String:
-                        ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR + 0.5f * DELTA_HAUTEUR, attributs[2] == 0 ? false : true, attributs[3], attributs[2] == 0 ? Materials.Get((int)NomMaterial.Point) : Materials.Get((int)NomMaterial.Multiplicateur));
+                        ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], 
+                                                                                   attributs[1] * DELTA_HAUTEUR + 0.5f * DELTA_HAUTEUR, 
+                                                                                   attributs[2] == 0 ? false : true, attributs[3], 
+                                                                                   attributs[2] == 0 ? Materials.Get((int)NomMaterial.Point) : Materials.Get((int)NomMaterial.Multiplicateur));
                         break;
+                    case Flèche.String:
+                        ListGameObject.Last().AddComponent<Flèche>().Initialisation(attributs[0], 
+                                                                                    attributs[1] * DELTA_HAUTEUR, 
+                                                                                    RAYON_TOUR, 
+                                                                                    attributs[2]);
+                        break;
+
                     case CheckPoint.String:
                         ListGameObject.Last().AddComponent<CheckPoint>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR);
                         break;
-                    case Flèche.String:
-                        ListGameObject.Last().AddComponent<Flèche>().Initialisation(attributs[0], attributs[1] * DELTA_HAUTEUR, RAYON_TOUR, attributs[2]);
+                    case FinÉtage.String:
+                        ListGameObject.Last().AddComponent<FinÉtage>().Initialisation2(attributs[0],
+                                                                                      attributs[1] * DELTA_HAUTEUR);
                         break;
-
                 }
 
             } while (!étageReader.EndOfStream);
@@ -229,8 +236,7 @@ public class DataÉtage : MonoBehaviour
     {
         if (étageFini) { FinirÉtage(); }
         if (nouvelÉtage) { NouvelÉtage(); }
-        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))) { pause = !pause; PauseUnPause(); }
-
+        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))) { pause = !pause; PausePlay(); }
     }
 
     void FinirÉtage()
@@ -264,7 +270,7 @@ public class DataÉtage : MonoBehaviour
         étageEnCour = true;
     }
 
-    void PauseUnPause()
+    void PausePlay()
     {
         Ui.SetActive(!Ui.activeSelf);
         UiFinÉtage.SetActive(!UiFinÉtage.activeSelf);

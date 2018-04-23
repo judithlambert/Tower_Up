@@ -2238,7 +2238,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Contr\xF4les: \navancer : D, fleche droite\nreculer : A, fleche gauche\nsauter
-    : W, fleche haut, espace\nplay/pause : shift"
+    : W, fleche haut, espace\ntirer (seulement pour l'\xE9tage final) : x\nplay/pause
+    : shift"
 --- !u!222 &1752567868
 CanvasRenderer:
   m_ObjectHideFlags: 0

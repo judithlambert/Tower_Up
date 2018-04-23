@@ -65,7 +65,24 @@ public class Plateforme : MonoBehaviour
         //Debug.Log("SommetDroiteHautInférieur: (" + SommetDroiteHautInférieur.x + ", " + SommetDroiteHautInférieur.y + ", " + SommetDroiteHautInférieur.z + ")");
         //Debug.Log("SommetDroiteHautSuppérieur: (" + SommetDroiteHautSuppérieur.x + ", " + SommetDroiteHautSuppérieur.y + ", " + SommetDroiteHautSuppérieur.z + ")");
     }
-    
+    public void CréationObject(Material material)
+    {
+        Maillage = new Mesh
+        {
+            name = "Plateforme"
+        };
+
+        CalculerDonnéesDeBase();
+        GénérerTriangles();
+
+        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
+        gameObject.AddComponent<Rigidbody>().useGravity = false;
+        gameObject.AddComponent<MeshRenderer>().material = material;
+        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
+        //GetComponent<MeshCollider>().convex = true;                       <-- le mesh collider ne fit plus avec son mesh réel
+        //GetComponent<MeshCollider>().isTrigger = true;
+        GetComponent<Rigidbody>().isKinematic = true;
+    }
     public void Positionnement()
     {
         transform.position = new Vector3(0, Hauteur, 0);
@@ -94,24 +111,7 @@ public class Plateforme : MonoBehaviour
 
     }
 
-    public void CréationObject(Material material)
-    {
-        Maillage = new Mesh
-        {
-            name = "Plateforme"
-        };
-
-        CalculerDonnéesDeBase();
-        GénérerTriangles();
-
-        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        gameObject.AddComponent<Rigidbody>().useGravity = false;
-        gameObject.AddComponent<MeshRenderer>().material = material;
-        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        //GetComponent<MeshCollider>().convex = true;                       <-- le mesh collider ne fit plus avec son mesh réel
-        //GetComponent<MeshCollider>().isTrigger = true;
-        GetComponent<Rigidbody>().isKinematic = true;
-    }
+   
 
 
     bool IsPointDessus(Vector3 point)
@@ -174,6 +174,15 @@ public class Plateforme : MonoBehaviour
             if (IsPointDessus(cp.point) || IsPointCôté(cp.point)) { dessusOuCoté = true; }
         }
         return dessusOuCoté;
+    }
+    public bool CollisionDessous(Collision collision)
+    {
+        bool enDessous = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointDessous(cp.point)) { enDessous = true; }
+        }
+        return enDessous;
     }
 
 

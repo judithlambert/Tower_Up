@@ -14,42 +14,28 @@ public class PlateformeMobile : Plateforme
     enum Mouvement { horizontal, vertical, diagonal}
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, float rotation, Material material)
     {
-        AngleDébut = angleDébut;
-        Amplitude = amplitude;
-        Hauteur = hauteur;
-        Inclinaison = inclinaison;
-        Épaisseur = épaisseur;
-        Largeur = largeur; 
-        Rayon = rayon;
+        Initialisation(angleDébut, amplitude, hauteur, inclinaison, épaisseur, largeur, rayon, rotation, material);
+
         Vitesse = vitesse;
         Distance = mouvement == 0 ? distance : distance * DataÉtage.DELTA_HAUTEUR;
-        Rotation = rotation;
         TypeMouvement = mouvement;
-
-
-        CréationObject(material);
 
         //temporaire
         translation = Vitesse / 20;
         //Distance = Distance * DataÉtage.DELTA_HAUTEUR;
-
-        Positionnement();
-        CréationPointCollision();
-        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name.Contains("Personnage") && CollisionDessus(collision))
-        touching = true;
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.name.Contains("Personnage") && CollisionDessus(collision))
+    //    touching = true;
+    //}
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.name.Contains("Personnage"))
-            touching = false;
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.name.Contains("Personnage"))
+    //        touching = false;
+    //}
 
     void Update()
     {
@@ -70,7 +56,5 @@ public class PlateformeMobile : Plateforme
                 transform.Rotate(Vector3.up, rotation); // not this
                 break;
         }
-
-        
     }
 }

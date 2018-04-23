@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class SphèreTexturée : MonoBehaviour
 {
-    const float LATITUDE_MIN = -Mathf.PI / 2; // La latitude minimale en degré
-    const float LATITUDE_MAX = Mathf.PI / 2; // La latitude maximale en degré
-    const float LONGITUDE_MIN = -Mathf.PI; // la longitude minimale en degré
-    const float LONGITUDE_MAX = Mathf.PI; // la longitude maximale en degré
+    const float LATITUDE_MIN = -Mathf.PI / 2;
+    const float LATITUDE_MAX = Mathf.PI / 2;
+    const float LONGITUDE_MIN = -Mathf.PI; 
+    const float LONGITUDE_MAX = Mathf.PI; 
     const int NB_TRIANGLES_PAR_TUILE = 2;
     const int NB_SOMMETS_PAR_TRIANGLE = 3;
-    const int VITESSE_TRANSLATION = 8; // mettre dans unity [serializefield]
+    const int VITESSE_TRANSLATION = 8; 
     const float DISTANTCE_POUR_ÊTRE_ARIVÉE_À_UN_POINT = 0.5f;
 
     [SerializeField] float Rayon;
@@ -18,7 +18,7 @@ public class SphèreTexturée : MonoBehaviour
 
     protected Mesh Maillage;
     protected Vector3[] Sommets;
-    protected Vector3 Origine;
+    protected Vector3 OrigineMaillage;
     Vector3 DeltaPosition, DeltaTexture;
     int NbColonneLongitude, NbLignesLatitude, NbSommets, NbTriangles;
 
@@ -32,7 +32,7 @@ public class SphèreTexturée : MonoBehaviour
 
     void CalculerDonnéesDeBase()
     {
-        Origine = transform.position;
+        OrigineMaillage = Vector3.zero;
         NbColonneLongitude = (int)Charpente.x;
         NbLignesLatitude = (int)Charpente.y;
 
@@ -63,9 +63,13 @@ public class SphèreTexturée : MonoBehaviour
             int latitude  = n / (NbColonneLongitude + 1);
 
             // Position Sommets 
-            Sommets[n] = new Vector3(Rayon * Mathf.Sin(latitude * DeltaPosition.y) * Mathf.Cos(longitude * DeltaPosition.x),
-                                     Rayon * Mathf.Cos(latitude * DeltaPosition.y),
-                                     Rayon * Mathf.Sin(latitude * DeltaPosition.y) * Mathf.Sin(longitude * DeltaPosition.x));
+            //Sommets[n] = new Vector3(Rayon * Mathf.Sin(latitude * DeltaPosition.y) * Mathf.Cos(longitude * DeltaPosition.x),
+            //                         Rayon * Mathf.Cos(latitude * DeltaPosition.y),
+            //                         Rayon * Mathf.Sin(latitude * DeltaPosition.y) * Mathf.Sin(longitude * DeltaPosition.x));
+            Sommets[n] = new Vector3(Rayon * Mathf.Cos(latitude * DeltaPosition.y) * Mathf.Cos(longitude * DeltaPosition.x),
+                                     Rayon * Mathf.Cos(latitude * DeltaPosition.y) * Mathf.Sin(longitude * DeltaPosition.y),
+                                     Rayon * Mathf.Sin(longitude * DeltaPosition.x));
+
             // Coordonnées Texture
             CoordonnéesTexture[CoordonnéesTexture.Length-n-1] = new Vector2(longitude * DeltaTexture.x,
                                                                             latitude * DeltaTexture.y);
@@ -109,13 +113,27 @@ public class SphèreTexturée : MonoBehaviour
     //    play = true;
     //}
 
+
+    /*
+    * x = r * cos(latitude) * cos(longitude)
+    * y = r * cos(latitude) * cos(longitude)
+    * z = r * sin(latitude)
+    * 
+    * latitude : [-π/2, π/2]
+    * longitude : [-π, π]
+    */
+
     void FonctionVague()
     {
         for (int i = 0; i < Sommets.Length; ++i)
         {
-            
+            float angleX, angleY, angleZ;
+            angleX = Mathf.Atan2(Sommets[i].z, Sommets[i].y);
+            angleY = Mathf.Atan2(Sommets[i].z, Sommets[i].x);
+            angleZ = Mathf.Atan2(Sommets[i].y, Sommets[i].x);
+
             //Sommets[i].z = A * ((Mathf.Sin(Sommets[i].x / S + time) + Mathf.Sin(Sommets[i].y / S + time))) 
-            //           + B * ((Mathf.Sin(Sommets[i].x / T + time) + Mathf.Sin(Sommets[i].y / T + time)));
+            //             + B * ((Mathf.Sin(Sommets[i].x / T + time) + Mathf.Sin(Sommets[i].y / T + time)));
         }
         Maillage.vertices = Sommets;
         time += Time.deltaTime;
@@ -123,6 +141,6 @@ public class SphèreTexturée : MonoBehaviour
 
     void Update()
     {
-            FonctionVague();
+        FonctionVague();
     }
 }

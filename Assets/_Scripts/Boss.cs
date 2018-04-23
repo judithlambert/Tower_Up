@@ -150,10 +150,11 @@ public class Boss : MonoBehaviour
     IEnumerator ProjectileWait()
     {
         yield return new WaitForSeconds(1.3f);
+        //Vector3 PositionTongue = transform.TransformPoint(Tongue.transform.localPosition);
         Vector3 PositionTongue = transform.TransformPoint(new Vector3(0, 0.8f, 1.6f));
-        //Vector3 PositionTongue = GameObject.FindGameObjectWithTag("Rino").transform.worldToLocalMatrix * (Tongue.transform.localToWorldMatrix * Tongue.transform.position);
+        //Vector3 PositionTongue = GameObject.Find("Rino").transform.worldToLocalMatrix * (Tongue.transform.localToWorldMatrix * Tongue.transform.position);
         GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileB"), PositionTongue, Quaternion.identity);
-        proj.AddComponent<ProjectileB>().Initialisation(0.8f, Random.Range(4,7), 20);
+        proj.AddComponent<ProjectileBoss>().Initialisation(0.8f, Random.Range(4,7), 20);
     }
  
 }

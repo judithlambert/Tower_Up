@@ -35,4 +35,6 @@
  * 
  * le changement de difficulté en pause ne fonctionne pas
  * 
+ * quitter app
+ * 
  */

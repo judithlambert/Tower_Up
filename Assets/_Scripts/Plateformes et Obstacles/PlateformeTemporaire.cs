@@ -21,36 +21,11 @@ public class PlateformeTemporaire : Plateforme
 
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float temps, int typeUptade, float rotation, Material material)
     {
-        AngleDébut = angleDébut;
-        Amplitude = amplitude; ;
-        Largeur = largeur;
-        Épaisseur = épaisseur;
-        Hauteur = hauteur;
-        Inclinaison = inclinaison;
-        Rayon = rayon;
+        Initialisation(angleDébut, amplitude, hauteur, inclinaison, épaisseur, largeur, rayon, rotation, material);
+
         TypeDeUpdate = typeUptade;
-        Rotation = rotation;
 
         Temps = temps;
-
-        Maillage = new Mesh
-        {
-            name = "Plateforme"
-        };
-
-        CalculerDonnéesDeBase();
-        GénérerTriangles();
-
-        gameObject.AddComponent<MeshFilter>().mesh = Maillage;
-        gameObject.AddComponent<Rigidbody>().useGravity = false;
-        gameObject.AddComponent<MeshRenderer>().material = material;
-        gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        GetComponent<MeshCollider>().convex = true; // nécéssaire?
-        GetComponent<Rigidbody>().isKinematic = true;
-
-        Positionnement();
-        CréationPointCollision();
-        GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
         ratio = ((DataÉtage.LARGEUR_PLATEFORME / 2 + DataÉtage.PersonnageGameObject.transform.lossyScale.y) / (DataÉtage.RAYON_TOUR + DataÉtage.LARGEUR_PLATEFORME));
 

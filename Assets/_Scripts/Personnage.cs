@@ -148,10 +148,11 @@ public class Personnage : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.Contains("Pla") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
+        //if (collision.gameObject.name.Contains("Plateforme") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
+        if (collision.gameObject.name.Contains("Plateforme") && !collision.gameObject.GetComponent<Plateforme>().CollisionDessous(collision))
         {
             Debug.Log("collision jump");
-            if (collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision) && nbJumps!=0)
+            if (collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision) && nbJumps != 0)
             {
                 nouveauCollisionObject = collision.gameObject;
                 vitesseWallJump = Vitesse;
@@ -162,7 +163,14 @@ public class Personnage : MonoBehaviour
         }
         else if (collision.gameObject.name.Contains("Proj"))
         {
-            Dommage(DOMMAGE_PAR_BOSS,collision); // est ce que dommage parreil pour prjectile venant des pic et du boss?
+            Dommage(DOMMAGE_PAR_BOSS, collision); // est ce que dommage parreil pour prjectile venant des pic et du boss?
+        }
+        else if (collision.gameObject.name.Contains("Plancher"))
+        {
+            nbJumps = 0;
+            nbWallJump = 0;
+            wallJump = false;
+            Debug.Log("collision plancher");
         }
         else { Debug.Log("collision personnage fail"); }
     }
