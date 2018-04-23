@@ -63,7 +63,7 @@ public class Boss : MonoBehaviour
                 Shout();
                 if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
                 {
-                    if (lastTimeShout + 4.667f <= Time.time || lastTimeShout==0)
+                    if (lastTimeShout + 4.667f <= Time.time || lastTimeShout == 0)
                     {
                         StartCoroutine(ProjectileWait());
                         lastTimeShout = Time.time;

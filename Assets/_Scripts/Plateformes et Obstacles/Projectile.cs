@@ -53,7 +53,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision detected proj");
         GameObject Explosion = Instantiate(Resources.Load<GameObject>("Effects/ProjectileExplosion"), transform.position, Quaternion.identity);

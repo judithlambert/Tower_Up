@@ -160,10 +160,6 @@ public class Personnage : MonoBehaviour
             }
             else { nbJumps = 0; nbWallJump = 0; }
         }
-        else if (collision.gameObject.name.Contains("Proj"))
-        {
-            Dommage(DOMMAGE_PAR_BOSS,collision); // est ce que dommage parreil pour prjectile venant des pic et du boss?
-        }
         else { Debug.Log("collision personnage fail"); }
     }
     void OnCollisionExit(Collision collision)
