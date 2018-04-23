@@ -127,7 +127,7 @@ public class Personnage : MonoBehaviour
             {
                 if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));
+                gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
                 //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
                 Vitesse = -vitesseWallJump * ACCÉLÉRATION;
 
@@ -140,7 +140,7 @@ public class Personnage : MonoBehaviour
                 GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
                 if (nbJumps == 1)
                 {
-                    Instantiate(Resources.Load<GameObject>("Effects/ParticuleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
+                    Instantiate(Resources.Load<GameObject>("Effects/ParticuleDoubleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
                 }
                 ++nbJumps;
             }
