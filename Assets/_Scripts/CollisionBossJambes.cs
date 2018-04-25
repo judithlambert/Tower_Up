@@ -6,6 +6,6 @@ public class CollisionBossJambes : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        DataÉtage.BossScript.Dommage(5);
+        GetComponentInParent<Boss>().Dommage(5);
     }
 }

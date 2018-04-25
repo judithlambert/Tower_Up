@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class BarreDeVie : MonoBehaviour {
+public class BarreDeVie : MonoBehaviour
+{
     // créer seulement pour ÉtageBoss
+    Boss BossScript;
 
-    float NbDeVie { get { return DataÉtage.BossScript.NbDeVie; } }
+    float NbDeVie { get { return BossScript.NbDeVie; } }
     float NbDeVieInitial { get { return Boss.NbDeVieInitial; } }
 
     Vector2 Dimension = new Vector2(250, 25);
     float offset = 1;
 
     RectTransform Encadré, Vie;
-    void Start() {
+    void Start()
+    {
+        BossScript = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
 
         Encadré = GetComponent<Image>().GetComponent<RectTransform>();
         Vie = GameObject.Find("Vie").GetComponent<Image>().GetComponent<RectTransform>();

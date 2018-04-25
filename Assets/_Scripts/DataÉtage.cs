@@ -37,12 +37,11 @@ public class DataÉtage : MonoBehaviour
     public static GameObject UiFinÉtage;
     public static UIFinÉtage UiFinÉtageScript;
     List<GameObject> ListGameObject;
-    public static GameObject Plane;
 
     //[SerializeField] GameObject prefabBoss;
-    static public GameObject BossGameObject;
-    public static Boss BossScript;
-    public static GameObject BarreDeVieBoss;
+    //static public GameObject BossGameObject;
+    //public static Boss BossScript;
+    
     public static float RayonTrajectoirePersonnage;
     public static float RayonCamera;
 
@@ -91,7 +90,6 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtage.SetActive(false);
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
-        Plane = GameObject.Find("Plane");
 
         //Sauvegarde.Save();
         LoadÉtage();
@@ -206,7 +204,7 @@ public class DataÉtage : MonoBehaviour
 
             } while (!étageReader.EndOfStream);
         }
-        else { LoadÉtageBoss(); }
+        else { TourGameObject.AddComponent<ÉtageBoss>(); ; }
         pause = false;
     }
 
@@ -263,52 +261,52 @@ public class DataÉtage : MonoBehaviour
         PersonnageGameObject.GetComponent<Rigidbody>().isKinematic = !PersonnageGameObject.GetComponent<Rigidbody>().isKinematic;
     }
 
-    void LoadÉtageBoss()
-    {        
-        TourGameObject.transform.position = new Vector3(0, PlancherGameObject.transform.position.y - 2);
-        TourGameObject.AddComponent<ÉtageBoss>();
-        BossGameObject = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, TourGameObject.transform.position.y,0), Quaternion.Euler(Vector3.zero));
-        BossScript = BossGameObject.GetComponent<Boss>();
-        Plane.transform.position = new Vector3(0, -250);
+    //void LoadÉtageBoss()
+    //{        
+    //    TourGameObject.transform.position = new Vector3(0, PlancherGameObject.transform.position.y - 2);
+        
+    //    BossGameObject = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, TourGameObject.transform.position.y,0), Quaternion.Euler(Vector3.zero));
+    //    BossScript = BossGameObject.GetComponent<Boss>();
+    //    Plane.transform.position = new Vector3(0, -250);
 
         
-        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0,0), Quaternion.Euler(Vector3.zero));
-        BarreDeVieBoss.transform.SetParent(Ui.transform);
+    //    BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0,0), Quaternion.Euler(Vector3.zero));
+    //    BarreDeVieBoss.transform.SetParent(Ui.transform);
 
-        string obj = "PlateformesSupport";
-        string obj1 = "PlateformeÉlévation";
-        string obj2 = "PlateformePic";
-        for(int i = 0; i < 3; ++i)
-        {
-            ListGameObject.Add(new GameObject(obj + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2 * DELTA_HAUTEUR, 0, 2 * DELTA_HAUTEUR, 0.8f, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-            ListGameObject.Add(new GameObject(obj1 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2.5f * DELTA_HAUTEUR, 0, 0.5f * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+    //    string obj = "PlateformesSupport";
+    //    string obj1 = "PlateformeÉlévation";
+    //    string obj2 = "PlateformePic";
+    //    for(int i = 0; i < 3; ++i)
+    //    {
+    //        ListGameObject.Add(new GameObject(obj + i));
+    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2 * DELTA_HAUTEUR, 0, 2 * DELTA_HAUTEUR, 0.8f, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+    //        ListGameObject.Add(new GameObject(obj1 + i));
+    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2.5f * DELTA_HAUTEUR, 0, 0.5f * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
 
-            ListGameObject.Add(new GameObject(obj + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DELTA_HAUTEUR, 0, 4.5f * DELTA_HAUTEUR, 0.6f, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-            ListGameObject.Add(new GameObject(obj + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DELTA_HAUTEUR, 0, 4.5f * DELTA_HAUTEUR, 0.6f, RAYON_TOUR + 2.4f, 0, Materials.Get((int)NomMaterial.Plateforme));
-            ListGameObject.Add(new GameObject(obj1 + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 5 * DELTA_HAUTEUR, 0, 0.5f * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-        }
-        int nbPic = 7;
-        for(int i = 0; i < nbPic; ++i)
-        {
-            ListGameObject.Add(new GameObject(obj2 + " 1er " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 3, 1, 0, 50, 1, RAYON_TOUR + 6, 2, 0, Materials.Get((int)NomMaterial.Tour));
-        }
-        nbPic = 16;
-        for (int i = 0; i < nbPic; ++i)
-        {
-            ListGameObject.Add(new GameObject(obj2 + " 2e " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 4, 0, 100, 2, RAYON_TOUR + 14, 4, 0, Materials.Get((int)NomMaterial.Plateforme));
-        }
-        nbPic = 5;
-        for (int i = 0; i < nbPic; ++i)
-        {
-            ListGameObject.Add(new GameObject(obj2 + " 3e " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 20, 0, 150, 2, RAYON_TOUR + 35, 8, 0, Materials.Get((int)NomMaterial.Tour));
-        }
-    }
+    //        ListGameObject.Add(new GameObject(obj + 3 + i));
+    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DELTA_HAUTEUR, 0, 4.5f * DELTA_HAUTEUR, 0.6f, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+    //        ListGameObject.Add(new GameObject(obj + 3 + i));
+    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DELTA_HAUTEUR, 0, 4.5f * DELTA_HAUTEUR, 0.6f, RAYON_TOUR + 2.4f, 0, Materials.Get((int)NomMaterial.Plateforme));
+    //        ListGameObject.Add(new GameObject(obj1 + 3 + i));
+    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 5 * DELTA_HAUTEUR, 0, 0.5f * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+    //    }
+    //    int nbPic = 7;
+    //    for(int i = 0; i < nbPic; ++i)
+    //    {
+    //        ListGameObject.Add(new GameObject(obj2 + " 1er " + i));
+    //        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 3, 1, 0, 50, 1, RAYON_TOUR + 6, 2, 0, Materials.Get((int)NomMaterial.Tour));
+    //    }
+    //    nbPic = 16;
+    //    for (int i = 0; i < nbPic; ++i)
+    //    {
+    //        ListGameObject.Add(new GameObject(obj2 + " 2e " + i));
+    //        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 4, 0, 100, 2, RAYON_TOUR + 14, 4, 0, Materials.Get((int)NomMaterial.Plateforme));
+    //    }
+    //    nbPic = 5;
+    //    for (int i = 0; i < nbPic; ++i)
+    //    {
+    //        ListGameObject.Add(new GameObject(obj2 + " 3e " + i));
+    //        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 20, 0, 150, 2, RAYON_TOUR + 35, 8, 0, Materials.Get((int)NomMaterial.Tour));
+    //    }
+    //}
 }
