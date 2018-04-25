@@ -63,8 +63,8 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        //nbÉtage = TEST_ÉTAGE;
-        //if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
+        nbÉtage = TEST_ÉTAGE;
+        if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
         //---
 
         étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");

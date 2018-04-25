@@ -128,6 +128,8 @@ public class Boss : MonoBehaviour
     public void Die()
     {
         isDead = true;
+        animator.ResetTrigger("Shout");
+        animator.ResetTrigger("Walk");
         animator.SetTrigger("Die");
     }
     public void Shout()

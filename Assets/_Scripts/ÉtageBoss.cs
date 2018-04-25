@@ -16,9 +16,9 @@ public class ÉtageBoss : MonoBehaviour
         ListSommetsPics3e = new List<Vector3>();
         foreach (GameObject g in Resources.FindObjectsOfTypeAll(typeof(GameObject)))
         {
-            if (g.name.Contains("pic 1e")) { ListSommetsPics1e.Add(g.GetComponent<PlateformePics>().SommetPic); }
-            else if (g.name.Contains("pic 2e")) { ListSommetsPics2e.Add(g.GetComponent<PlateformePics>().SommetPic); }
-            else if (g.name.Contains("pic 2e")) { ListSommetsPics3e.Add(g.GetComponent<PlateformePics>().SommetPic); }
+            if (g.name.Contains("Pic 1er")) { ListSommetsPics1e.Add(g.GetComponent<PlateformePics>().SommetPic); }
+            else if (g.name.Contains("Pic 2e")) { ListSommetsPics2e.Add(g.GetComponent<PlateformePics>().SommetPic); }
+            else if (g.name.Contains("Pic 2e")) { ListSommetsPics3e.Add(g.GetComponent<PlateformePics>().SommetPic); }
         }
     }
 
