@@ -20,7 +20,7 @@ public class Boss : MonoBehaviour
 
     public const float NbDeVieInitial = 1000, DommageParCoup = 5;
     float nbDeVie;
-    public float NbDeVie { get { return nbDeVie; } private set { nbDeVie = value; if (nbDeVie <= 0) { Die(); } } }
+    public float NbDeVie { get { return nbDeVie; } private set { nbDeVie = value; if (nbDeVie <= 0) { nbDeVie = 0; Die(); } } }
 
     Animator animator;
     GameObject Tongue;
