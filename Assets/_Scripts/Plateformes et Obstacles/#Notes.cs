@@ -37,4 +37,6 @@
  * 
  * quitter app
  * 
+ * VecteurOrigineÀPosition devrait être calculé une seule fois par frame dans personnage
+ * 
  */

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEngine.UI;
 
 public class ÉtageBoss : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class ÉtageBoss : MonoBehaviour
     float deltaTemps;
     public List<Vector3> ListSommetsPics1e, ListSommetsPics2e, ListSommetsPics3e;
     List<GameObject> ListGameObject = new List<GameObject>();
-    GameObject Boss;
+    GameObject Boss, TxtVictoire;
 
     void Start()
     {
@@ -73,7 +74,7 @@ public class ÉtageBoss : MonoBehaviour
 
     void Update()
     {
-        if (!DataÉtage.pause)
+        if (!DataÉtage.pause && !DataÉtage.victoire)
         {
             deltaTemps += Time.deltaTime;
             if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE && DataÉtage.PersonnageGameObject.transform.position.y >= HAUTEUR_ACTIVATION_PROJECTILES)
@@ -116,6 +117,23 @@ public class ÉtageBoss : MonoBehaviour
             //Projectile proj = new Projectile();
             //proj.Initialisation(list[i] + new Vector3(0, 2, 0), 1, 50, 3, 20);
             //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[i] + new Vector3(0, 2, 0), Quaternion.identity);
+        }
+    }
+
+    public void Victoire()
+    {        
+        DataÉtage.victoire = true;
+        foreach(GameObject g in FindObjectsOfType<GameObject>())
+        {
+            if (g.name.Contains("Projectile")) { Destroy(g); }
+        }
+        DataÉtage.Ui.SetActive(false);
+        DataÉtage.UiFinÉtage.SetActive(true);
+        TxtVictoire = Instantiate(Resources.Load<GameObject>("Prefabs/Victoire"),DataÉtage.UiFinÉtage.transform);
+
+        foreach(Vector3 p in ListSommetsPics2e)
+        {
+            ListGameObject.Add(Instantiate(Resources.Load<GameObject>("Effects/ParticuleVictoire"), p, Quaternion.Euler(-90,0,0)));
         }
     }
 }

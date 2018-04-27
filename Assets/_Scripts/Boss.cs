@@ -79,10 +79,13 @@ public class Boss : MonoBehaviour
         }     
     }
 
-    public void Dommage(int dommage)
+    public void Dommage(int dommage, Collision collision)
     {
-        NbDeVie -= dommage;
-        Debug.Log(NbDeVie);
+        if (collision.gameObject.name.Contains("ProjectileP"))
+        {
+            NbDeVie -= dommage;
+            Debug.Log(NbDeVie);
+        }
     }
 
     bool VisÀVisPersonnage()
@@ -129,8 +132,7 @@ public class Boss : MonoBehaviour
     {
         isDead = true;
         animator.SetTrigger("Die");
-        //foreach(GameObject g in )
-        DataÉtage.UiFinÉtage.SetActive(true);
+        DataÉtage.TourGameObject.GetComponent<ÉtageBoss>().Victoire();
     }
     public void Shout()
     {

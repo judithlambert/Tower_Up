@@ -6,7 +6,7 @@ public class PlateformeMobile : Plateforme
 {
     public const string String = Plateforme.String + "Mobile";
 
-    bool touching=false;
+    bool touching = false;
 
     float Temps, Distance, Vitesse, rotation, translation;
     // distance est une amplitude, en degré
@@ -25,17 +25,17 @@ public class PlateformeMobile : Plateforme
         //Distance = Distance * DataÉtage.DELTA_HAUTEUR;
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.name.Contains("Personnage") && CollisionDessus(collision))
-    //    touching = true;
-    //}
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Personnage") && CollisionDessus(collision))
+            touching = DataÉtage.PersonnageScript.touchingPlateformeMobile = true;
+    }
 
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.name.Contains("Personnage"))
-    //        touching = false;
-    //}
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Personnage"))
+            touching = DataÉtage.PersonnageScript.touchingPlateformeMobile = false;
+    }
 
     void Update()
     {

@@ -7,8 +7,12 @@ using System.Linq;
 
 public class Personnage : MonoBehaviour
 {
+    Vector3 rV3 = new Vector3(0, 0, 0);
+    Vector3 arV3 = new Vector3(0, 0, 0);
+
+
     const int ACCÉLÉRATION = 5;
-    const int ANGULAR_DRAG = 5;
+    const float ANGULAR_DRAG = float.MaxValue;
     const int MULTIPLICATEUR_VITESSE = 50;
 
 
@@ -29,12 +33,14 @@ public class Personnage : MonoBehaviour
             if (value < -DataÉtage.RAYON_TOUR) { vitesse = -DataÉtage.RAYON_TOUR; }
             else if (value > DataÉtage.RAYON_TOUR) { vitesse = DataÉtage.RAYON_TOUR; }
             else { vitesse = value; }
+            //Debug.Log(vitesse);
         }
     }
 
     float déplacementForce = 375;
   
     Quaternion rotationInitiale;
+    Quaternion ancienneRotation;
     Vector3 positionInitiale;
     public Vector3 PositionCheckPoint { get; set; }
 
@@ -44,6 +50,7 @@ public class Personnage : MonoBehaviour
          avancer,
          block;
 
+    public bool touchingPlateformeMobile = false;
     int nbJumps = 0;
     int nbWallJump = 0;
     int vieInitiale;
@@ -100,7 +107,7 @@ public class Personnage : MonoBehaviour
                             Vitesse = vitesse * Vitesse <= 0 ? 0 : vitesse; }
     }
 
-    void EffectuerDéplacementEtRotation()
+    void EffectuerDéplacement()
     {
         //Vector3 vecPosIn, VecPosFin;
         //vecPosIn = new Vector3(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.y, VecteurOrigineÀPosition.z); // pour pas que transmet réference ???
@@ -179,11 +186,13 @@ public class Personnage : MonoBehaviour
     {
         if (!DataÉtage.pause)
         {
-            //Debug.Log("jumps: " + nbJumps.ToString());
+            //Debug.Log("jumps: " + nbJumps.ToString());            
             InputMouvement();
             DéterminerVitesse();
-            EffectuerDéplacementEtRotation();
-            Repositionnement();
+            EffectuerDéplacement();
+            RepositionnementTrajectoire();
+            RepositionnementRotation();
+            RotationSurElleMême();
 
             if (jump) { Jumper(); }
             jump = crouch = reculer = avancer = block = false;
@@ -199,7 +208,7 @@ public class Personnage : MonoBehaviour
     //            transform.Rotate(Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x),0, 0);
 
     //}
-    void Repositionnement() // replacer la balle sur sa trajectoire
+    void RepositionnementTrajectoire() // replacer la balle sur sa trajectoire
     {
         //transform.right = VecteurOrigineÀPosition.normalized;
         //transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
@@ -209,17 +218,50 @@ public class Personnage : MonoBehaviour
                                              transform.position.y,
                                              VecteurOrigineÀPosition.normalized.z * DataÉtage.RayonTrajectoirePersonnage);
         }
-        transform.right = VecteurOrigineÀPosition.normalized;
+        //Vector3 v3 = transform.eulerAngles;
+        //transform.right = VecteurOrigineÀPosition.normalized;
+        //transform.rotation = Quaternion.FromToRotation(transform.right, -VecteurOrigineÀPosition);
+        //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, -VecteurOrigineÀPosition);
+        //transform.rotation = Quaternion.LookRotation(-VecteurOrigineÀPosition);
+        //transform.rotation.SetFromToRotation(transform.right, VecteurOrigineÀPosition);
+        //transform.Rotate(40 * Time.deltaTime, 0, Space.World);
 
-        transform.Rotate(new Vector3(Mathf.Atan2(transform.right.z, transform.right.x) * Mathf.Rad2Deg * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0));
+
+        // transform.rotation = Quaternion.Euler(new Vector3(0, Mathf.Atan2(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.z) * Mathf.Rad2Deg - 90, 0));
+        
+
+        //    new Vector3(ancienneRotationX + 40 * Time.deltaTime, 0, 0);
+        //Debug.Log(ancienneRotationX);
+
+
+
         //transform.Translate(VecteurOrigineÀPosition.normalized * (-VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage));
+    }
+
+    void RepositionnementRotation()
+    {
+        arV3 = rV3;
+        rV3 = new Vector3(0, Mathf.Atan2(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.z) * Mathf.Rad2Deg - 90, 0);
+        rV3 = rV3 + new Vector3(arV3.x, 0, 0);
+        transform.eulerAngles = rV3;
+    }
+
+    void RotationSurElleMême()
+    {                                   // meme que dans le déplacement
+        rV3 = rV3 + new Vector3(Vitesse * MULTIPLICATEUR_VITESSE * Time.deltaTime / DataÉtage.RAYON_TOUR * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
+        transform.eulerAngles = rV3;
+
+
+       //transform.Rotate(new Vector3(40 * Time.deltaTime,0,0));
+
+        //transform.rotation = Quaternion.Euler(Time.time*100, transform.rotation.eulerAngles.y - ancienneRotation.eulerAngles.y, transform.rotation.eulerAngles.z - ancienneRotation.eulerAngles.z);
     }
 
     public void Die()
     {
         Debug.Log("Die");
         Réinitialiser();
-        DataÉtage.UiScript.Réinitialiser();
+        DataÉtage.Recommencer();
     }
 
     public void Dommage(int dommage, Collision collision) // collision sert a fuckall??

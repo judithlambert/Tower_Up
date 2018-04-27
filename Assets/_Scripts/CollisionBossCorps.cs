@@ -6,6 +6,6 @@ public class CollisionBossCorps : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        GetComponentInParent<Boss>().Dommage(500);
+        GetComponentInParent<Boss>().Dommage(500, collision);
     }
 }

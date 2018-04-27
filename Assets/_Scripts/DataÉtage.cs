@@ -23,7 +23,7 @@ public class DataÉtage : MonoBehaviour
     public const int DIFFICULTÉ_DE_BASE = (int)Difficulté.Normale;
 
     public string PlayerName;
-    StreamReader étageReader;
+    static StreamReader étageReader;
     int NB_MAX_JUMP = 2;
 
     static public GameObject PersonnageGameObject, PlancherGameObject, TourGameObject;
@@ -36,7 +36,7 @@ public class DataÉtage : MonoBehaviour
     public static UI UiScript;
     public static GameObject UiFinÉtage;
     public static UIFinÉtage UiFinÉtageScript;
-    List<GameObject> ListGameObject;
+    static List<GameObject> ListGameObject;
 
     //[SerializeField] GameObject prefabBoss;
     //static public GameObject BossGameObject;
@@ -50,10 +50,12 @@ public class DataÉtage : MonoBehaviour
     static public bool étageFini = false;
     static public bool jeuFini = false;
     static public bool nouvelÉtage = false;
+    static public bool recommencer = false;
 
     public static int nbÉtage { get; set; }
     public static bool pause { get; private set; }
     public static bool étageEnCour { get; private set; }
+    public static bool victoire { get; set; }
 
     public static int difficulté = DIFFICULTÉ_DE_BASE;
     public enum Difficulté { GodMode, Normale, Difficile };
@@ -66,7 +68,6 @@ public class DataÉtage : MonoBehaviour
         if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
         //---
 
-        étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
 
 
         Materials.Init();
@@ -94,12 +95,14 @@ public class DataÉtage : MonoBehaviour
         //Sauvegarde.Save();
         LoadÉtage();
         étageEnCour = true;
+        victoire = false;
     }
     
-    public void LoadÉtage()
+    static public void LoadÉtage()
     {
         if(nbÉtage != ÉTAGE_BOSS)
         {
+            étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
             do
             {
                 string obj;
@@ -217,11 +220,11 @@ public class DataÉtage : MonoBehaviour
     private void Update()
     {
         if (étageFini) { FinirÉtage(); }
-        if (nouvelÉtage) { NouvelÉtage(); }
-        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))) { pause = !pause; PausePlay(); }
+        if (nouvelÉtage) { NouvelÉtage(false); }
+        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !victoire) { pause = !pause; PausePlay(); }
     }
 
-    void FinirÉtage() // detruire objet, gestion UI
+    static void FinirÉtage() // detruire objet, gestion UI
     {
         foreach (GameObject g in ListGameObject)
         {
@@ -239,11 +242,11 @@ public class DataÉtage : MonoBehaviour
         étageEnCour = false;
     }
 
-    void NouvelÉtage()
+    static void NouvelÉtage(bool mêmeÉtage)
     {
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
-        nbÉtage++;
+        if(!mêmeÉtage) { nbÉtage++; }
         //Sauvegarde.Save();
         LoadÉtage();
         Ui.SetActive(true);
@@ -258,55 +261,12 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtage.SetActive(!UiFinÉtage.activeSelf);
         if(UiFinÉtageScript != null) { UiFinÉtageScript.DonnéesDeBase(); }
         UiFinÉtage.GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().enabled = false;
-        PersonnageGameObject.GetComponent<Rigidbody>().isKinematic = !PersonnageGameObject.GetComponent<Rigidbody>().isKinematic;
+        PersonnageGameObject.GetComponent<Rigidbody>().isKinematic = !PersonnageGameObject.GetComponent<Rigidbody>().isKinematic; // a mettre dans personnage?
     }
 
-    //void LoadÉtageBoss()
-    //{        
-    //    TourGameObject.transform.position = new Vector3(0, PlancherGameObject.transform.position.y - 2);
-        
-    //    BossGameObject = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, TourGameObject.transform.position.y,0), Quaternion.Euler(Vector3.zero));
-    //    BossScript = BossGameObject.GetComponent<Boss>();
-    //    Plane.transform.position = new Vector3(0, -250);
-
-        
-    //    BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0,0), Quaternion.Euler(Vector3.zero));
-    //    BarreDeVieBoss.transform.SetParent(Ui.transform);
-
-    //    string obj = "PlateformesSupport";
-    //    string obj1 = "PlateformeÉlévation";
-    //    string obj2 = "PlateformePic";
-    //    for(int i = 0; i < 3; ++i)
-    //    {
-    //        ListGameObject.Add(new GameObject(obj + i));
-    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2 * DELTA_HAUTEUR, 0, 2 * DELTA_HAUTEUR, 0.8f, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-    //        ListGameObject.Add(new GameObject(obj1 + i));
-    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2.5f * DELTA_HAUTEUR, 0, 0.5f * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-
-    //        ListGameObject.Add(new GameObject(obj + 3 + i));
-    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DELTA_HAUTEUR, 0, 4.5f * DELTA_HAUTEUR, 0.6f, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-    //        ListGameObject.Add(new GameObject(obj + 3 + i));
-    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DELTA_HAUTEUR, 0, 4.5f * DELTA_HAUTEUR, 0.6f, RAYON_TOUR + 2.4f, 0, Materials.Get((int)NomMaterial.Plateforme));
-    //        ListGameObject.Add(new GameObject(obj1 + 3 + i));
-    //        ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 5 * DELTA_HAUTEUR, 0, 0.5f * DELTA_HAUTEUR, LARGEUR_PLATEFORME, RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-    //    }
-    //    int nbPic = 7;
-    //    for(int i = 0; i < nbPic; ++i)
-    //    {
-    //        ListGameObject.Add(new GameObject(obj2 + " 1er " + i));
-    //        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 3, 1, 0, 50, 1, RAYON_TOUR + 6, 2, 0, Materials.Get((int)NomMaterial.Tour));
-    //    }
-    //    nbPic = 16;
-    //    for (int i = 0; i < nbPic; ++i)
-    //    {
-    //        ListGameObject.Add(new GameObject(obj2 + " 2e " + i));
-    //        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 4, 0, 100, 2, RAYON_TOUR + 14, 4, 0, Materials.Get((int)NomMaterial.Plateforme));
-    //    }
-    //    nbPic = 5;
-    //    for (int i = 0; i < nbPic; ++i)
-    //    {
-    //        ListGameObject.Add(new GameObject(obj2 + " 3e " + i));
-    //        ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 20, 0, 150, 2, RAYON_TOUR + 35, 8, 0, Materials.Get((int)NomMaterial.Tour));
-    //    }
-    //}
+    public static void Recommencer()
+    {
+        FinirÉtage();
+        NouvelÉtage(true);
+    }
 }
