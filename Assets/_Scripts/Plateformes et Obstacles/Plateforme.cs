@@ -41,7 +41,7 @@ public class Plateforme : MonoBehaviour
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude;
-        Largeur = largeur;
+        Largeur = inclinaison == 0 ? largeur : largeur - largeur / 40;
         Épaisseur = épaisseur;
         Hauteur = hauteur;
         Inclinaison = inclinaison;

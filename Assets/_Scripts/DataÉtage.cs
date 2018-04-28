@@ -58,14 +58,14 @@ public class DataÉtage : MonoBehaviour
     public static bool victoire { get; set; }
 
     public static int difficulté = DIFFICULTÉ_DE_BASE;
-    public enum Difficulté { GodMode, Normale, Difficile };
+    public enum Difficulté { Exploration, Normale, Difficile };
 
         
     private void Awake()
     {
         // for testing
-        nbÉtage = TEST_ÉTAGE;
-        if (GODMOD) { difficulté = (int)Difficulté.GodMode; }
+        //nbÉtage = TEST_ÉTAGE;
+        //if (GODMOD) { difficulté = (int)Difficulté.Triche; }
         //---
 
 
@@ -142,7 +142,7 @@ public class DataÉtage : MonoBehaviour
                                                                                               attributs[2] * DELTA_HAUTEUR,
                                                                                               attributs[3],
                                                                                               attributs[4] * DELTA_HAUTEUR,
-                                                                                              LARGEUR_PLATEFORME,
+                                                                                              LARGEUR_PLATEFORME - LARGEUR_PLATEFORME / 40,
                                                                                               RAYON_TOUR,
                                                                                               attributs[5],
                                                                                               attributs[6],
@@ -244,6 +244,7 @@ public class DataÉtage : MonoBehaviour
 
     static void NouvelÉtage(bool mêmeÉtage)
     {
+        UiFinÉtage.GetComponentInChildren<Image>().gameObject.SetActive(false);
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
         if(!mêmeÉtage) { nbÉtage++; }
@@ -260,7 +261,7 @@ public class DataÉtage : MonoBehaviour
         Ui.SetActive(!Ui.activeSelf);
         UiFinÉtage.SetActive(!UiFinÉtage.activeSelf);
         if(UiFinÉtageScript != null) { UiFinÉtageScript.DonnéesDeBase(); }
-        UiFinÉtage.GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().enabled = false;
+        UiFinÉtage.GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().interactable = false;
         PersonnageGameObject.GetComponent<Rigidbody>().isKinematic = !PersonnageGameObject.GetComponent<Rigidbody>().isKinematic; // a mettre dans personnage?
     }
 

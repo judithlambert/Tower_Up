@@ -40,7 +40,7 @@ public class UIFinÉtage : MonoBehaviour
     public void FinÉtage()
     {
         Start();
-        GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().enabled = true;
+        GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().interactable = true;
     }
 
     //public void Difficulté()

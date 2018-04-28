@@ -130,7 +130,7 @@ public class Personnage : MonoBehaviour
     {
         if (nbJumps + nbWallJump < 4)
         {
-            if ((wallJump && nbWallJump < 2) || (DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode && wallJump)) // BUG
+            if ((wallJump && nbWallJump < 2) || (DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration && wallJump)) // BUG
             {
                 if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
                 gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -141,7 +141,7 @@ public class Personnage : MonoBehaviour
                 Debug.Log("wall jump successful");
                 dernierCollisionObject = nouveauCollisionObject;
             }
-            else if (nbJumps < 2 || DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode) // est ce que le saut est valide
+            else if (nbJumps < 2 || DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration) // est ce que le saut est valide
             {
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
@@ -268,7 +268,7 @@ public class Personnage : MonoBehaviour
     {
         Debug.Log("dommage");
         StartCoroutine(FlashCouleur(Color.red));
-        if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.GodMode))
+        if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration))
         {
             Vie -= dommage;
             if (Vie <= 0) { Die(); }
