@@ -18,7 +18,7 @@ public class UIFinÉtage : MonoBehaviour
     {
         GetComponentsInChildren<Text>().Where(x => x.name == "Temps").First().text = DataÉtage.UiScript.TempsPassé;
         GetComponentsInChildren<Text>().Where(x => x.name == "Score").First().text = DataÉtage.UiScript.Score;
-        GetComponentsInChildren<Dropdown>().Where(x => x.name.Contains("Difficulté")).First().value = DataÉtage.difficulté;
+        //GetComponentsInChildren<Dropdown>().Where(x => x.name.Contains("Difficulté")).First().value = DataÉtage.difficulté;
     }
 
     public void ProchainÉtage()
@@ -40,11 +40,11 @@ public class UIFinÉtage : MonoBehaviour
     public void FinÉtage()
     {
         Start();
-        GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().enabled = true;
+        GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().interactable = true;
     }
 
-    public void Difficulté()
-    {
-        DataÉtage.difficulté = GetComponentsInChildren<Dropdown>().Where(x => x.name.Contains("Difficulté")).First().value;
-    }
+    //public void Difficulté()
+    //{
+    //    DataÉtage.difficulté = GetComponentsInChildren<Dropdown>().Where(x => x.name.Contains("Difficulté")).First().value;
+    //}
 }

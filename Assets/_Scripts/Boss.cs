@@ -65,7 +65,7 @@ public class Boss : MonoBehaviour
                 {
                     if (lastTimeShout + 4.667f <= Time.time || lastTimeShout == 0)
                     {
-                        StartCoroutine(ProjectileWait());
+                        StartCoroutine(CracherProjectile());
                         lastTimeShout = Time.time;
                     }
                 }
@@ -79,10 +79,13 @@ public class Boss : MonoBehaviour
         }     
     }
 
-    public void Dommage(int dommage)
+    public void Dommage(int dommage, Collision collision)
     {
-        NbDeVie -= dommage;
-        Debug.Log(NbDeVie);
+        if (collision.gameObject.name.Contains("ProjectileP"))
+        {
+            NbDeVie -= dommage;
+            Debug.Log(NbDeVie);
+        }
     }
 
     bool VisÀVisPersonnage()
@@ -128,9 +131,8 @@ public class Boss : MonoBehaviour
     public void Die()
     {
         isDead = true;
-        animator.ResetTrigger("Shout");
-        animator.ResetTrigger("Walk");
         animator.SetTrigger("Die");
+        DataÉtage.TourGameObject.GetComponent<ÉtageBoss>().Victoire();
     }
     public void Shout()
     {
@@ -141,15 +143,8 @@ public class Boss : MonoBehaviour
         animator.SetTrigger("GetHit");
     }
 
-    public void CracheProjectile()
-    {
 
-       
-        //GameObject proj = new GameObject("projectile");
-        //proj.AddComponent<Projectile>().Initialisation(transform.position + 10*transform.forward + 10*Vector3.up, 1, 50, 2, 20);
-    }
-
-    IEnumerator ProjectileWait()
+    IEnumerator CracherProjectile()
     {
         yield return new WaitForSeconds(1.3f);
         //Vector3 PositionTongue = transform.TransformPoint(Tongue.transform.localPosition);
