@@ -21,7 +21,7 @@ public class BarreDeVie : MonoBehaviour {
         Encadré.pivot = new Vector2(0.5f, -1);
         Encadré.localPosition = new Vector2(0, 0);
         Encadré.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 5, 10);
-        Encadré.sizeDelta = Dimension;
+        Encadré.sizeDelta = Dimension; // vie doit etre plus petit que encadré
         Vie.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 1, 250);
 
         //Vie.localPosition = new Vector2(offset / 2, 0);

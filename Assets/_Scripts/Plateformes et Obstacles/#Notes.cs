@@ -37,4 +37,12 @@
  * 
  * quitter app
  * 
+ * pause = Time.timeScale = 0
+ * 
+ * reloader plateforme a check point
+ * 
+ * colliion plateforme pic
+ * 
+ * static DataÉtage
+ * 
  */

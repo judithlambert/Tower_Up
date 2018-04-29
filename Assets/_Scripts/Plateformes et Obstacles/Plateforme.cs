@@ -32,9 +32,9 @@ public class Plateforme : MonoBehaviour
     protected float DeltaAngle, DeltaTexture, DeltaÉlévation;
     protected int nbTranches, nbSommets, nbTriangles;
 
-    Vector3 SommetDroiteHautSuppérieur, SommetDroiteHautInférieur, SommetDroiteBasSuppérieur, SommetDroiteBasInférieur, SommetGaucheHautSuppérieur, SommetGaucheHautInférieur, SommetGaucheBasSuppérieur, SommetGaucheBasInférieur;
-    float PositionDessus, PositionDessous;
-    Vector3 PositionCôtéDébut, PositionCôtéFin;
+    protected Vector3 SommetDroiteHautSuppérieur, SommetDroiteHautInférieur, SommetDroiteBasSuppérieur, SommetDroiteBasInférieur, SommetGaucheHautSuppérieur, SommetGaucheHautInférieur, SommetGaucheBasSuppérieur, SommetGaucheBasInférieur;
+    protected float PositionDessus, PositionDessous;
+    //Vector3 PositionCôtéDébut, PositionCôtéFin;
 
 
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float rotation, Material material)
@@ -92,13 +92,13 @@ public class Plateforme : MonoBehaviour
 
     public void CréationPointCollision()
     {
-        PositionDessus = Hauteur;
-        PositionDessous = Hauteur - Épaisseur;
-        if (Rotation == 180)
-        {
-            PositionDessus = Hauteur - Épaisseur;
-            PositionDessous = Hauteur;
-        }
+        //PositionDessus = Hauteur;
+        //PositionDessous = Hauteur - Épaisseur;
+        //if (Rotation == 180)
+        //{
+        //    PositionDessus = Hauteur - Épaisseur;
+        //    PositionDessous = Hauteur;
+        //}
 
         SommetGaucheBasInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false);
         SommetGaucheBasSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true);
@@ -108,6 +108,9 @@ public class Plateforme : MonoBehaviour
         SommetDroiteBasSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, true);
         SommetDroiteHautInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, false);
         SommetDroiteHautSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, true);
+
+        PositionDessus = SommetGaucheHautSuppérieur.y;
+        PositionDessous = SommetGaucheBasInférieur.y;
 
     }
 
