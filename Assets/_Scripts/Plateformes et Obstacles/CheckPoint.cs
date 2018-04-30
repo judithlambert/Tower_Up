@@ -27,7 +27,7 @@ public class CheckPoint : MonoBehaviour
         gameObject.AddComponent<MeshCollider>().convex = true;
         GetComponent<MeshCollider>().isTrigger = true;
 
-        Maths.SetGlobalScale(transform, new Vector3(DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR * 2, 1));
+        transform.SetGlobalScale(new Vector3(DataÉtage.LARGEUR_PLATEFORME, DataÉtage.DELTA_HAUTEUR * 2, 1));
 
         Drapeau = new GameObject("Drapeau");
         Drapeau.AddComponent<DrapeauAnimé>().Initialisation(new Vector3(Mathf.Cos((Mathf.Deg2Rad * angle)) * DataÉtage.RAYON_TOUR, // même chose que plus haut
@@ -50,7 +50,7 @@ public class CheckPoint : MonoBehaviour
         }
     }
 
-    public void OnDestroy()
+    public void OnDestroy() // a quoi sa sert??
     {
         Destroy(Drapeau);
     }

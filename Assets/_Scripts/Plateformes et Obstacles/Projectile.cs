@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
         if (TempsApparition == 0)
         {
             Debug.Log("apparue");
-            Maths.SetGlobalScale(transform, new Vector3(Diamètre, Diamètre, Diamètre)); // apparition
+            transform.SetGlobalScale(new Vector3(Diamètre, Diamètre, Diamètre)); // apparition
             direction = (DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized;
         }
 
@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour
             {
                 float pourcentageTemps = deltaTemps / TempsApparition;
                 Debug.Log("en apparition");
-                Maths.SetGlobalScale(transform, new Vector3(Diamètre * pourcentageTemps, Diamètre * pourcentageTemps, Diamètre * pourcentageTemps)); // apparition
+                transform.SetGlobalScale(new Vector3(Diamètre * pourcentageTemps, Diamètre * pourcentageTemps, Diamètre * pourcentageTemps)); // apparition
                 direction = (DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized;
             }
             deltaTemps += Time.deltaTime;

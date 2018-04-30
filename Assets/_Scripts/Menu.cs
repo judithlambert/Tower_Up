@@ -14,7 +14,6 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
-        //Sauvegarde.Initialisation();
         MessageErreur = GameObject.FindGameObjectWithTag("MessageErreur");
         MssgErreurTxt = MessageErreur.GetComponentInChildren<Text>();
         MessageErreur.SetActive(false);
@@ -28,14 +27,17 @@ public class Menu : MonoBehaviour
 
     public void ResumeGame()
     {
-        //string save = Sauvegarde.saveReader.ReadLine();
-        //if (save == null) //if (File.Exists(path))
-        //{
-        //    MessageErreur.SetActive(true);
-        //    MssgErreurTxt.text = "il n'y a aucune partie de déja commencer";
-        //    StartCoroutine(WaitUtilOK());
-        //}
-        //else { DataÉtage.nbÉtage = int.Parse(save); SceneManager.LoadScene("ScnÉtage"); }
+        if (Sauvegarde.Load()==0) //if (File.Exists(path))
+        {
+            MessageErreur.SetActive(true);
+            MssgErreurTxt.text = "il n'y a aucune partie de commencer";
+            StartCoroutine(WaitUtilOK());
+        }
+        else
+        {
+            DataÉtage.nbÉtage = Sauvegarde.Load();
+            SceneManager.LoadScene("ScnÉtage");
+        }
     }
 
     public void Niveaux()

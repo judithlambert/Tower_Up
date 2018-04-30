@@ -150,6 +150,7 @@ public class Personnage : MonoBehaviour
             }
             else // collision dessus
             {
+                nouveauCollisionObject = collision.gameObject;
                 nbJumps = 0;
                 nbWallJump = 0;
                 Debug.Log("collision jump");

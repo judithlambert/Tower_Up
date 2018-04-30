@@ -2,38 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+using System.Text;
 
 public static class Sauvegarde
 {
-    static FileStream save;
-    public const string CHEMIN_SAVE = "Assets/Resources/SaveFile.txt";
+    public const string CHEMIN_SAVE = "Assets/Saves/SaveFile.txt";
 
     public static StreamReader saveReader;
     public static StreamWriter saveWriter;
 
-    public static void Initialisation()
+    static FileStream save = new FileStream(CHEMIN_SAVE, FileMode.Open, FileAccess.ReadWrite);
+
+    public static int Load()
     {
-        save = new FileStream(CHEMIN_SAVE, FileMode.Open);
-        saveWriter = new StreamWriter(CHEMIN_SAVE);
-        saveReader = new StreamReader(CHEMIN_SAVE);
         saveReader = new StreamReader(save);
-        saveWriter.Write("test");
+        return saveReader.Read();
+    }
+    public static void Save()
+    {
+        saveWriter = new StreamWriter(save);
+        saveWriter.Write(DataÉtage.nbÉtage);
+        saveWriter.Close();
     }
 
-    //public static void Save()
-    //{
-    //    saveWriter.Write(DataÉtage.nbÉtage);
-    //}
 
 
-    //using (FileStream fs = File.Create(path))
-    //{
-
-    //}
-
-    //using (FileStream fs = File.OpenRead(path))
-    //{
-
-    //}
 }

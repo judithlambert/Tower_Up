@@ -14,7 +14,7 @@ public class Flèche : MonoBehaviour
         tex = Resources.Load<Texture2D>("Sprites/fleche");
         //tex = AssetDatabase.LoadAssetAtPath(PATH + "fleche.png", typeof(Texture2D)) as Texture2D;
         gameObject.AddComponent<SpriteRenderer>().sprite = Sprite.Create( tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
-        Maths.SetGlobalScale(transform, new Vector3(SCALE, SCALE, SCALE));
+        transform.SetGlobalScale(new Vector3(SCALE, SCALE, SCALE));
         transform.position = new Vector3(rayon, hauteur + DataÉtage.DELTA_HAUTEUR/2, 0);
         GetComponent<SpriteRenderer>().transform.Rotate(transform.up, -90);
         GetComponent<SpriteRenderer>().transform.Rotate(transform.right, rotation);

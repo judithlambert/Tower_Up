@@ -208,16 +208,16 @@ public class Plateforme : MonoBehaviour
     // COLLISION
     bool IsPointDessus(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessus, INCERTITUDE_COLLISION));
+        return (Maths.EstDansLeRange(point.y, SommetDroiteHautInférieur.y, SommetGaucheHautInférieur.y, INCERTITUDE_COLLISION));
     }
     bool IsPointDessous(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, PositionDessous, PositionDessous, INCERTITUDE_COLLISION));
+        return (Maths.EstDansLeRange(point.y, SommetDroiteBasInférieur.y, SommetGaucheBasInférieur.y, INCERTITUDE_COLLISION));
     }
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
         bool c = false; // ne marche pas avec rotation
-        if (Maths.EstDansLeRange(point.y, PositionDessus, PositionDessous, -2 * INCERTITUDE_COLLISION))
+        if (Maths.EstDansLeRange(point.y, SommetDroiteHautInférieur.y, SommetGaucheHautInférieur.y, -2 * INCERTITUDE_COLLISION))
         {
             if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
                 Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))

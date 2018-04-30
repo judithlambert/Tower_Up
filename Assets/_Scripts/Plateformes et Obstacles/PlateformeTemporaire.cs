@@ -75,7 +75,7 @@ public class PlateformeTemporaire : Plateforme
     {
         if (Time.time <= timeTouched + 1.5*Temps)
         {
-            Maths.SetGlobalScale(gameObject.transform, new Vector3(1 - ratio * pourcentageTemps, 1, 1 - ratio * pourcentageTemps));
+            transform.SetGlobalScale(new Vector3(1 - ratio * pourcentageTemps, 1, 1 - ratio * pourcentageTemps));
         }
     }
 
