@@ -130,10 +130,24 @@ public class ÉtageBoss : MonoBehaviour
         DataÉtage.Ui.SetActive(false);
         DataÉtage.UiFinÉtage.SetActive(true);
         TxtVictoire = Instantiate(Resources.Load<GameObject>("Prefabs/Victoire"),DataÉtage.UiFinÉtage.transform);
+        DataÉtage.UiFinÉtage.GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().interactable = false;
 
-        foreach(Vector3 p in ListSommetsPics2e)
+        foreach (Vector3 p in ListSommetsPics2e)
         {
             ListGameObject.Add(Instantiate(Resources.Load<GameObject>("Effects/ParticuleVictoire"), p, Quaternion.Euler(-90,0,0)));
         }
+    }
+
+    public void Recommencer()
+    {
+        foreach(GameObject g in ListGameObject)
+        {
+            Destroy(g);
+        }
+        Destroy(GameObject.FindGameObjectWithTag("Boss"));
+        Destroy(TxtVictoire);
+        DataÉtage.victoire = false;
+        DataÉtage.NouvelÉtage(true);
+        Destroy(this);
     }
 }

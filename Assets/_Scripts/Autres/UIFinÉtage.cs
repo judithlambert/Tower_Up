@@ -28,8 +28,9 @@ public class UIFinÉtage : MonoBehaviour
 
     public void Recommencer()
     {
-        DataÉtage.nbÉtage -= 1;
-        DataÉtage.nouvelÉtage = true;
+        DataÉtage.Recommencer();
+        //DataÉtage.nbÉtage -= 1;
+        //DataÉtage.nouvelÉtage = true;
     }
 
     public void MenuPrincipal()

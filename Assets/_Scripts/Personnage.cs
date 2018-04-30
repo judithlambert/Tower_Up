@@ -42,6 +42,7 @@ public class Personnage : MonoBehaviour
     Quaternion rotationInitiale;
     Quaternion ancienneRotation;
     Vector3 positionInitiale;
+    GameObject particule;
     public Vector3 PositionCheckPoint { get; set; }
 
     bool jump,
@@ -147,7 +148,8 @@ public class Personnage : MonoBehaviour
                 GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
                 if (nbJumps == 1)
                 {
-                    Instantiate(Resources.Load<GameObject>("Effects/ParticuleDoubleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
+                    particule = Instantiate(Resources.Load<GameObject>("Effects/ParticuleDoubleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
+                    Destroy(particule, 2);
                 }
                 ++nbJumps;
             }
@@ -260,7 +262,7 @@ public class Personnage : MonoBehaviour
     public void Die()
     {
         Debug.Log("Die");
-        Réinitialiser();
+        //Réinitialiser();
         DataÉtage.Recommencer();
     }
 
@@ -288,6 +290,7 @@ public class Personnage : MonoBehaviour
     public void Réinitialiser()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().isKinematic = false;
         Vitesse = 0;
         transform.position = positionInitiale;
         transform.rotation = rotationInitiale;

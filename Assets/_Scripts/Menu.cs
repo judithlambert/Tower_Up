@@ -54,6 +54,11 @@ public class Menu : MonoBehaviour
         DataÉtage.difficulté = GetComponentsInChildren<Dropdown>().Where(x => x.name.Contains("Difficulté")).First().value;
     }
 
+    public void Quitter()
+    {
+        Application.Quit();
+    }
+
     bool OK = false;
 
     public void BtnOk()
