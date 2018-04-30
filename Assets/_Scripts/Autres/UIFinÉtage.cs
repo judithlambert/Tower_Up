@@ -11,6 +11,7 @@ public class UIFinÉtage : MonoBehaviour
 
     private void Start()
     {
+        GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
         DonnéesDeBase();
     }
 
@@ -28,8 +29,9 @@ public class UIFinÉtage : MonoBehaviour
 
     public void Recommencer()
     {
-        DataÉtage.nbÉtage -= 1;
-        DataÉtage.nouvelÉtage = true;
+        DataÉtage.Recommencer();
+        //DataÉtage.nbÉtage -= 1;
+        //DataÉtage.nouvelÉtage = true;
     }
 
     public void MenuPrincipal()
@@ -41,6 +43,7 @@ public class UIFinÉtage : MonoBehaviour
     {
         Start();
         GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().interactable = true;
+        GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = true;
     }
 
     //public void Difficulté()

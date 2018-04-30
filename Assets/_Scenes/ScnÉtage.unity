@@ -855,6 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6e7a7f981ddb541b8e5ae724dfdf1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpClip: {fileID: 8300000, guid: db3eb70e5b7bcbb4398bc55d2d43dbb9, type: 3}
 --- !u!82 &618468968
 AudioSource:
   m_ObjectHideFlags: 0

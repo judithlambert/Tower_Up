@@ -12,8 +12,6 @@ public class FinÉtage : CheckPoint
         Drapeau.GetComponent<MeshRenderer>().material = Materials.Get((int)NomMaterial.FinÉtage); // devrait etre fait dans drapeur animé
     }
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name.Contains("Personnage"))
@@ -22,5 +20,9 @@ public class FinÉtage : CheckPoint
             DataÉtage.étageFini = true;
             Destroy(Drapeau);
         }
+    }
+    public void OnDestroy()
+    {
+        Destroy(Drapeau);
     }
 }

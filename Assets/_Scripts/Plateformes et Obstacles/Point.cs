@@ -180,9 +180,8 @@ public class Point : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public void OnDestroy()
     {
         Destroy(ComposanteTexte);
-        Destroy(gameObject);
     }
 }

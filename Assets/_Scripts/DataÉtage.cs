@@ -65,7 +65,7 @@ public class DataÉtage : MonoBehaviour
     {
         // for testing
         //nbÉtage = TEST_ÉTAGE;
-        //if (GODMOD) { difficulté = (int)Difficulté.Triche; }
+        //if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
         //---
 
 
@@ -227,11 +227,7 @@ public class DataÉtage : MonoBehaviour
     {
         foreach (GameObject g in ListGameObject)
         {
-            if (g != null && (g.name.Contains("Point")))
-            { g.GetComponent<Point>().Destroy(); }
-            else if (g != null && g.name.Contains("Check"))
-            { g.GetComponent<CheckPoint>().Destroy(); }
-            else { Destroy(g); };
+            Destroy(g);
         }
         ListGameObject.Clear();
         UiFinÉtage.SetActive(true);
@@ -241,9 +237,10 @@ public class DataÉtage : MonoBehaviour
         étageEnCour = false;
     }
 
-    static void NouvelÉtage(bool mêmeÉtage)
+    public static void NouvelÉtage(bool mêmeÉtage)
     {
-        UiFinÉtage.GetComponentInChildren<Image>().gameObject.SetActive(false);
+        //UiFinÉtage.GetComponentInChildren<Image>().gameObject.SetActive(false);
+        UiFinÉtage.GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
         if(!mêmeÉtage) { nbÉtage++; }
@@ -266,7 +263,14 @@ public class DataÉtage : MonoBehaviour
 
     public static void Recommencer()
     {
-        FinirÉtage();
-        NouvelÉtage(true);
+        if (nbÉtage == ÉTAGE_BOSS)
+        {
+            TourGameObject.GetComponent<ÉtageBoss>().Recommencer();
+        }
+        else
+        {
+            FinirÉtage();
+            NouvelÉtage(true);
+        }
     }
 }

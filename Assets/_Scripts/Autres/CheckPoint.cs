@@ -50,9 +50,8 @@ public class CheckPoint : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public void OnDestroy()
     {
         Destroy(Drapeau);
-        Destroy(gameObject);
     }
 }

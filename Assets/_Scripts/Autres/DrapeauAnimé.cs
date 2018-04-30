@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrapeauAnimé : MonoBehaviour {
-
+public class DrapeauAnimé : MonoBehaviour
+{
     protected const int NB_TRIANGLES_PAR_TUILE = 2;
     protected const int NB_SOMMETS_PAR_TRIANGLE = 3;
 
