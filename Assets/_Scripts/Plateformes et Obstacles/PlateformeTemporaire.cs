@@ -81,7 +81,7 @@ public class PlateformeTemporaire : Plateforme
 
     public void Réinitialiser()
     {
-        Initialisation(AngleDébut, Amplitude, Hauteur, Inclinaison, Épaisseur, Largeur, Rayon, Rotation, Materials.Get((int)NomMaterial.Plateforme));
+        InitialisationPT(AngleDébut, Amplitude, Hauteur, Inclinaison, Épaisseur, Largeur, Rayon, Temps, TypeDeUpdate, Rotation, Materials.Get((int)NomMaterial.Plateforme));
         Destroy(this);
     }
 }

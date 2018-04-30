@@ -33,7 +33,6 @@ public class Personnage : MonoBehaviour
             if (value < -DataÉtage.RAYON_TOUR) { vitesse = -DataÉtage.RAYON_TOUR; }
             else if (value > DataÉtage.RAYON_TOUR) { vitesse = DataÉtage.RAYON_TOUR; }
             else { vitesse = value; }
-            //Debug.Log(vitesse);
         }
     }
 
@@ -73,30 +72,22 @@ public class Personnage : MonoBehaviour
 
     void Awake() // devrait pt pas etre instancier dans unity mais ici comme les autres objets
     {
-        //gameObject.AddComponent<Rigidbody>().useGravity = true;
-        //gameObject.AddComponent<MeshRenderer>().material = material;
-        //gameObject.AddComponent<SphereCollider>();
-
-        // ne dois pas bouger lors du respawn
         transform.rotation = rotationInitiale = Quaternion.Euler(Vector3.zero);
         PositionCheckPoint = transform.position;
         positionInitiale = transform.position;
         GetComponent<Rigidbody>().angularDrag = ANGULAR_DRAG;
 
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        //transform.position=positionInitial = new Vector3(DataÉtage.RayonTrajectoirePersonnage, transform.lossyScale.y+1, 0);
-        //new WaitUntil(()=>TouchingGround());
         jump = crouch = reculer = avancer = block = false;
         Vie = vieInitiale = DataÉtage.difficulté == (int)DataÉtage.Difficulté.Difficile ? 1 : 3;
     }
-
     
     void InputMouvement()
     {
         jump = Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space);
-        crouch = Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        reculer = Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow);
-        avancer = Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow);
+        crouch = Input.GetKey("s")   || Input.GetKey(KeyCode.DownArrow)   || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        reculer = Input.GetKey("a")  || Input.GetKey(KeyCode.LeftArrow);
+        avancer = Input.GetKey("d")  || Input.GetKey(KeyCode.RightArrow);
         block = Input.GetKeyDown("q");
     }
 
@@ -110,18 +101,7 @@ public class Personnage : MonoBehaviour
 
     void EffectuerDéplacement()
     {
-        //Vector3 vecPosIn, VecPosFin;
-        //vecPosIn = new Vector3(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.y, VecteurOrigineÀPosition.z); // pour pas que transmet réference ???
-        //transform.RotateAround(Vector3.zero, Vector3.down, Vitesse / DataÉtage.RayonTrajectoirePersonnage);
-        //VecPosFin = new Vector3(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.y, VecteurOrigineÀPosition.z); // pour pas que transmet réference ???
-        //transform.Rotate(VecteurOrigineÀPosition.normalized, Mathf.Atan2((VecPosFin - vecPosIn).z, (VecPosFin - vecPosIn).x));
-
         transform.RotateAround(Vector3.zero, Vector3.down, Vitesse * MULTIPLICATEUR_VITESSE * Time.deltaTime / DataÉtage.RAYON_TOUR);
-        //transform.right = VecteurOrigineÀPosition.normalized;
-        ////transform.Rotate(VecteurOrigineÀPosition.normalized, Vitesse / RayonSphere);
-        //transform.Rotate(Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x),0, 0);
-        //Debug.Log("VecteurOrigineÀPosition: (" + VecteurOrigineÀPosition.x + ", " + VecteurOrigineÀPosition.y + ", " + VecteurOrigineÀPosition.z + ")");
-
     }
 
     GameObject dernierCollisionObject;
@@ -133,7 +113,7 @@ public class Personnage : MonoBehaviour
         {
             if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            AudioScript.PlayJumpSound();
+            //AudioScript.PlayJumpSound();
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
             //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
             Vitesse = -vitesseWallJump * ACCÉLÉRATION;
@@ -145,6 +125,7 @@ public class Personnage : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            Debug.Log("jumps succes");
             if (nbJumps == 1)
             {
                 particule = Instantiate(Resources.Load<GameObject>("Effects/ParticuleDoubleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
@@ -152,13 +133,14 @@ public class Personnage : MonoBehaviour
             }
             ++nbJumps;
         }
+        Debug.Log("jump = " + nbJumps + ", wall jump = " + nbWallJump);
     }
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Plateforme") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusOuCôté(collision))
         //if (collision.gameObject.name.Contains("Plateforme") && !collision.gameObject.GetComponent<Plateforme>().CollisionDessous(collision))
         {
-            Debug.Log("collision jump");
+            Debug.Log("collision jump detected");
             if (collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision) && nbJumps != 0)
             {
                 nouveauCollisionObject = collision.gameObject;
@@ -166,7 +148,12 @@ public class Personnage : MonoBehaviour
                 wallJump = true;
                 Debug.Log("collision wall jump");
             }
-            else { nbJumps = 0; nbWallJump = 0; }
+            else // collision dessus
+            {
+                nbJumps = 0;
+                nbWallJump = 0;
+                Debug.Log("collision jump");
+            }
         }
         else if (collision.gameObject.name.Contains("Plancher"))
         {
@@ -199,43 +186,14 @@ public class Personnage : MonoBehaviour
         }
     }
 
-    //void Repositionnement() // replacer la balle sur sa trajectoire
-    //{
-    //    transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
-    //    transform.right = VecteurOrigineÀPosition.normalized;
-    //    transform.Rotate(Mathf.Atan(transform.right.z / transform.right.x) * 360 / (2 * Mathf.PI) * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
-
-    //            transform.Rotate(Mathf.Atan2(VecteurOrigineÀPosition.z, VecteurOrigineÀPosition.x),0, 0);
-
-    //}
     void RepositionnementTrajectoire() // replacer la balle sur sa trajectoire
     {
-        //transform.right = VecteurOrigineÀPosition.normalized;
-        //transform.Translate(-(VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage), 0, 0);
         if (VecteurOrigineÀPosition.magnitude != DataÉtage.RayonTrajectoirePersonnage)
         {
             transform.position = new Vector3(VecteurOrigineÀPosition.normalized.x * DataÉtage.RayonTrajectoirePersonnage,
                                              transform.position.y,
                                              VecteurOrigineÀPosition.normalized.z * DataÉtage.RayonTrajectoirePersonnage);
         }
-        //Vector3 v3 = transform.eulerAngles;
-        //transform.right = VecteurOrigineÀPosition.normalized;
-        //transform.rotation = Quaternion.FromToRotation(transform.right, -VecteurOrigineÀPosition);
-        //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, -VecteurOrigineÀPosition);
-        //transform.rotation = Quaternion.LookRotation(-VecteurOrigineÀPosition);
-        //transform.rotation.SetFromToRotation(transform.right, VecteurOrigineÀPosition);
-        //transform.Rotate(40 * Time.deltaTime, 0, Space.World);
-
-
-        // transform.rotation = Quaternion.Euler(new Vector3(0, Mathf.Atan2(VecteurOrigineÀPosition.x, VecteurOrigineÀPosition.z) * Mathf.Rad2Deg - 90, 0));
-        
-
-        //    new Vector3(ancienneRotationX + 40 * Time.deltaTime, 0, 0);
-        //Debug.Log(ancienneRotationX);
-
-
-
-        //transform.Translate(VecteurOrigineÀPosition.normalized * (-VecteurOrigineÀPosition.magnitude - DataÉtage.RayonTrajectoirePersonnage));
     }
 
     void RepositionnementRotation()
@@ -250,11 +208,6 @@ public class Personnage : MonoBehaviour
     {                                   // meme que dans le déplacement
         rV3 = rV3 + new Vector3(Vitesse * MULTIPLICATEUR_VITESSE * Time.deltaTime / DataÉtage.RAYON_TOUR * DataÉtage.RayonTrajectoirePersonnage / (transform.lossyScale.x / 2), 0, 0);
         transform.eulerAngles = rV3;
-
-
-       //transform.Rotate(new Vector3(40 * Time.deltaTime,0,0));
-
-        //transform.rotation = Quaternion.Euler(Time.time*100, transform.rotation.eulerAngles.y - ancienneRotation.eulerAngles.y, transform.rotation.eulerAngles.z - ancienneRotation.eulerAngles.z);
     }
 
     public void Die()

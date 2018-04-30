@@ -45,7 +45,6 @@ public class PlateformePics : Plateforme
 
         CalculerDonnéesDeBase();
         GénérerTriangles();
-        HauteurPic = hauteurPic;
 
         gameObject.AddComponent<MeshFilter>().mesh = Maillage;
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
@@ -78,6 +77,7 @@ public class PlateformePics : Plateforme
                            inclinaisonAjouté + hauteurAjouté,
                            Mathf.Sin(angleAjouté) * (Rayon + (Largeur / 2)));
     }
+
     override protected void CalculerDonnéesDeBase()
     {
         Origine = transform.position;
@@ -87,6 +87,7 @@ public class PlateformePics : Plateforme
         DeltaAngle = (Mathf.Deg2Rad * Amplitude) / nbTranches;
         DeltaTexture = DeltaAngle / (Mathf.Deg2Rad * NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
     }
+
     override protected void GénérerTriangles()
     {
         GénérerSommets();
@@ -203,6 +204,7 @@ public class PlateformePics : Plateforme
         Maillage.RecalculateNormals();
     }
 
+    // COLLISION
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Personnage") && CollisionDessusAvecPics(collision))

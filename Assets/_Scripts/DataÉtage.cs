@@ -123,7 +123,6 @@ public class DataÉtage : MonoBehaviour
                 obj = obj.Split(' ')[0]; // obj.Remove(' ');
                 switch (obj)
                 {
-                    //Gestion Angle ne sert à rien
                     case Plateforme.String:
                         ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(attributs[0],
                                                                                         attributs[1],

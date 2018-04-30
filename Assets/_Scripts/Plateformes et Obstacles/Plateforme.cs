@@ -5,10 +5,6 @@ using System.Linq;
 
 public class Plateforme : MonoBehaviour
 {
-    // transform.position 
-    // si position non a (0,y,0), rotate marche pas
-    // transform.rotation
-   
     public const string String = "Plateforme";
 
     public const float INCERTITUDE_COLLISION = 0.1f;
@@ -16,7 +12,6 @@ public class Plateforme : MonoBehaviour
     protected const int NB_TRIANGLES_PAR_TUILE = 2, NB_SOMMETS_PAR_TRIANGLE = 3, NB_TUILES_PAR_CERCLE_COMPLET = 72, NB_SOMMETS_BOUTS = 8, NB_DE_BOUT = 2;
     protected const float NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR = 45;
 
-    //protected float AngleDébut, Amplitude, Épaisseur, Largeur, Rayon, Élévation, Rugosité;
     public float AngleDébut { get; protected set; }
     public float Amplitude { get; protected set; }
     public float Épaisseur { get; protected set; }
@@ -34,7 +29,6 @@ public class Plateforme : MonoBehaviour
 
     protected Vector3 SommetDroiteHautSuppérieur, SommetDroiteHautInférieur, SommetDroiteBasSuppérieur, SommetDroiteBasInférieur, SommetGaucheHautSuppérieur, SommetGaucheHautInférieur, SommetGaucheBasSuppérieur, SommetGaucheBasInférieur;
     protected float PositionDessus, PositionDessous;
-    //Vector3 PositionCôtéDébut, PositionCôtéFin;
 
     public void InitialisationP(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float rotation, Material material)
     {
@@ -53,6 +47,7 @@ public class Plateforme : MonoBehaviour
 
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
+
     public void CréationObject(Material material)
     {
         Maillage = new Mesh
@@ -67,8 +62,6 @@ public class Plateforme : MonoBehaviour
         gameObject.AddComponent<Rigidbody>().useGravity = false;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        //GetComponent<MeshCollider>().convex = true;                       <-- le mesh collider ne fit plus avec son mesh réel
-        //GetComponent<MeshCollider>().isTrigger = true;
         GetComponent<Rigidbody>().isKinematic = true;
     }
     public void Positionnement()
@@ -118,12 +111,14 @@ public class Plateforme : MonoBehaviour
         DeltaTexture = DeltaAngle / (Mathf.Deg2Rad * NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
         DeltaÉlévation = Inclinaison / nbTranches;
     }
+
     virtual protected void GénérerTriangles()
     {
         GénérerSommets();
         GénérerCoordonnéesDeTextures();
         GénérerListeTriangles();
     }
+
     protected virtual void GénérerSommets()
     {
         Sommets = new Vector3[nbSommets];
@@ -154,6 +149,7 @@ public class Plateforme : MonoBehaviour
 
         Maillage.vertices = Sommets;
     }
+
     protected virtual void GénérerCoordonnéesDeTextures()
     {
         Vector2[] CoordonnéesTexture = new Vector2[nbSommets];
@@ -254,20 +250,11 @@ public class Plateforme : MonoBehaviour
     }
     public bool CollisionDessusOuCôté(Collision collision)
     {
-        //bool auPasDessous = false;
-        //foreach (ContactPoint cp in collision.contacts)
-        //{
-        //    if (!IsPointDessous(cp.point)) { auPasDessous = true; }
-        //}
         bool dessusOuCoté = false;
-        //foreach (ContactPoint cp in collision.contacts)
-        //{
-        //    if (IsPointDessus(cp.point) || IsPointCôté(cp.point)) { dessusOuCoté = true; }
-        //}
         int x = 0;
-        if(CollisionDessus(collision) || CollisionCôté(collision, ref x))
+        foreach (ContactPoint cp in collision.contacts)
         {
-            dessusOuCoté = true;
+            if (IsPointDessus(cp.point) || IsPointCôté(cp.point, ref x)) { dessusOuCoté = true; }
         }
         return dessusOuCoté;
     }

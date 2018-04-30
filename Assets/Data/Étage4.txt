@@ -39,6 +39,9 @@ Checkpoint
 Fleche
 225;10;270
 
+Plateforme mur
+300;10;21;0;7
+
 //JUMPS RAPIDE PICS
 Point 1
 225;1;0;20

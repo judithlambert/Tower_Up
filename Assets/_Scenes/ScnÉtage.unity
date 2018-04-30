@@ -488,7 +488,7 @@ RectTransform:
   m_Children:
   - {fileID: 1210702592}
   m_Father: {fileID: 1739816952}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1355,7 +1355,7 @@ Prefab:
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
       propertyPath: "TEST_\xC9TAGE"
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
@@ -1670,11 +1670,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1235053593}
---- !u!224 &1622856567 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224702704010373626, guid: 43d324a15a2b07a458d83103be143295,
-    type: 2}
-  m_PrefabInternal: {fileID: 664561967}
 --- !u!1 &1656372494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,11 +1952,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 437649455}
+  - {fileID: 1235053594}
   - {fileID: 1656372495}
   - {fileID: 329221285}
   - {fileID: 721592747}
   - {fileID: 899357906}
+  - {fileID: 437649455}
   - {fileID: 1769702608}
   m_Father: {fileID: 0}
   m_RootOrder: 7

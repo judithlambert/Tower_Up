@@ -9,14 +9,14 @@ public class AudioScript : MonoBehaviour
 
     void Start()
     {
-        JumpSource.clip = JumpClip;
+        //JumpSource.clip = JumpClip;
         //JumpSource = GetComponentInChildren<AudioSource>();
-        JumpSource = GetComponent<AudioSource>();
+        //JumpSource = GetComponent<AudioSource>();
 
     }
 
     static public void PlayJumpSound()
     {
-        JumpSource.Play();
+        //JumpSource.Play();
     }
 }

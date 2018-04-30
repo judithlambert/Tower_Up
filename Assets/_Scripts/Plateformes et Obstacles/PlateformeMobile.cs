@@ -11,7 +11,7 @@ public class PlateformeMobile : Plateforme
     float Temps, Distance, Vitesse, rotation, translation;
     // distance est une amplitude, en degré
     int TypeMouvement;
-    enum Mouvement { horizontal, vertical, diagonal}
+    enum Mouvement { horizontal, vertical}
 
     public void InitialisationPM(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, float rotation, Material material)
     {
@@ -48,12 +48,6 @@ public class PlateformeMobile : Plateforme
                 break;
             case 1:
                 transform.position = new Vector3(0, Distance / 2 * Sin.PMobiles(Vitesse) + Hauteur - Distance / 2, 0);
-                //transform.Translate(new Vector3(0, translation, 0)); //maybbeee idk
-                //if (transform.position.y >= Distance + Hauteur || transform.position.y <= Hauteur)
-                //{ translation = -translation; Debug.Log("translation changed"); }
-                break;
-            case 2:
-                transform.Rotate(Vector3.up, rotation); // not this
                 break;
         }
     }
