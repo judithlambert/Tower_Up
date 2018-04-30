@@ -9,9 +9,10 @@ public class UIFinÉtage : MonoBehaviour
 {
     Text tempsTxt, scoreTxt;
 
+
     private void Start()
     {
-        GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
+        //GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
         DonnéesDeBase();
     }
 
@@ -43,7 +44,11 @@ public class UIFinÉtage : MonoBehaviour
     {
         Start();
         GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().interactable = true;
-        GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = true;
+    }
+
+    private void OnEnable()
+    {
+        GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = DataÉtage.étageFini;
     }
 
     //public void Difficulté()

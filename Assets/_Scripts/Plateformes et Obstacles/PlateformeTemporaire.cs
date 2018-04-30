@@ -13,7 +13,7 @@ public class PlateformeTemporaire : Plateforme
     }
 
     bool wasTouched =false;
-    float timeTouched=0;
+    float timeTouched = 0;
     bool isInitialisé = false;
     Color color;
     float Temps;
@@ -77,5 +77,11 @@ public class PlateformeTemporaire : Plateforme
         {
             Maths.SetGlobalScale(gameObject.transform, new Vector3(1 - ratio * pourcentageTemps, 1, 1 - ratio * pourcentageTemps));
         }
+    }
+
+    public void Réinitialiser()
+    {
+        Initialisation(AngleDébut, Amplitude, Hauteur, Inclinaison, Épaisseur, Largeur, Rayon, Rotation, Materials.Get((int)NomMaterial.Plateforme));
+        Destroy(this);
     }
 }
