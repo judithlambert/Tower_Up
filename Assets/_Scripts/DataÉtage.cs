@@ -69,7 +69,6 @@ public class DataÉtage : MonoBehaviour
         //---
 
 
-
         Materials.Init();
 
         ListGameObject = new List<GameObject>();

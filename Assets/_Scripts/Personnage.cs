@@ -132,6 +132,7 @@ public class Personnage : MonoBehaviour
         {
             if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            AudioScript.PlayJumpSound();
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
             //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
             Vitesse = -vitesseWallJump * ACCÉLÉRATION;
