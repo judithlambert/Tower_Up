@@ -133,6 +133,7 @@ public class Personnage : MonoBehaviour
         {
             if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            AudioScript.PlayJumpSound();
             gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
             //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
             Vitesse = -vitesseWallJump * ACCÉLÉRATION;
@@ -154,8 +155,8 @@ public class Personnage : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.name.Contains("Plateforme") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
-        if (collision.gameObject.name.Contains("Plateforme") && !collision.gameObject.GetComponent<Plateforme>().CollisionDessous(collision))
+        if (collision.gameObject.name.Contains("Plateforme") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusOuCôté(collision))
+        //if (collision.gameObject.name.Contains("Plateforme") && !collision.gameObject.GetComponent<Plateforme>().CollisionDessous(collision))
         {
             Debug.Log("collision jump");
             if (collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision) && nbJumps != 0)

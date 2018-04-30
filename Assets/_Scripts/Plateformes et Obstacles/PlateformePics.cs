@@ -11,7 +11,7 @@ public class PlateformePics : Plateforme
     public const string String = Plateforme.String + "Pics";
 
     Vector3 sommetPic;
-    public Vector3 SommetPic
+    public Vector3 SommetPic // juste pour voir ou sont les sommets
     {
         get
         {
@@ -26,7 +26,7 @@ public class PlateformePics : Plateforme
     float PositionPics;
 
 
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, float rotation, Material material)
+    public void InitialisationPP(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, float rotation, Material material)
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude; ;
@@ -45,21 +45,22 @@ public class PlateformePics : Plateforme
 
         CalculerDonnéesDeBase();
         GénérerTriangles();
+        HauteurPic = hauteurPic;
 
         gameObject.AddComponent<MeshFilter>().mesh = Maillage;
         gameObject.AddComponent<Rigidbody>().isKinematic = true;
         gameObject.AddComponent<MeshRenderer>().material = material;
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
-        //GetComponent<MeshCollider>().convex = true;         // <-- crée un mesh colider qui ne fit pas avec le mesh réel
-        //GetComponent<MeshCollider>().isTrigger = true;
-        //GetComponent<Rigidbody>().isKinematic = true;
+
+        GénérerSommets();
+        GénérerCoordonnéesDeTextures();
+        GénérerListeTriangles();
 
         Positionnement();
         CréationPointCollisionPics();
+
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
-
-
     public void CréationPointCollisionPics()
     {
         CréationPointCollision();
@@ -70,35 +71,29 @@ public class PlateformePics : Plateforme
         }
     }
 
-
-
     // MAILLAGE
-    override protected void CalculerDonnéesDeBase()
-    {
-        Origine = transform.position;
-        nbTranches = (int)Mathf.Ceil((Mathf.Deg2Rad * Amplitude) * DataÉtage.RayonTrajectoirePersonnage / DataÉtage.LARGEUR_PLATEFORME);
-        //AngleDébut = Maths.DegréEnRadian(AngleDébut);
-        //Amplitude = Maths.DegréEnRadian(Amplitude);
-        nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS + nbTranches;
-        nbTriangles = (nbTranches * 3 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE + nbTranches * 4;
-        DeltaAngle = (Mathf.Deg2Rad * Amplitude) / nbTranches;
-        DeltaTexture = DeltaAngle / (Mathf.Deg2Rad * NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
-    }
-
-    override protected void GénérerTriangles()
-    {
-        GénérerSommets();
-        GénérerCoordonnéesDeTextures();
-        GénérerListeTriangles();
-    }
-
     Vector3 SommetPointePic(float angleAjouté, float hauteurAjouté, float inclinaisonAjouté)
     {
         return new Vector3(Mathf.Cos(angleAjouté) * (Rayon + (Largeur / 2)),
                            inclinaisonAjouté + hauteurAjouté,
                            Mathf.Sin(angleAjouté) * (Rayon + (Largeur / 2)));
     }
-
+    override protected void CalculerDonnéesDeBase()
+    {
+        Origine = transform.position;
+        nbTranches = (int)Mathf.Ceil((Mathf.Deg2Rad * Amplitude) * DataÉtage.RayonTrajectoirePersonnage / DataÉtage.LARGEUR_PLATEFORME);
+        nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS + nbTranches;
+        nbTriangles = (nbTranches * 3 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE + nbTranches * 4;
+        DeltaAngle = (Mathf.Deg2Rad * Amplitude) / nbTranches;
+        DeltaTexture = DeltaAngle / (Mathf.Deg2Rad * NB_DEGRÉ_PAR_TEXTURE_SELON_LARGEUR);
+    }
+    override protected void GénérerTriangles()
+    {
+        GénérerSommets();
+        GénérerCoordonnéesDeTextures();
+        GénérerListeTriangles();
+    }
+    
     protected override void GénérerSommets()
     {
         Sommets = new Vector3[nbSommets];
@@ -112,11 +107,10 @@ public class PlateformePics : Plateforme
             Sommets[(nbTranches + 1) + n] = Sommet(angleAjouté, élévationAjouté, false, false);
             Sommets[(nbTranches + 1) * 2 + n] = Sommet(angleAjouté, élévationAjouté, true, false);
             Sommets[(nbTranches + 1) * 3 + n] = Sommet(angleAjouté, élévationAjouté, true, true);
-
+            
             //  Sommets des pointes des pics
             Sommets[nbSommets - NB_SOMMETS_BOUTS + (n - nbTranches)] = SommetPointePic(angleAjouté + DeltaAngle / 2, HauteurPic, élévationAjouté);
         }
-
         // Sommets des extrémités
         Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
         Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
@@ -130,7 +124,6 @@ public class PlateformePics : Plateforme
 
         Maillage.vertices = Sommets;
     }
-
     protected override void GénérerCoordonnéesDeTextures()
     {
         Vector2[] CoordonnéesTexture = new Vector2[nbSommets];
@@ -143,13 +136,11 @@ public class PlateformePics : Plateforme
             CoordonnéesTexture[n] = new Vector2((n % (nbTranches + 1)) * DeltaTexture,
                                                  nièmeArrête % 2 == 0 ? nièmeArrête / 2 * (1 + ratio) : (nièmeArrête - 1) / 2 * (1 + ratio) + 1);
         }
-
         // Coordonnées de textures des pointes
         for (int n = nbSommets - NB_SOMMETS_BOUTS - nbTranches; n < nbSommets - NB_SOMMETS_BOUTS; n++)
         {
             CoordonnéesTexture[n] = new Vector2((n % (nbTranches + 1)) * DeltaTexture + DeltaTexture / 2, 0.5f);
         }
-
         // Coordonnées de textures des deux bouts
         CoordonnéesTexture[nbSommets - 8] = CoordonnéesTexture[nbSommets - 4] = new Vector2(0, 0);
         CoordonnéesTexture[nbSommets - 7] = CoordonnéesTexture[nbSommets - 3] = new Vector2(1, 0);
@@ -158,7 +149,6 @@ public class PlateformePics : Plateforme
 
         Maillage.uv = CoordonnéesTexture;
     }
-
     protected override void GénérerListeTriangles()
     {
         int[] Triangles = new int[nbTriangles * NB_SOMMETS_PAR_TRIANGLE];
@@ -221,7 +211,6 @@ public class PlateformePics : Plateforme
             DataÉtage.PersonnageGameObject.GetComponent<Personnage>().Dommage(1, collision);
         }
     }
-
     public bool CollisionDessusAvecPics(Collision collision)
     {
         bool estAuPic = false;
@@ -234,13 +223,25 @@ public class PlateformePics : Plateforme
         }
         else
         {
-            foreach (ContactPoint cp in collision.contacts)
+            if (Rotation == 90)
             {
-                //if (Maths.EstDansLeRange(cp.point.y, PositionDessus, PositionPics)) { estAuPic = true; }
-                // to be continued...
+                foreach (ContactPoint cp in collision.contacts)
+                {
+                    if (Maths.EstDansLeRange(cp.point.x, SommetGaucheBasInférieur.x + Épaisseur, SommetGaucheBasInférieur.x + Épaisseur + HauteurPic, INCERTITUDE_COLLISION) &&
+                        Maths.EstDansLeRange(cp.point.z, SommetGaucheBasInférieur.z + Épaisseur, SommetGaucheBasInférieur.z + Épaisseur + HauteurPic, INCERTITUDE_COLLISION))
+                    { estAuPic = true; }
+                }
+            }
+            else
+            {
+                foreach (ContactPoint cp in collision.contacts)
+                {
+                    if (Maths.EstDansLeRange(cp.point.x, SommetGaucheBasInférieur.x - Épaisseur, SommetGaucheBasInférieur.x - Épaisseur - HauteurPic, INCERTITUDE_COLLISION) &&
+                        Maths.EstDansLeRange(cp.point.z, SommetGaucheBasInférieur.z - Épaisseur, SommetGaucheBasInférieur.z - Épaisseur - HauteurPic, INCERTITUDE_COLLISION))
+                    { estAuPic = true; }
+                }
             }
         }
-
-            return estAuPic;
+        return estAuPic;
     }
 }

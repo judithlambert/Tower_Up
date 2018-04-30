@@ -31,34 +31,34 @@ public class ÉtageBoss : MonoBehaviour
         for (int i = 0; i < 3; ++i)
         {
             ListGameObject.Add(new GameObject(obj + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2 * DataÉtage.DELTA_HAUTEUR, 0, 2 * DataÉtage.DELTA_HAUTEUR, 0.8f, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i, 20, 2 * DataÉtage.DELTA_HAUTEUR, 0, 2 * DataÉtage.DELTA_HAUTEUR, 0.8f, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
             ListGameObject.Add(new GameObject(obj1 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i, 20, 2.5f * DataÉtage.DELTA_HAUTEUR, 0, 0.5f * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i, 20, 2.5f * DataÉtage.DELTA_HAUTEUR, 0, 0.5f * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
 
             ListGameObject.Add(new GameObject(obj + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DataÉtage.DELTA_HAUTEUR, 0, 4.5f * DataÉtage.DELTA_HAUTEUR, 0.6f, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i + 55, 10, 4.5f * DataÉtage.DELTA_HAUTEUR, 0, 4.5f * DataÉtage.DELTA_HAUTEUR, 0.6f, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
             ListGameObject.Add(new GameObject(obj + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 4.5f * DataÉtage.DELTA_HAUTEUR, 0, 4.5f * DataÉtage.DELTA_HAUTEUR, 0.6f, DataÉtage.RAYON_TOUR + 2.4f, 0, Materials.Get((int)NomMaterial.Plateforme));
+            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i + 55, 10, 4.5f * DataÉtage.DELTA_HAUTEUR, 0, 4.5f * DataÉtage.DELTA_HAUTEUR, 0.6f, DataÉtage.RAYON_TOUR + 2.4f, 0, Materials.Get((int)NomMaterial.Plateforme));
             ListGameObject.Add(new GameObject(obj1 + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().Initialisation(120 * i + 55, 10, 5 * DataÉtage.DELTA_HAUTEUR, 0, 0.5f * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i + 55, 10, 5 * DataÉtage.DELTA_HAUTEUR, 0, 0.5f * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
         }
         int nbPic = 7;
         for (int i = 0; i < nbPic; ++i)
         {
             ListGameObject.Add(new GameObject(obj2 + " 1er " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 3, 1, 0, 50, 1, DataÉtage.RAYON_TOUR + 6, 2, 0, Materials.Get((int)NomMaterial.Tour));
+            ListGameObject.Last().AddComponent<PlateformePics>().InitialisationPP(360 / nbPic * i, 3, 1, 0, 50, 1, DataÉtage.RAYON_TOUR + 6, 2, 0, Materials.Get((int)NomMaterial.Tour));
         }
         nbPic = 16;
         for (int i = 0; i < nbPic; ++i)
         {
             ListGameObject.Add(new GameObject(obj2 + " 2e " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 4, 0, 100, 2, DataÉtage.RAYON_TOUR + 14, 4, 0, Materials.Get((int)NomMaterial.Plateforme));
+            ListGameObject.Last().AddComponent<PlateformePics>().InitialisationPP(360 / nbPic * i, 7, 4, 0, 100, 2, DataÉtage.RAYON_TOUR + 14, 4, 0, Materials.Get((int)NomMaterial.Plateforme));
         }
         nbPic = 5;
         for (int i = 0; i < nbPic; ++i)
         {
             ListGameObject.Add(new GameObject(obj2 + " 3e " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().Initialisation(360 / nbPic * i, 7, 20, 0, 150, 2, DataÉtage.RAYON_TOUR + 35, 8, 0, Materials.Get((int)NomMaterial.Tour));
+            ListGameObject.Last().AddComponent<PlateformePics>().InitialisationPP(360 / nbPic * i, 7, 20, 0, 150, 2, DataÉtage.RAYON_TOUR + 35, 8, 0, Materials.Get((int)NomMaterial.Tour));
         }
 
         ListSommetsPics1e = new List<Vector3>();

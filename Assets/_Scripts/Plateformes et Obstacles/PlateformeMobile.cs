@@ -12,9 +12,10 @@ public class PlateformeMobile : Plateforme
     // distance est une amplitude, en degré
     int TypeMouvement;
     enum Mouvement { horizontal, vertical, diagonal}
-    public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, float rotation, Material material)
+
+    public void InitialisationPM(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float vitesse, float distance, int mouvement, float rotation, Material material)
     {
-        Initialisation(angleDébut, amplitude, hauteur, inclinaison, épaisseur, largeur, rayon, rotation, material);
+        InitialisationP(angleDébut, amplitude, hauteur, inclinaison, épaisseur, largeur, rayon, rotation, material);
 
         Vitesse = vitesse;
         Distance = mouvement == 0 ? distance : distance * DataÉtage.DELTA_HAUTEUR;
@@ -30,7 +31,6 @@ public class PlateformeMobile : Plateforme
         if (collision.gameObject.name.Contains("Personnage") && CollisionDessus(collision))
             touching = DataÉtage.PersonnageScript.touchingPlateformeMobile = true;
     }
-
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.name.Contains("Personnage"))
