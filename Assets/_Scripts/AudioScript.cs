@@ -5,18 +5,24 @@ using UnityEngine;
 public class AudioScript : MonoBehaviour
 {
     public AudioClip JumpClip;
-    static public AudioSource JumpSource;
+    public AudioSource JumpSource;
 
     void Start()
     {
-        //JumpSource.clip = JumpClip;
-        //JumpSource = GetComponentInChildren<AudioSource>();
-        //JumpSource = GetComponent<AudioSource>();
-
+        JumpSource.clip = JumpClip;
     }
 
-    static public void PlayJumpSound()
+    private void Update()
     {
         //JumpSource.Play();
+        if (Input.GetKey(KeyCode.O))
+        {
+            JumpSource.Play();
+        }
     }
+
+    //static public void PlayJumpSound()
+    //{
+    //    JumpSource.Play();
+    //}
 }
