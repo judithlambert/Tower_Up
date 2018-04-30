@@ -56,5 +56,6 @@
  * Les plateformePics de l'étage 4 ne font aucun dommage
  * Il est possible de sauter à l'infini sur le dessous des plateformePics
  * On voit l'étage disparaître à la fin d'un étage
+ * blocker passage etage4
  * 
  */

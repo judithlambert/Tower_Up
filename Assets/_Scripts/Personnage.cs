@@ -155,8 +155,8 @@ public class Personnage : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.name.Contains("Plateforme") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusEtCôté(collision))
-        if (collision.gameObject.name.Contains("Plateforme") && !collision.gameObject.GetComponent<Plateforme>().CollisionDessous(collision))
+        if (collision.gameObject.name.Contains("Plateforme") && collision.gameObject.GetComponent<Plateforme>().CollisionDessusOuCôté(collision))
+        //if (collision.gameObject.name.Contains("Plateforme") && !collision.gameObject.GetComponent<Plateforme>().CollisionDessous(collision))
         {
             Debug.Log("collision jump");
             if (collision.gameObject.GetComponent<Plateforme>().CollisionCôté(collision, ref côtéCollision) && nbJumps != 0)
