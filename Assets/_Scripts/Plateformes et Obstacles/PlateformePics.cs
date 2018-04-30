@@ -23,8 +23,7 @@ public class PlateformePics : Plateforme
 
     protected float HauteurPic;
 
-    float PositionDessus, PositionDessous, PositionPics;
-    Vector3 SommetDroiteHautSuppérieur, SommetDroiteHautInférieur, SommetDroiteBasSuppérieur, SommetDroiteBasInférieur, SommetGaucheHautSuppérieur, SommetGaucheHautInférieur, SommetGaucheBasSuppérieur, SommetGaucheBasInférieur;
+    float PositionPics;
 
 
     public void Initialisation(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float hauteurPic, float rotation, Material material)
@@ -56,21 +55,17 @@ public class PlateformePics : Plateforme
         //GetComponent<Rigidbody>().isKinematic = true;
 
         Positionnement();
-        CréationPointCollision();
+        CréationPointCollisionPics();
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
 
-    public void CréationPointCollision()
+    public void CréationPointCollisionPics()
     {
-
-        PositionDessus = Hauteur;
-        PositionDessous = Hauteur - Épaisseur;
+        CréationPointCollision();
         PositionPics = Hauteur + HauteurPic;
         if (Rotation == 180)
         {
-            PositionDessus = Hauteur - Épaisseur;
-            PositionDessous = Hauteur;
             PositionPics = Hauteur - Épaisseur - HauteurPic;
         }
     }
@@ -230,10 +225,22 @@ public class PlateformePics : Plateforme
     public bool CollisionDessusAvecPics(Collision collision)
     {
         bool estAuPic = false;
-        foreach (ContactPoint cp in collision.contacts)
+        if (Mathf.Abs(Rotation) != 90)
         {
-            if (Maths.EstDansLeRange(cp.point.y, PositionDessus, PositionPics)) { estAuPic = true; }
+            foreach (ContactPoint cp in collision.contacts)
+            {
+                if (Maths.EstDansLeRange(cp.point.y, PositionDessus, PositionPics)) { estAuPic = true; }
+            }
         }
-        return estAuPic;
+        else
+        {
+            foreach (ContactPoint cp in collision.contacts)
+            {
+                //if (Maths.EstDansLeRange(cp.point.y, PositionDessus, PositionPics)) { estAuPic = true; }
+                // to be continued...
+            }
+        }
+
+            return estAuPic;
     }
 }

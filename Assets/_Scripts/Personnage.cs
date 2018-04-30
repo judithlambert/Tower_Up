@@ -129,30 +129,27 @@ public class Personnage : MonoBehaviour
 
     void Jumper()
     {
-        if (nbJumps + nbWallJump < 4)
+        if ((wallJump && nbWallJump < 2) || (DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration && wallJump)) // BUG
         {
-            if ((wallJump && nbWallJump < 2) || (DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration && wallJump)) // BUG
-            {
-                if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
-                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
-                //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
-                Vitesse = -vitesseWallJump * ACCÉLÉRATION;
+            if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
+            //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
+            Vitesse = -vitesseWallJump * ACCÉLÉRATION;
 
-                Debug.Log("wall jump successful");
-                dernierCollisionObject = nouveauCollisionObject;
-            }
-            else if (nbJumps < 2 || DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration) // est ce que le saut est valide
+            Debug.Log("wall jump successful");
+            dernierCollisionObject = nouveauCollisionObject;
+        }
+        else if (nbJumps < 2 || DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration) // est ce que le saut est valide
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            if (nbJumps == 1)
             {
-                GetComponent<Rigidbody>().velocity = Vector3.zero;
-                GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
-                if (nbJumps == 1)
-                {
-                    particule = Instantiate(Resources.Load<GameObject>("Effects/ParticuleDoubleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
-                    Destroy(particule, 2);
-                }
-                ++nbJumps;
+                particule = Instantiate(Resources.Load<GameObject>("Effects/ParticuleDoubleSaut"), transform.position - new Vector3(0, transform.localScale.y, 0), Quaternion.Euler(-90, 0, 0));
+                Destroy(particule, 2);
             }
+            ++nbJumps;
         }
     }
     void OnCollisionEnter(Collision collision)
