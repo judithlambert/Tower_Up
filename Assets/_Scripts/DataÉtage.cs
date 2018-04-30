@@ -90,7 +90,7 @@ public class DataÉtage : MonoBehaviour
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
-        Sauvegarde.Save();
+        //Sauvegarde.Save();
         LoadÉtage();
         étageEnCour = true;
         victoire = false;
@@ -242,7 +242,7 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
         if(!mêmeÉtage) { nbÉtage++; }
-        Sauvegarde.Save();
+        //Sauvegarde.Save();
         LoadÉtage();
         Ui.SetActive(true);
         UiScript.Réinitialiser();
