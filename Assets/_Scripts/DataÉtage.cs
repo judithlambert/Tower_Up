@@ -274,9 +274,9 @@ public class DataÉtage : MonoBehaviour
 
     public static void Checkpoint()
     {
-        foreach(GameObject g in ListGameObject.FindAll(x=>x.name.Contains("PlateformeTemporaire")))
+        foreach(GameObject g in ListGameObject.FindAll(x=>x.name.Contains(PlateformeTemporaire.String)))
         {
-
+            g.GetComponent<PlateformeTemporaire>().Réinitialiser();
         }
     }
 }

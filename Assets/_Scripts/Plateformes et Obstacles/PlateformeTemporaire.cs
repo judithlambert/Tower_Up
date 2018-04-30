@@ -18,6 +18,7 @@ public class PlateformeTemporaire : Plateforme
     Color color;
     float Temps;
     int TypeDeUpdate;
+    Vector3 scaleInitial;
 
     public void InitialisationPT(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float temps, int typeUptade, float rotation, Material material)
     {
@@ -30,6 +31,8 @@ public class PlateformeTemporaire : Plateforme
         ratio = ((DataÉtage.LARGEUR_PLATEFORME / 2 + DataÉtage.PersonnageGameObject.transform.lossyScale.y) / (DataÉtage.RAYON_TOUR + DataÉtage.LARGEUR_PLATEFORME));
 
         color = GetComponent<Renderer>().material.color;
+
+        scaleInitial = transform.lossyScale;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -81,7 +84,13 @@ public class PlateformeTemporaire : Plateforme
 
     public void Réinitialiser()
     {
-        InitialisationPT(AngleDébut, Amplitude, Hauteur, Inclinaison, Épaisseur, Largeur, Rayon, Temps, TypeDeUpdate, Rotation, Materials.Get((int)NomMaterial.Plateforme));
-        Destroy(this);
+        transform.SetGlobalScale(scaleInitial);
+        //Destroy(gameObject.AddComponent<MeshFilter>());
+        //Destroy(gameObject.AddComponent<Rigidbody>());
+        //Destroy(gameObject.AddComponent<MeshRenderer>());
+        //Destroy(gameObject.AddComponent<MeshCollider>());
+        //InitialisationPT(AngleDébut, Amplitude, Hauteur, Inclinaison, Épaisseur, Largeur, Rayon, Temps, TypeDeUpdate, Rotation, Materials.Get((int)NomMaterial.Plateforme));
+        //float f = 0f;
+        //Destroy(this);
     }
 }

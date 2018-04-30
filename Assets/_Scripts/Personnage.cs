@@ -256,5 +256,6 @@ public class Personnage : MonoBehaviour
         Vitesse = 0;
         transform.position = PositionCheckPoint;
         transform.rotation = rotationInitiale;
+        DataÉtage.Checkpoint();
     }
 }
