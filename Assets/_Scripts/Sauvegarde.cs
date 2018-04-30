@@ -8,8 +8,8 @@ public static class Sauvegarde
 {
     public const string CHEMIN_SAVE = "Assets/Saves/SaveFile.txt";
 
-    public static StreamReader saveReader;
-    public static StreamWriter saveWriter;
+    static StreamReader saveReader;
+    static StreamWriter saveWriter;
 
     static FileStream save = new FileStream(CHEMIN_SAVE, FileMode.Open, FileAccess.ReadWrite);
 
@@ -24,7 +24,4 @@ public static class Sauvegarde
         saveWriter.Write(DataÉtage.nbÉtage);
         saveWriter.Close();
     }
-
-
-
 }

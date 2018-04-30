@@ -80,14 +80,14 @@ public class Plateforme : MonoBehaviour
             PositionDessous = Hauteur;
         }
 
-        SommetGaucheBasInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false);
-        SommetGaucheBasSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true);
-        SommetGaucheHautInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, false);
-        SommetGaucheHautSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, true);
-        SommetDroiteBasInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, false);
-        SommetDroiteBasSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, true);
-        SommetDroiteHautInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, false);
-        SommetDroiteHautSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, true);
+        SommetGaucheBasInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false) + new Vector3(0,Hauteur,0);
+        SommetGaucheBasSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true) + new Vector3(0, Hauteur, 0);
+        SommetGaucheHautInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, false) + new Vector3(0, Hauteur, 0);
+        SommetGaucheHautSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, true) + new Vector3(0, Hauteur, 0);
+        SommetDroiteBasInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, false) + new Vector3(0, Hauteur, 0);
+        SommetDroiteBasSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, true) + new Vector3(0, Hauteur, 0);
+        SommetDroiteHautInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, false) + new Vector3(0, Hauteur, 0);
+        SommetDroiteHautSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, true) + new Vector3(0, Hauteur, 0);
 
         //PositionDessus = SommetGaucheHautSuppérieur.y;
         //PositionDessous = SommetGaucheBasInférieur.y;
