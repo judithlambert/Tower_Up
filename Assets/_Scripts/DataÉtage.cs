@@ -64,8 +64,8 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        nbÉtage = TEST_ÉTAGE;
-        if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
+        //nbÉtage = TEST_ÉTAGE;
+        //if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
         //---
 
 
@@ -241,6 +241,7 @@ public class DataÉtage : MonoBehaviour
     public static void NouvelÉtage(bool mêmeÉtage)
     {
         //UiFinÉtage.GetComponentInChildren<Image>().gameObject.SetActive(false);
+        UiFinÉtage.GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
         if(!mêmeÉtage) { nbÉtage++; }
