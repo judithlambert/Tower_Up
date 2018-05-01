@@ -16,8 +16,8 @@ public class CoeursDeVie : MonoBehaviour
         largeur = Coeur.rectTransform.rect.width;
         for(int i = 1; i <= DataÉtage.PersonnageScript.Vie; ++i)
         {
-            Image nouveauCoeur = Instantiate(Coeur, Vector3.zero, Quaternion.identity, transform);
-            nouveauCoeur.transform.position = new Vector3(nouveauCoeur.GetComponentInParent<Transform>().position.x + (largeur + ESPACEMENENT) * (i - 1), nouveauCoeur.transform.position.y);
+            Image nouveauCoeur = Instantiate(Coeur, Vector2.zero, Quaternion.identity, transform);
+            nouveauCoeur.transform.localPosition = new Vector2((largeur + ESPACEMENENT) * (i - 1), 0);
             ListeCoeurs.Add(nouveauCoeur);
         }
     }
