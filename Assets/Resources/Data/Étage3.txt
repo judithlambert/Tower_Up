@@ -1,0 +1,264 @@
+PlateformeMobile 1
+270;320;1.5;0;0.5;-2;680
+Point 1
+0;1.5;1;10
+Point 1.1
+90;1.5;1;10
+Point 1.2
+180;1.5;1;10
+Point 1.3
+270;1.5;1;10
+PlateformeMobile 1.1
+340;5;2.5;0;1;-2;365
+PlateformeMobile 1.2
+160;5;2.5;0;1;-2;365
+Plateforme 1
+87.5;5;1;0;1
+Plateforme 1.1
+177.5;5;1;0;1
+Plateforme 1.2
+267.5;5;1;0;1
+Point 1
+135;0;0;50
+Point 1.1
+225;0;0;50
+PlateformeMobile 2
+-90;320;3;0;0.5;1;680
+Point 2
+0;3;1;10
+Point 2.1
+90;3;1;10
+Point 2.2
+180;3;1;10
+Point 2.3
+270;3;1;10
+PlateformeMobile 3
+0;320;4.5;0;0.5;2;680
+Point 3
+0;4.5;1;10
+Point 3.1
+90;4.5;1;10
+Point 3.2
+180;4.5;1;10
+Point 3.3
+270;4.5;1;10
+PlateformeMobile 3.1
+90;5;4;0;1;2;365
+PlateformeMobile 3.2
+270;5;4;0;1;2;365
+PlateformeMobile 4
+270;320;6;0;0.5;1.5;680
+Point 4
+90;6;0;50
+Point 4.1
+180;6;0;50
+Point 4,2
+270;6;0;50
+PlateformeMobile 4.1
+30;5;5.5;0;1;1.5;365
+PlateformeMobile 4.2
+100;5;5.5;0;1;1.5;365
+PlateformeMobile 4.3
+290;5;5.5;0;1;1.5;365
+Plateforme 5
+20;320;7.5;0;0.5
+Checkpoint
+30;7.5
+Plateforme 5.1
+42.5;5;7;0;1
+Plateforme 5.2
+132.5;5;7;0;1
+Plateforme 5.3
+222.5;5;7;0;1
+Plateforme 5.4
+312.5;5;7;0;1
+Plateforme 6
+40;60;7.5;4;0.5
+Plateforme 6.1
+140;60;11;4;0.5
+PlateformeTemporaire 6.2
+200;40;13;3;0.5;0.5
+Plateforme 6.3
+240;50;14.5;3.3;0.5
+PlateformePics 7
+70;265;7.5;0;0;1
+PlateformeMobile 8
+320;15;10;0;0.5;7;35
+Point 8
+315;9.75;1;50
+PlateformeMobile 8.1
+320;15;11;0;0.5;-9;35
+PlateformeMobile 8.2
+320;15;12;0;0.5;8;35
+PlateformeMobile 8.3
+320;15;13;0;0.5;-8;35
+PlateformeMobile 8.4
+320;15;14;0;0.5;9;35
+PlateformeMobile 8.5
+320;15;15;0;0.5;-7;35
+PlateformeMobile 8.6
+320;15;16;0;0.5;8;35
+Point 8.7
+360;15;1;30
+PlateformeMobile 8.7
+320;15;17;0;0.5;-9;35
+PlateformeMobile 8.8
+320;15;18;0;0.5;7;35
+PlateformeMobile 8.9
+320;15;19;0;0.5;-7;35
+PlateformeMobile 8.10
+320;15;20;0;0.5;9;35
+PlateformeMobile 8.11
+320;15;21;0;0.5;-8;35
+PlateformeMobile 8.12
+320;15;22;0;0.5;7;35
+PlateformeMobile 8.13
+320;15;23;0;0.5;-9;35
+PlateformeMobile 8.14
+320;15;24;0;0.5;8;35
+PlateformeMobile 8.15
+320;15;25;0;0.5;-8;35
+PlateformeMobile 8.16
+320;15;26;0;0.5;9;35
+PlateformeMobile 8.17
+320;15;27;0;0.5;-7;35
+Plateforme 9
+335;5;27.5;0;20
+Plateforme 9.1
+335;45;28;0;0.5
+Plateforme 9.2
+20;10;28;0;6
+Checkpoint
+25;28
+Plateforme 9.3
+0;5;26.5;0;2
+PlateformeTemporaire 9.4
+0;20;24.5;0;0.5;3
+Point 9.4
+12.5;24.5;0;100
+Plateforme 9.5
+30;15;26.5;0;1
+Point 9.5
+37.5;24.5;0;400
+Plateforme 9.6
+45;10;28.5;0;6.2
+Plateforme 10
+40;250;8.7;17.6;0.5
+Plateforme 11
+290;15;18;0;1
+Pic 11.1
+297.5;2.3;18
+Point 11.1
+297.5;20.3;0;70
+PlateformePics 12
+55;90;27.5;0;0.2;0.5
+PlateformePics 12.1
+70;90;25;0;0.2;0.5
+PlateformePics 12.2
+55;105;22.5;0;0.2;0.5
+PlateformeMobile 12.3
+55;105;28.5;0;0.3;3;6;1
+Plateforme 13
+160;20;22.5;0;0.5
+Plateforme 13.1
+160;5;35;0;10.2
+Point 13.1
+155;32;1;100
+Point 13.1
+170;34;0;80
+Plateforme 13.2
+200;5;30;0;8
+Plateforme 13.3
+167.5;5;22;0;3
+Point 13.3
+162.5;21;1;90
+Point 13.3
+177.5;21;1;60
+PlateformeMobile 13.4
+177.5;10;29;0;0.5;4;5;1
+PlateformeMobile 14
+205;10;30;0;0.5;6;8;1
+Point 14
+210;20.5;1;80
+Point 14.1
+210;25;0;20
+Point 14.2
+220;24;0;20
+Point 14.3
+230;25;0;20
+Point 14.4
+240;24;0;20
+Point 14.5
+250;25;0;20
+Point 14.6
+260;24;0;20
+Point 14.7
+270;25;0;20
+PlateformeMobile 14.1
+215;10;32;0;0.5;-8;11;1
+PlateformeMobile 14.2
+225;10;32;0;0.5;9;11;1
+PlateformeMobile 14.3
+235;10;32;0;0.5;-5;11;1
+PlateformeMobile 14.4
+245;10;32;0;0.5;7;11;1
+PlateformeMobile 14.5
+255;10;32;0;0.5;-6;11;1
+PlateformeMobile 14.6
+265;10;32;0;0.5;8;11;1
+Plateforme 15
+275;5;33;0;12
+Point 15
+285;27;0;50
+Plateforme 15.1
+280;15;33;0;1.5
+Plateforme 15.2
+305;40;33;0;1.5
+PlateformeTemporaire 15.3
+345;90;33;0;1.5;1
+Point 15.3
+390;31.5;0;80
+Plateforme 15.4
+75;20;33;0;1.5
+PlateformeTemporaire 15.5
+295;10;33;0;0.5;0.5
+Point 15.5
+300;31.5;0;70
+Plateforme Plafond
+0;360;50;0;15
+Plateforme 16
+70;20;16.5;0;0.5
+Point 16
+80;16.5;0;120
+Point 16.1
+80;21.25;0;150
+PlateformePics 16.1
+30;90;15;0;0.5;1
+Plateforme 16.2
+70;5;14.5;0;2
+Point 16.2
+65;13.5;1;40
+Point 16.2
+80;13.5;0;40
+PlateformePics 16.3
+200;5;15.5;0;1.2;1.5
+Point 16.3
+202.5;17;0;70
+FinEtage
+80;33
+PlateformeMobile 17
+100;20;9;0;0.5;2;225
+Plateforme 17.1
+270;10;12;0;0.5
+Pic 17.2
+175;3;7.5
+Pic 17.2
+225;3;7.5
+Pic 17.2
+275;3;7.5
+Point
+175;10.5;0;60
+Point
+225;10.5;0;60
+Point
+275;10.5;0;60

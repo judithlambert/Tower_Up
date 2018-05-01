@@ -1,0 +1,184 @@
+Fleche
+0;1.2;90
+Pic
+326.25;2;0
+Plateforme début
+45;45;1;0;1
+Plateforme 1
+135;45;1;0;1
+Plateforme 2
+225;45;1;0;1
+Plateforme 3
+270;45;2;0;2
+Plateforme 4
+315;270;3.5;0;0.5
+Fleche
+245;3.5;135
+Fleche
+295;3.5;45
+Plateforme 5
+0;180;5;0;1.5
+Plateforme 6
+45;45;10;0;3.5
+Pic h10
+60;2;10
+Plateforme 7
+135;45;10;0;3.5
+Fleche
+115;10;45
+Plateforme 8
+90;15;7;0;0.5
+Plateforme
+120;15;9;0;0.5
+Plateforme 10
+215;125;7;0;0.5
+Plateforme
+330;10;8.5;0;1.5
+Plateforme
+180;135;10;0;1.5
+Plateforme
+180;10;14;0;3
+Plateforme
+260;10;14;0;3
+Plateforme 15
+190;70;14;0;1
+Plateforme
+200;50;12;0;2
+Plateforme
+320;20;12;0;0.5
+Fleche
+295;13;135
+Checkpoint
+330;12
+Plateforme
+150;20;16;0;0.5
+Plateforme
+120;20;18;0;0.5
+Plateforme 20
+90;20;20;0;0.5
+Plateforme
+60;20;22;0;0.5
+Plateforme
+30;10;22;0;0.5
+Plateforme
+0;10;22;0;0.5
+Plateforme
+270;10;22;0;0.5
+Fleche
+5;23;180
+Plateforme 25
+120;140;22;0;0.5
+Plateforme 
+250;10;26;0;4
+Plateforme
+260;5;23.33;0;0.5
+Plateforme
+270;5;24.66;0;0.5
+PlateformePics
+200;45;17;0;1;1
+Plateforme 30
+245;20;18;0;2
+PlateformePics
+165;60;22;0;0;1.4
+Fleche
+195;26;180
+Plateforme
+60;100;26;0;1
+Plateforme finale
+225;25;26;0;0.5
+Plateforme
+0;360;38;0;10
+Plateforme
+0;10;19.5;0;0.5
+FinEtage
+80;26
+Point 1
+50.625;1;0;10
+Point 1
+61.875;1;0;10
+Point 1
+73.125;1;0;10
+Point 1
+84.375;1;0;10
+Point 2
+140.625;1;1;2
+Point 2
+151.875;1;1;2
+Point 2
+163.125;1;1;2
+Point 2
+174.375;1;1;2
+Point 3
+270;5.5;1;30
+Point 3
+250;5;0;70
+Point 3
+290;5;0;70
+Point 4
+326.25;2;0;50
+Point 5
+60;12;0;70
+Point 5
+70;10;1;25
+Point 5
+50;10;1;25
+Point 5
+40;8;0;100
+Point 6
+97.5;5;0;20
+Point 6
+112.5;5;0;20
+Point 6
+127.5;5;0;20
+Point 6
+112.5;12.5;0;70
+Point 7
+235;7;0;20
+Point 7
+245;7;0;20
+Point 7
+255;7;0;20
+Point 7
+265;7;0;20
+Point 8
+220;12;1;4
+Point 8
+230;12;1;4
+Point 8
+225;15;0;40
+Point 9
+100;18;0;200
+Point 9
+160;14;0;150
+Point 10
+255;19;1;80
+Point 10
+222.5;19;1;80
+Point 11
+295;10.5;0;20
+Point 11
+295;11.5;0;20
+Point 11
+295;12.5;0;20
+Point 11
+295;13.5;0;20
+Point 12
+5;17.5;1;120
+Point 12
+5;20;1;60
+Point 12
+5;22.5;1;30
+Point 12
+35;14.5;0;200
+Point 12
+5;9.5;1;75
+Point 13
+330;16;0;150
+Point 13
+330;20;0;200
+Point 13
+330;25;0;200
+Point 14
+237.5;23;0;300
+Point 15
+187;7;0;80

@@ -10,7 +10,7 @@ using System.IO;
 public class DataÉtage : MonoBehaviour
 {
     [SerializeField] bool GODMOD;
-    public const string CHEMIN_DATA_ÉTAGE = "Assets/Data/";
+    public const string CHEMIN_DATA_ÉTAGE = "Assets/Resources/Data/";
     [SerializeField] int TEST_ÉTAGE;
 
     public const float HAUTEUR_TOUR = 35,
@@ -90,7 +90,7 @@ public class DataÉtage : MonoBehaviour
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
 
-        //Sauvegarde.Save();
+        Sauvegarde.Save();
         LoadÉtage();
         étageEnCour = true;
         victoire = false;
@@ -243,7 +243,7 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
         if(!mêmeÉtage) { nbÉtage++; }
-        //Sauvegarde.Save();
+        Sauvegarde.Save();
         LoadÉtage();
         Ui.SetActive(true);
         UiScript.Réinitialiser();

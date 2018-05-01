@@ -27,7 +27,7 @@ public class Menu : MonoBehaviour
 
     public void ResumeGame()
     {
-        if (Sauvegarde.Load()==0) //if (File.Exists(path))
+        if (Sauvegarde.Load()==0)
         {
             MessageErreur.SetActive(true);
             MssgErreurTxt.text = "il n'y a aucune partie de commencer";
