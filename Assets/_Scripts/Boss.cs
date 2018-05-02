@@ -28,6 +28,7 @@ public class Boss : MonoBehaviour
     float avancé;
     float nouvelleAvancé;
 
+
     public float VitesseRotation { get; private set; }
     public float Rotation
     {
@@ -40,12 +41,18 @@ public class Boss : MonoBehaviour
               return angle += angle > 180 ? -360 : (angle < -180 ? 360 : 0); }
     }
 
+    private void Awake()
+    {
+
+    }
+
     void Start()
     {
         VitesseRotation = VITESSE_ROTATION_MIN;
         animator = GetComponent<Animator>();
         Tongue = GameObject.Find("Tongue");
         NbDeVie = NbDeVieInitial;
+       
     }
 
     //public void OnCollisionEnter(Collision collision)
@@ -153,5 +160,4 @@ public class Boss : MonoBehaviour
         GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileB"), PositionTongue, Quaternion.identity);
         proj.AddComponent<ProjectileBoss>().Initialisation(0.8f, Random.Range(4,7), 40);
     }
- 
 }

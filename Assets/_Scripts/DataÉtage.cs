@@ -64,8 +64,8 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        //nbÉtage = TEST_ÉTAGE;
-        //if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
+        nbÉtage = TEST_ÉTAGE;
+        if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
         //---
 
         Materials.Init();
