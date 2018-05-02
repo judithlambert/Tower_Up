@@ -1123,7 +1123,7 @@ Prefab:
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
       propertyPath: "TEST_\xC9TAGE"
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
@@ -2053,7 +2053,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2080217238
 MonoBehaviour:
   m_ObjectHideFlags: 0

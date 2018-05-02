@@ -14,6 +14,9 @@ public class DataÉtage : MonoBehaviour
     public const string CHEMIN_DATA_ÉTAGE = "Assets/Resources/Data/";
     [SerializeField] int TEST_ÉTAGE;
 
+    [SerializeField] AudioSource AudioSource;
+    [SerializeField] AudioClip WinClip;
+
     public const float HAUTEUR_TOUR = 35,
                        RAYON_TOUR = 10, // si distance < rayon
                        DELTA_HAUTEUR = 2, //Hauteur entre 2 plateformes
@@ -249,6 +252,7 @@ public class DataÉtage : MonoBehaviour
         UiScript.Réinitialiser();
         nouvelÉtage = pause = false;
         étageEnCour = true;
+        //PersonnageScript.AudioRecommencer();
     }
 
     public static void PausePlay()
