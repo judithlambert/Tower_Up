@@ -19,7 +19,6 @@ public class ÉtageBoss : MonoBehaviour
     GameObject canvas;
     static public GameObject MessagePanel;
 
-
     void Start()
     {
         DataÉtage.TourGameObject.transform.position = new Vector3(0, DataÉtage.PlancherGameObject.transform.position.y - 2);
@@ -31,8 +30,8 @@ public class ÉtageBoss : MonoBehaviour
 
         //do
         //{
-            canvas = GameObject.Find("Canvas");
-            MessagePanel = Instantiate(Resources.Load<GameObject>("Prefabs/PnlMessageProjectilesBoss"), new Vector2(0, 0), Quaternion.Euler(Vector2.zero), canvas.transform);
+            //canvas = GameObject.Find("Canvas");
+            //MessagePanel = Instantiate(Resources.Load<GameObject>("Prefabs/PnlMessageProjectilesBoss"), new Vector2(0, 0), Quaternion.Euler(Vector2.zero), canvas.transform);
         //    Maths.messageProjDéjaAfficher = true;
         //} while (!Maths.messageProjDéjaAfficher);
 

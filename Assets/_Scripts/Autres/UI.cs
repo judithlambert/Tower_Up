@@ -10,6 +10,7 @@ public class UI : MonoBehaviour
     Text tempsTxt, pointsEtMultiplicateurTxt, scoreTxt;
     bool pointsUpdate, multiplicateurUpdate;
     char[] trim = new char[] { '.' };
+    Text nbÉtageTxt;
 
     static public Text FPSText;
 
@@ -31,10 +32,10 @@ public class UI : MonoBehaviour
         tempsTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Temps").First();
         pointsEtMultiplicateurTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Points et Multiplicateur").First();
         scoreTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Score").First();
-        
+        nbÉtageTxt = GetComponentsInChildren<Text>().Where(x => x.name == "NbÉtage").First();
         pointsUpdate = multiplicateurUpdate = true;
     }
-	
+    int ancienNbÉtage;
 	void Update ()
     {
         tempsPassé += Time.deltaTime;
@@ -49,6 +50,8 @@ public class UI : MonoBehaviour
 
         FPSText.text = (1 / Time.smoothDeltaTime).ToString("0.00") + " FPS";
 
+        // minimiser son update
+        nbÉtageTxt.text = "Étage " + DataÉtage.nbÉtage;
     }
 
     public void Réinitialiser()
