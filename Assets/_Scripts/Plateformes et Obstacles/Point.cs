@@ -48,7 +48,7 @@ public class Point : MonoBehaviour
         GetComponent<MeshCollider>().isTrigger = true;
 
         AudioSource = gameObject.AddComponent<AudioSource>();
-        PointClip = Resources.Load("Audio/Sound effect/Point") as AudioClip;
+        PointClip = multiplicateur? Resources.Load("Audio/Sound effect/Point2") as AudioClip: Resources.Load("Audio/Sound effect/Point") as AudioClip;
         AudioSource.clip = PointClip;
 
         ComposanteTexte = new GameObject(name + " ComposanteTexte");

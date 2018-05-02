@@ -192,8 +192,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4324561eadd0d439aa924373427c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpClip: {fileID: 8300000, guid: db3eb70e5b7bcbb4398bc55d2d43dbb9, type: 3}
   AudioSource: {fileID: 82239347749025926}
+  JumpClip: {fileID: 8300000, guid: db3eb70e5b7bcbb4398bc55d2d43dbb9, type: 3}
+  WinClip: {fileID: 8300000, guid: 99025c851352bbb478f283d82374b926, type: 3}
+  DeathClip: {fileID: 8300000, guid: 7ef0f59d5f5fc8341ae5736c25ac832a, type: 3}
+  CheckpointClip: {fileID: 8300000, guid: fa459b7a8ab0a38409da406fa6fb7d63, type: 3}
+  RecommencerClip: {fileID: 8300000, guid: 685599002efb3bc49bfa145c156794b4, type: 3}
   updateVie: 0
   touchingPlateformeMobile: 0
 --- !u!135 &135755181039867920

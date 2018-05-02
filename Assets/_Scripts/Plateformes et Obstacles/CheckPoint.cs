@@ -45,7 +45,7 @@ public class CheckPoint : MonoBehaviour
         {
             Debug.Log("checkPoint");
             Drapeau.GetComponent<MeshRenderer>().material = Materials.Get((int)NomMaterial.CheckPointDéclanché); // devrait etre fait dans drapeur animé
-
+            DataÉtage.PersonnageScript.AudioCheckpoint();
             DataÉtage.PersonnageScript.PositionCheckPoint = transform.position;
         }
     }
