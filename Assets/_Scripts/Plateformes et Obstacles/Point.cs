@@ -16,6 +16,9 @@ public class Point : MonoBehaviour
 
     public const string String = "Point";
 
+    AudioClip PointClip;
+    AudioSource AudioSource;
+
     bool Multiplicateur;
     float Points;
 
@@ -43,6 +46,10 @@ public class Point : MonoBehaviour
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<MeshCollider>().convex = true;
         GetComponent<MeshCollider>().isTrigger = true;
+
+        AudioSource = gameObject.AddComponent<AudioSource>();
+        PointClip = Resources.Load("Audio/Sound effect/Point") as AudioClip;
+        AudioSource.clip = PointClip;
 
         ComposanteTexte = new GameObject(name + " ComposanteTexte");
         Texte = ComposanteTexte.AddComponent<Text>();
@@ -174,9 +181,12 @@ public class Point : MonoBehaviour
             {
                 DataÉtage.UiScript.Points += (int)Points;
             }
-            Destroy(gameObject);
-            Destroy(ComposanteTexte,TEMPS_DESTRUCTION);
-            Destroy(this);
+            Destroy(gameObject,2);
+            Destroy(GetComponent<MeshCollider>());
+            Destroy(GetComponent<MeshRenderer>());
+            Destroy(GetComponent<MeshFilter>());
+            AudioSource.Play();
+            //Destroy(this);
         }
     }
 
