@@ -14,14 +14,27 @@ public class ÉtageBoss : MonoBehaviour
     List<GameObject> ListGameObject = new List<GameObject>();
     GameObject Boss, TxtVictoire;
 
+    public static GameObject BarreDeVieBoss;
+
+    GameObject canvas;
+    static public GameObject MessagePanel;
+
+
     void Start()
     {
         DataÉtage.TourGameObject.transform.position = new Vector3(0, DataÉtage.PlancherGameObject.transform.position.y - 2);
         Boss = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, DataÉtage.TourGameObject.transform.position.y, 0), Quaternion.Euler(Vector3.zero));
+        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0, 0), Quaternion.Euler(Vector3.zero));
+        BarreDeVieBoss.transform.SetParent(DataÉtage.Ui.transform);
         //DataÉtage.BossScript = Boss.GetComponent<Boss>();
         //Plane.transform.position = new Vector3(0, -250);
 
-
+        //do
+        //{
+            canvas = GameObject.Find("Canvas");
+            MessagePanel = Instantiate(Resources.Load<GameObject>("Prefabs/PnlMessageProjectilesBoss"), new Vector2(0, 0), Quaternion.Euler(Vector2.zero), canvas.transform);
+        //    Maths.messageProjDéjaAfficher = true;
+        //} while (!Maths.messageProjDéjaAfficher);
 
         string obj = "PlateformesSupport";
         string obj1 = "PlateformeÉlévation";
@@ -143,10 +156,11 @@ public class ÉtageBoss : MonoBehaviour
             Destroy(g);
         }
         Destroy(GameObject.FindGameObjectWithTag("Boss"));
-        Destroy(GameObject.Find("BarreDeVie"));
+        Destroy(BarreDeVieBoss);
         Destroy(TxtVictoire);
         DataÉtage.victoire = false;
         DataÉtage.NouvelÉtage(true);
         Destroy(this);
+        Destroy(MessagePanel);
     }
 }

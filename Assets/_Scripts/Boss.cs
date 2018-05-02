@@ -52,7 +52,7 @@ public class Boss : MonoBehaviour
         animator = GetComponent<Animator>();
         Tongue = GameObject.Find("Tongue");
         NbDeVie = NbDeVieInitial;
-       
+
     }
 
     //public void OnCollisionEnter(Collision collision)

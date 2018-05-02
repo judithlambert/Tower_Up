@@ -9,6 +9,7 @@ using System.IO;
 
 public class DataÉtage : MonoBehaviour
 {
+
     [SerializeField] bool GODMOD;
     public const string CHEMIN_DATA_ÉTAGE = "Assets/Resources/Data/";
     [SerializeField] int TEST_ÉTAGE;
@@ -60,7 +61,6 @@ public class DataÉtage : MonoBehaviour
     public static int difficulté = DIFFICULTÉ_DE_BASE;
     public enum Difficulté { Exploration, Normale, Difficile };
 
-        
     private void Awake()
     {
         // for testing
@@ -219,7 +219,7 @@ public class DataÉtage : MonoBehaviour
     {
         if (étageFini) { FinirÉtage(); }
         if (nouvelÉtage) { NouvelÉtage(false); }
-        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !victoire) { pause = !pause; PausePlay(); }
+        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !victoire) { PausePlay(); }
     }
 
     static void FinirÉtage() // detruire objet, gestion UI
@@ -251,8 +251,9 @@ public class DataÉtage : MonoBehaviour
         étageEnCour = true;
     }
 
-    void PausePlay()
+    public static void PausePlay()
     {
+        pause = !pause;
         Ui.SetActive(!Ui.activeSelf);
         UiFinÉtage.SetActive(!UiFinÉtage.activeSelf);
         if(UiFinÉtageScript != null) { UiFinÉtageScript.DonnéesDeBase(); }

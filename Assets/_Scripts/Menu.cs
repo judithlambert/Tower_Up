@@ -14,7 +14,7 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
-        MessageErreur = GameObject.FindGameObjectWithTag("MessageErreur");
+        MessageErreur = GameObject.Find("MessageErreur");
         MssgErreurTxt = MessageErreur.GetComponentInChildren<Text>();
         MessageErreur.SetActive(false);
     }
