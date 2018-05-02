@@ -9,7 +9,6 @@ public class ÉtageBoss : MonoBehaviour
 {
     const float INTERVALLE_APPARITION_PROJECTILE = 0.6f;
     const float HAUTEUR_ACTIVATION_PROJECTILES = 7.5f;
-    public static GameObject BarreDeVieBoss;
     float deltaTemps;
     public List<Vector3> ListSommetsPics1e, ListSommetsPics2e, ListSommetsPics3e;
     List<GameObject> ListGameObject = new List<GameObject>();
@@ -22,8 +21,7 @@ public class ÉtageBoss : MonoBehaviour
         //DataÉtage.BossScript = Boss.GetComponent<Boss>();
         //Plane.transform.position = new Vector3(0, -250);
 
-        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0, 0), Quaternion.Euler(Vector3.zero));
-        BarreDeVieBoss.transform.SetParent(DataÉtage.Ui.transform);
+
 
         string obj = "PlateformesSupport";
         string obj1 = "PlateformeÉlévation";
@@ -145,6 +143,7 @@ public class ÉtageBoss : MonoBehaviour
             Destroy(g);
         }
         Destroy(GameObject.FindGameObjectWithTag("Boss"));
+        Destroy(GameObject.Find("BarreDeVie"));
         Destroy(TxtVictoire);
         DataÉtage.victoire = false;
         DataÉtage.NouvelÉtage(true);

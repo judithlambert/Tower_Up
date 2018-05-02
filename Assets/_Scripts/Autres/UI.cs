@@ -12,6 +12,8 @@ public class UI : MonoBehaviour
     char[] trim = new char[] { '.' };
 
     static public Text FPSText;
+    public static GameObject BarreDeVieBoss;
+
 
     public string Score { get { return "SCORE : " + ((int)(Points * (1 + Multiplicateur / 100) /tempsPassé * 10)).ToString(); } }
 
@@ -30,7 +32,8 @@ public class UI : MonoBehaviour
         tempsTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Temps").First();
         pointsEtMultiplicateurTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Points et Multiplicateur").First();
         scoreTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Score").First();
-
+        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0, 0), Quaternion.Euler(Vector3.zero));
+        BarreDeVieBoss.transform.SetParent(DataÉtage.Ui.transform);
         pointsUpdate = multiplicateurUpdate = true;
     }
 	
