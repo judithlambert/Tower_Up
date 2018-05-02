@@ -9,6 +9,8 @@ public class Personnage : MonoBehaviour
 {
     Vector3 rV3 = new Vector3(0, 0, 0);
     Vector3 arV3 = new Vector3(0, 0, 0);
+    [SerializeField] AudioClip JumpClip;
+    [SerializeField] AudioSource JumpSource;
 
 
     const int ACCÉLÉRATION = 5;
@@ -80,6 +82,8 @@ public class Personnage : MonoBehaviour
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         jump = crouch = reculer = avancer = block = false;
         Vie = vieInitiale = DataÉtage.difficulté == (int)DataÉtage.Difficulté.Difficile ? 1 : 3;
+
+        JumpSource.clip = JumpClip;
     }
     
     void InputMouvement()
@@ -114,7 +118,8 @@ public class Personnage : MonoBehaviour
             if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             //AudioScript.PlayJumpSound();
-            gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
+            gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));
+            JumpSource.Play();
             //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
             Vitesse = -vitesseWallJump * ACCÉLÉRATION;
 
@@ -125,6 +130,7 @@ public class Personnage : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            JumpSource.Play();
             Debug.Log("jumps succes");
             if (nbJumps == 1)
             {
