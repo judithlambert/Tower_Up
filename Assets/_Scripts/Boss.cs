@@ -16,6 +16,10 @@ public class Boss : MonoBehaviour
     const float ANGLE_VIS_À_VIS = 0.5f;
     const float INTERVALLE_APPARITION_PROJECTILE = 5;
 
+    [SerializeField] AudioClip ShoutClip;
+    [SerializeField] AudioSource AudioSource;
+    //[SerializeField] AudioClip Victoire;
+
     public bool isDead = false;
 
     public const float NbDeVieInitial = 1000, DommageParCoup = 5;
@@ -68,14 +72,15 @@ public class Boss : MonoBehaviour
             if (VisÀVisPersonnage())
             {
                 Shout();
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-                {
+                //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) // fusionner les if
+                //{
+
                     if (lastTimeShout + 4.667f <= Time.time || lastTimeShout == 0)
                     {
                         StartCoroutine(CracherProjectile());
                         lastTimeShout = Time.time;
                     }
-                }
+                //}
                 NouvelleVitesseAléatoire();
                 NouvelleAvancéAléatoire();
             }
@@ -143,6 +148,7 @@ public class Boss : MonoBehaviour
     }
     public void Shout()
     {
+        //lastTimeShout + 4.667f <= Time.time
         animator.SetTrigger("Shout");
     }
     public void GetHit()
@@ -159,5 +165,12 @@ public class Boss : MonoBehaviour
         //Vector3 PositionTongue = GameObject.Find("Rino").transform.worldToLocalMatrix * (Tongue.transform.localToWorldMatrix * Tongue.transform.position);
         GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileB"), PositionTongue, Quaternion.identity);
         proj.AddComponent<ProjectileBoss>().Initialisation(0.8f, Random.Range(4,7), 40);
+        AudioShout();
+    }
+
+    public void AudioShout()
+    {
+        AudioSource.clip = ShoutClip;
+        AudioSource.Play();
     }
 }

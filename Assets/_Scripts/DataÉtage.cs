@@ -14,9 +14,6 @@ public class DataÉtage : MonoBehaviour
     public const string CHEMIN_DATA_ÉTAGE = "Assets/Resources/Data/";
     [SerializeField] int TEST_ÉTAGE;
 
-    [SerializeField] AudioSource AudioSource;
-    [SerializeField] AudioClip WinClip;
-
     public const float HAUTEUR_TOUR = 35,
                        RAYON_TOUR = 10, // si distance < rayon
                        DELTA_HAUTEUR = 2, //Hauteur entre 2 plateformes
@@ -30,6 +27,7 @@ public class DataÉtage : MonoBehaviour
     static StreamReader étageReader;
     int NB_MAX_JUMP = 2;
 
+    static public Musique Musique;
     static public GameObject PersonnageGameObject, PlancherGameObject, TourGameObject;
     static public Camera Caméra;
     public static Personnage PersonnageScript;
@@ -67,8 +65,8 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        nbÉtage = TEST_ÉTAGE;
-        if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
+        //nbÉtage = TEST_ÉTAGE;
+        //if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
         //---
 
         Materials.Init();
@@ -92,6 +90,8 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtage.SetActive(false);
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
+        Musique = GameObject.FindGameObjectWithTag("Musique").GetComponent<Musique>();
+        Musique.Niveaux();
 
         Sauvegarde.Save();
         LoadÉtage();
@@ -227,6 +227,7 @@ public class DataÉtage : MonoBehaviour
 
     static void FinirÉtage() // detruire objet, gestion UI
     {
+        Musique.PausePlay();
         foreach (GameObject g in ListGameObject)
         {
             Destroy(g);
@@ -241,6 +242,7 @@ public class DataÉtage : MonoBehaviour
 
     public static void NouvelÉtage(bool mêmeÉtage)
     {
+        Musique.PausePlay();
         //UiFinÉtage.GetComponentInChildren<Image>().gameObject.SetActive(false);
         //UiFinÉtage.GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
         UiFinÉtage.SetActive(false);
@@ -258,6 +260,7 @@ public class DataÉtage : MonoBehaviour
     public static void PausePlay()
     {
         pause = !pause;
+        Musique.PausePlay();
         Ui.SetActive(!Ui.activeSelf);
         UiFinÉtage.SetActive(!UiFinÉtage.activeSelf);
         if(UiFinÉtageScript != null) { UiFinÉtageScript.DonnéesDeBase(); }

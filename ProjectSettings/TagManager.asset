@@ -9,6 +9,7 @@ TagManager:
   - MessageErreur
   - Rino
   - Boss
+  - Musique
   layers:
   - Default
   - TransparentFX

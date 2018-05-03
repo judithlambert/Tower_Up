@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class ÉtageBoss : MonoBehaviour
 {
+    //[SerializeField] AudioSource AudioSource;
+    //[SerializeField] AudioClip VictoireClip;
+
     const float INTERVALLE_APPARITION_PROJECTILE = 0.6f;
     const float HAUTEUR_ACTIVATION_PROJECTILES = 7.5f;
     float deltaTemps;
@@ -21,6 +24,9 @@ public class ÉtageBoss : MonoBehaviour
 
     void Start()
     {
+        //AudioSource.clip = ÉtageBossClip;
+        //AudioSource.Play();
+        DataÉtage.Musique.Boss();
         DataÉtage.TourGameObject.transform.position = new Vector3(0, DataÉtage.PlancherGameObject.transform.position.y - 2);
         Boss = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, DataÉtage.TourGameObject.transform.position.y, 0), Quaternion.Euler(Vector3.zero));
         BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0, 0), Quaternion.Euler(Vector3.zero));
@@ -131,7 +137,8 @@ public class ÉtageBoss : MonoBehaviour
     }
 
     public void Victoire()
-    {        
+    {
+        DataÉtage.Musique.PausePlay();
         DataÉtage.victoire = true;
         foreach(GameObject g in FindObjectsOfType<GameObject>())
         {
