@@ -64,8 +64,8 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         // for testing
-        //nbÉtage = TEST_ÉTAGE;
-        //if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
+        nbÉtage = TEST_ÉTAGE;
+        if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
         //---
 
         Materials.Init();
@@ -177,13 +177,15 @@ public class DataÉtage : MonoBehaviour
                                                                                  attributs[1] * DELTA_HAUTEUR,
                                                                                  attributs[2] * DELTA_HAUTEUR,
                                                                                  LARGEUR_PLATEFORME / 2.4f,
+                                                                                 attributs.Length >= 4 ? (int)attributs[3] : 0,
                                                                                  Materials.Get((int)NomMaterial.Pic));
                         break;
                     
                     case Point.String:
                         ListGameObject.Last().AddComponent<Point>().Initialisation(attributs[0], 
                                                                                    attributs[1] * DELTA_HAUTEUR + 0.5f * DELTA_HAUTEUR, 
-                                                                                   attributs[2] == 0 ? false : true, attributs[3], 
+                                                                                   attributs[2] == 0 ? false : true, 
+                                                                                   attributs[3],
                                                                                    attributs[2] == 0 ? Materials.Get((int)NomMaterial.Point) : Materials.Get((int)NomMaterial.Multiplicateur));
                         break;
                     case Flèche.String:
