@@ -107,7 +107,7 @@ Point 1
 Pic g1
 86;1;16
 Pic d1
-116;1;16
+114;1;16
 Plateforme 2
 120;40;14;0;0.5
 Point 2
@@ -157,7 +157,7 @@ Fleche
 Plateforme debut tunel
 300;30;22;-4;1
 Checkpoint
-305;21.1
+331;19.5
 Plateforme debut tunel
 300;30;24;-4;1
 Plateforme
@@ -181,23 +181,23 @@ Plateforme fin tunel
 Plateforme chemin walljump pics
 30;110;22;0;1
 Plateforme plafond
-0;90;24;0;1
+0;85;24;0;1
 Plateforme g
 85;15;31;0;8
 Plateforme d
 130;10;32;0;10
-PlateformePics g1
-100;18;25;0;1;1;90
-Point d
-125;24;1;20
-PlateformePics d2
-130;18;26;0;1;1;-90
-Point g
-105;26.4;1;20
-PlateformePics g3
-100;18;30.9;0;1;1;90
-Point
-125;30;1;20
+Pic g1
+100;1;24;90
+Point d1
+125;23.7;1;20
+Pic d2
+125;1;27;-90
+Point g2
+105;26.7;1;20
+Pic g3
+100;1;30;90
+Point d3
+125;29.7;1;20
 
 //PLATEFORMES ÉCRASSANTES
 Plateforme ecrassement d
@@ -249,5 +249,8 @@ Plateforme mur
 Plateforme final
 40;120;33;0;1
 
+Plateforme plafond
+0;360;40;0;5
+
 FinEtage
-160;33
+100;33
