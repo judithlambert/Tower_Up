@@ -27,7 +27,7 @@ public class Plateforme : MonoBehaviour
     protected float DeltaAngle, DeltaTexture, DeltaÉlévation;
     protected int nbTranches, nbSommets, nbTriangles;
 
-    protected Vector3 SommetDroiteHautSuppérieur, SommetDroiteHautInférieur, SommetDroiteBasSuppérieur, SommetDroiteBasInférieur, SommetGaucheHautSuppérieur, SommetGaucheHautInférieur, SommetGaucheBasSuppérieur, SommetGaucheBasInférieur;
+    protected Vector3 SommetDroiteHautSupérieur, SommetDroiteHautIntérieur, SommetDroiteBasSupérieur, SommetDroiteBasIntérieur, SommetGaucheHautSupérieur, SommetGaucheHautIntérieur, SommetGaucheBasSupérieur, SommetGaucheBasIntérieur;
     protected float PositionDessus, PositionDessous;
 
     public void InitialisationP(float angleDébut, float amplitude, float hauteur, float inclinaison, float épaisseur, float largeur, float rayon, float rotation, Material material)
@@ -80,14 +80,14 @@ public class Plateforme : MonoBehaviour
             PositionDessous = Hauteur;
         }
 
-        SommetGaucheBasInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false) + new Vector3(0,transform.position.y, 0);
-        SommetGaucheBasSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true) + new Vector3(0, transform.position.y, 0);
-        SommetGaucheHautInférieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, false) + new Vector3(0, transform.position.y, 0);
-        SommetGaucheHautSuppérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, true) + new Vector3(0, transform.position.y, 0);
-        SommetDroiteBasInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, false) + new Vector3(0, transform.position.y, 0);
-        SommetDroiteBasSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, true, true) + new Vector3(0, transform.position.y, 0);
-        SommetDroiteHautInférieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, false) + new Vector3(0, transform.position.y, 0);
-        SommetDroiteHautSuppérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), 0, false, true) + new Vector3(0, transform.position.y, 0);
+        SommetGaucheBasIntérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false) + new Vector3(0,transform.position.y, 0);
+        SommetGaucheBasSupérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true) + new Vector3(0, transform.position.y, 0);
+        SommetGaucheHautIntérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, false) + new Vector3(0, transform.position.y, 0);
+        SommetGaucheHautSupérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, true) + new Vector3(0, transform.position.y, 0);
+        SommetDroiteBasIntérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, true, false) + new Vector3(0, transform.position.y, 0);
+        SommetDroiteBasSupérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, true, true) + new Vector3(0, transform.position.y, 0);
+        SommetDroiteHautIntérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, false, false) + new Vector3(0, transform.position.y, 0);
+        SommetDroiteHautSupérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, false, true) + new Vector3(0, transform.position.y, 0);
 
         //PositionDessus = SommetGaucheHautSuppérieur.y;
         //PositionDessous = SommetGaucheBasInférieur.y;
@@ -208,22 +208,22 @@ public class Plateforme : MonoBehaviour
     // COLLISION
     bool IsPointDessus(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, SommetDroiteHautInférieur.y, SommetGaucheHautInférieur.y, INCERTITUDE_COLLISION));
+        return (Maths.EstDansLeRange(point.y, SommetDroiteHautIntérieur.y, SommetGaucheHautIntérieur.y, INCERTITUDE_COLLISION));
     }
     bool IsPointDessous(Vector3 point)
     {
-        return (Maths.EstDansLeRange(point.y, SommetDroiteBasInférieur.y, SommetGaucheBasInférieur.y, INCERTITUDE_COLLISION));
+        return (Maths.EstDansLeRange(point.y, SommetDroiteBasIntérieur.y, SommetGaucheBasIntérieur.y, INCERTITUDE_COLLISION));
     }
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
         bool c = false; // ne marche pas avec rotation
-        if (Maths.EstDansLeRange(point.y, SommetDroiteBasInférieur.y, SommetGaucheHautInférieur.y, -INCERTITUDE_COLLISION))
+        if (Maths.EstDansLeRange(point.y, SommetDroiteBasIntérieur.y, SommetGaucheHautIntérieur.y, -INCERTITUDE_COLLISION))
         {
-            if (Maths.EstDansLeRange(point.x, SommetGaucheBasInférieur.x, SommetGaucheBasSuppérieur.x, INCERTITUDE_COLLISION) &&
-                Maths.EstDansLeRange(point.z, SommetGaucheBasInférieur.z, SommetGaucheBasSuppérieur.z, INCERTITUDE_COLLISION))
+            if (Maths.EstDansLeRange(point.x, SommetGaucheBasIntérieur.x, SommetGaucheBasSupérieur.x, INCERTITUDE_COLLISION) &&
+                Maths.EstDansLeRange(point.z, SommetGaucheBasIntérieur.z, SommetGaucheBasSupérieur.z, INCERTITUDE_COLLISION))
             { c = true; côtéCollision = -1; }
-            else if (Maths.EstDansLeRange(point.x, SommetDroiteBasInférieur.x, SommetDroiteBasSuppérieur.x, INCERTITUDE_COLLISION) &&
-                     Maths.EstDansLeRange(point.z, SommetDroiteBasInférieur.z, SommetDroiteBasSuppérieur.z, INCERTITUDE_COLLISION))
+            else if (Maths.EstDansLeRange(point.x, SommetDroiteBasIntérieur.x, SommetDroiteBasSupérieur.x, INCERTITUDE_COLLISION) &&
+                     Maths.EstDansLeRange(point.z, SommetDroiteBasIntérieur.z, SommetDroiteBasSupérieur.z, INCERTITUDE_COLLISION))
             { c = true; côtéCollision = 1; }
         }
         if (Rotation == 180) { côtéCollision = -côtéCollision; }

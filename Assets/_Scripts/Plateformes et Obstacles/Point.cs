@@ -11,8 +11,8 @@ public class Point : MonoBehaviour
     const int NB_SOMMETS_PAR_TRIANGLE = 3;
     const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 180;
     public const int VITESSE_TRANSLATION = 4;
-    const int TEMPS_DESTRUCTION = 2;
-    const int MAX_FONT_SIZE = 35;
+    ///const int TEMPS_DESTRUCTION = 2;
+    const int MAX_FONT_SIZE = 30;
 
     public const string String = "Point";
 
