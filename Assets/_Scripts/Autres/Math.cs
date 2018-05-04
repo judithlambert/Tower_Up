@@ -6,6 +6,9 @@ using UnityEngine;
 
 public static class Maths
 {
+    // il est ici puisqu'il ne doit pas être reset
+    static public bool messageProjDéjaAfficher;
+
 
     public static void SetGlobalScale(this Transform transform, Vector3 globalScale)
     {

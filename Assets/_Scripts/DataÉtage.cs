@@ -9,6 +9,7 @@ using System.IO;
 
 public class DataÉtage : MonoBehaviour
 {
+
     [SerializeField] bool GODMOD;
     public const string CHEMIN_DATA_ÉTAGE = "Assets/Resources/Data/";
     [SerializeField] int TEST_ÉTAGE;
@@ -26,6 +27,7 @@ public class DataÉtage : MonoBehaviour
     static StreamReader étageReader;
     int NB_MAX_JUMP = 2;
 
+    static public Musique Musique;
     static public GameObject PersonnageGameObject, PlancherGameObject, TourGameObject;
     static public Camera Caméra;
     public static Personnage PersonnageScript;
@@ -60,7 +62,6 @@ public class DataÉtage : MonoBehaviour
     public static int difficulté = DIFFICULTÉ_DE_BASE;
     public enum Difficulté { Exploration, Normale, Difficile };
 
-        
     private void Awake()
     {
         // for testing
@@ -89,6 +90,8 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtage.SetActive(false);
         Caméra = Camera.main;
         Caméra.gameObject.AddComponent<CameraControlleur>();
+        Musique = GameObject.FindGameObjectWithTag("Musique").GetComponent<Musique>();
+        Musique.Niveaux();
 
         Sauvegarde.Save();
         LoadÉtage();
@@ -221,11 +224,12 @@ public class DataÉtage : MonoBehaviour
     {
         if (étageFini) { FinirÉtage(); }
         if (nouvelÉtage) { NouvelÉtage(false); }
-        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !victoire) { pause = !pause; PausePlay(); }
+        if (étageEnCour && (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !victoire) { PausePlay(); }
     }
 
     static void FinirÉtage() // detruire objet, gestion UI
     {
+        Musique.PausePlay();
         foreach (GameObject g in ListGameObject)
         {
             Destroy(g);
@@ -240,6 +244,7 @@ public class DataÉtage : MonoBehaviour
 
     public static void NouvelÉtage(bool mêmeÉtage)
     {
+        Musique.PausePlay();
         //UiFinÉtage.GetComponentInChildren<Image>().gameObject.SetActive(false);
         //UiFinÉtage.GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
         UiFinÉtage.SetActive(false);
@@ -251,10 +256,13 @@ public class DataÉtage : MonoBehaviour
         UiScript.Réinitialiser();
         nouvelÉtage = pause = false;
         étageEnCour = true;
+        //PersonnageScript.AudioRecommencer();
     }
 
-    void PausePlay()
+    public static void PausePlay()
     {
+        pause = !pause;
+        Musique.PausePlay();
         Ui.SetActive(!Ui.activeSelf);
         UiFinÉtage.SetActive(!UiFinÉtage.activeSelf);
         if(UiFinÉtageScript != null) { UiFinÉtageScript.DonnéesDeBase(); }

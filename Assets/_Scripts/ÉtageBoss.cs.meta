@@ -5,7 +5,10 @@ licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - AudioSource: {instanceID: 0}
+  - "\xC9tageBossClip": {fileID: 8300000, guid: c726d3a3770c94245ad7d090fb5bf22a,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

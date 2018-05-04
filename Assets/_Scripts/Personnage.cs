@@ -10,6 +10,12 @@ public class Personnage : MonoBehaviour
     Vector3 rV3 = new Vector3(0, 0, 0);
     Vector3 arV3 = new Vector3(0, 0, 0);
 
+    [SerializeField] AudioSource AudioSource;
+    [SerializeField] AudioClip JumpClip;
+    [SerializeField] AudioClip WinClip;
+    [SerializeField] AudioClip DeathClip;
+    [SerializeField] AudioClip CheckpointClip;
+    [SerializeField] AudioClip RecommencerClip;
 
     const int ACCÉLÉRATION = 5;
     const float ANGULAR_DRAG = float.MaxValue;
@@ -114,7 +120,8 @@ public class Personnage : MonoBehaviour
             if (dernierCollisionObject != null && dernierCollisionObject == nouveauCollisionObject) { ++nbWallJump; }
             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             //AudioScript.PlayJumpSound();
-            gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));               
+            gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, déplacementForce));
+            AudioJump();
             //Vitesse = Mathf.Abs(Vitesse) * 100 * côtéCollision;
             Vitesse = -vitesseWallJump * ACCÉLÉRATION;
 
@@ -125,6 +132,7 @@ public class Personnage : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(new Vector2(0, déplacementForce));
+            AudioJump();
             Debug.Log("jumps succes");
             if (nbJumps == 1)
             {
@@ -174,7 +182,7 @@ public class Personnage : MonoBehaviour
     {
         if (!DataÉtage.pause)
         {
-            //Debug.Log("jumps: " + nbJumps.ToString());            
+            Debug.Log(nbJumps.ToString());            
             InputMouvement();
             DéterminerVitesse();
             EffectuerDéplacement();
@@ -214,6 +222,7 @@ public class Personnage : MonoBehaviour
     public void Die()
     {
         Debug.Log("Die");
+        AudioDeath();
         //Réinitialiser();
         DataÉtage.Recommencer();
     }
@@ -257,5 +266,39 @@ public class Personnage : MonoBehaviour
         transform.position = PositionCheckPoint;
         transform.rotation = rotationInitiale;
         DataÉtage.Checkpoint();
+        AudioRecommencer();
+    }
+
+    public void AudioWin()
+    {
+        AudioSource.clip = WinClip;
+        AudioSource.Play();
+    }
+
+    public void AudioJump()
+    {
+        AudioSource.clip = JumpClip;
+        AudioSource.Play();
+    }
+
+    public void AudioDeath()
+    {
+        AudioSource.clip = DeathClip;
+        AudioSource.Play();
+    }
+
+    public void AudioCheckpoint()
+    {
+        AudioSource.clip = CheckpointClip;
+        AudioSource.Play();
+    }
+
+    public void AudioRecommencer()
+    {
+        if (AudioSource.clip != DeathClip)
+        {
+            AudioSource.clip = RecommencerClip;
+            AudioSource.Play();
+        }
     }
 }

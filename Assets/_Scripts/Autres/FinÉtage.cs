@@ -18,6 +18,7 @@ public class FinÉtage : CheckPoint
         {
             Debug.Log("fin étage");
             DataÉtage.étageFini = true;
+            DataÉtage.PersonnageScript.AudioWin();
             Destroy(Drapeau);
         }
     }

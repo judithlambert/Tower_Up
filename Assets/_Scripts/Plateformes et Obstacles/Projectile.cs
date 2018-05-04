@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    [SerializeField] AudioSource AudioSource;
+    [SerializeField] AudioClip ProjectileClip;
+
     // valeurs de Adam (bonnes valeurs) : vitesse = 50, temps apparition = 3, temps pour mourrir = 20
     protected Vector3 direction;
     protected float deltaTemps;
     protected float Diamètre, Vitesse, TempsApparition, TempsMourrir;
+
 
     string String = "Projectile";
 
@@ -41,6 +45,7 @@ public class Projectile : MonoBehaviour
             {
                 //transform.Translate((DataÉtage.PersonnageGameObject.transform.position - transform.position).normalized * vitesse * Time.deltaTime);
                 transform.Translate(direction * Vitesse * Time.deltaTime);
+                //Son = true;
             }
             else
             {
@@ -65,4 +70,10 @@ public class Projectile : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+    //public void AudioProjectile()
+    //{
+    //    AudioSource.clip = ProjectileClip;
+    //    AudioSource.Play();
+    //}
 }

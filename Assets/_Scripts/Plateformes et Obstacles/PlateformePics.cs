@@ -229,8 +229,8 @@ public class PlateformePics : Plateforme
             {
                 foreach (ContactPoint cp in collision.contacts)
                 {
-                    if (Maths.EstDansLeRange(cp.point.x, SommetGaucheBasInférieur.x + Épaisseur, SommetGaucheBasInférieur.x + Épaisseur + HauteurPic, INCERTITUDE_COLLISION) &&
-                        Maths.EstDansLeRange(cp.point.z, SommetGaucheBasInférieur.z + Épaisseur, SommetGaucheBasInférieur.z + Épaisseur + HauteurPic, INCERTITUDE_COLLISION))
+                    if (Maths.EstDansLeRange(cp.point.x, SommetGaucheBasIntérieur.x + Épaisseur, SommetGaucheBasIntérieur.x + Épaisseur + HauteurPic, INCERTITUDE_COLLISION) &&
+                        Maths.EstDansLeRange(cp.point.z, SommetGaucheBasIntérieur.z + Épaisseur, SommetGaucheBasIntérieur.z + Épaisseur + HauteurPic, INCERTITUDE_COLLISION))
                     { estAuPic = true; }
                 }
             }
@@ -238,8 +238,8 @@ public class PlateformePics : Plateforme
             {
                 foreach (ContactPoint cp in collision.contacts)
                 {
-                    if (Maths.EstDansLeRange(cp.point.x, SommetGaucheBasInférieur.x - Épaisseur, SommetGaucheBasInférieur.x - Épaisseur - HauteurPic, INCERTITUDE_COLLISION) &&
-                        Maths.EstDansLeRange(cp.point.z, SommetGaucheBasInférieur.z - Épaisseur, SommetGaucheBasInférieur.z - Épaisseur - HauteurPic, INCERTITUDE_COLLISION))
+                    if (Maths.EstDansLeRange(cp.point.x, SommetGaucheBasIntérieur.x - Épaisseur, SommetGaucheBasIntérieur.x - Épaisseur - HauteurPic, INCERTITUDE_COLLISION) &&
+                        Maths.EstDansLeRange(cp.point.z, SommetGaucheBasIntérieur.z - Épaisseur, SommetGaucheBasIntérieur.z - Épaisseur - HauteurPic, INCERTITUDE_COLLISION))
                     { estAuPic = true; }
                 }
             }

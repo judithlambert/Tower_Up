@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114619848372219784}
   - component: {fileID: 54172832920384114}
   - component: {fileID: 135755181039867920}
+  - component: {fileID: 82239347749025926}
   m_Layer: 0
   m_Name: Personnage
   m_TagString: Untagged
@@ -100,6 +101,86 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!82 &82239347749025926
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755459956330604}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114619848372219784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,6 +192,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4324561eadd0d439aa924373427c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioSource: {fileID: 82239347749025926}
+  JumpClip: {fileID: 8300000, guid: db3eb70e5b7bcbb4398bc55d2d43dbb9, type: 3}
+  WinClip: {fileID: 8300000, guid: 99025c851352bbb478f283d82374b926, type: 3}
+  DeathClip: {fileID: 8300000, guid: 7ef0f59d5f5fc8341ae5736c25ac832a, type: 3}
+  CheckpointClip: {fileID: 8300000, guid: fa459b7a8ab0a38409da406fa6fb7d63, type: 3}
+  RecommencerClip: {fileID: 8300000, guid: 685599002efb3bc49bfa145c156794b4, type: 3}
   updateVie: 0
   touchingPlateformeMobile: 0
 --- !u!135 &135755181039867920

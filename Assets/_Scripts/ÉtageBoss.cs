@@ -7,23 +7,39 @@ using UnityEngine.UI;
 
 public class ÉtageBoss : MonoBehaviour
 {
+    //[SerializeField] AudioSource AudioSource;
+    //[SerializeField] AudioClip VictoireClip;
+
     const float INTERVALLE_APPARITION_PROJECTILE = 0.6f;
     const float HAUTEUR_ACTIVATION_PROJECTILES = 7.5f;
-    public static GameObject BarreDeVieBoss;
     float deltaTemps;
     public List<Vector3> ListSommetsPics1e, ListSommetsPics2e, ListSommetsPics3e;
     List<GameObject> ListGameObject = new List<GameObject>();
     GameObject Boss, TxtVictoire;
 
+    public static GameObject BarreDeVieBoss;
+
+    GameObject canvas;
+    static public GameObject MessagePanel;
+
     void Start()
     {
+        //AudioSource.clip = ÉtageBossClip;
+        //AudioSource.Play();
+        DataÉtage.Musique.Boss();
         DataÉtage.TourGameObject.transform.position = new Vector3(0, DataÉtage.PlancherGameObject.transform.position.y - 2);
         Boss = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, DataÉtage.TourGameObject.transform.position.y, 0), Quaternion.Euler(Vector3.zero));
+        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0, 0), Quaternion.Euler(Vector3.zero));
+        BarreDeVieBoss.transform.SetParent(DataÉtage.Ui.transform);
         //DataÉtage.BossScript = Boss.GetComponent<Boss>();
         //Plane.transform.position = new Vector3(0, -250);
 
-        BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0, 0), Quaternion.Euler(Vector3.zero));
-        BarreDeVieBoss.transform.SetParent(DataÉtage.Ui.transform);
+        //do
+        //{
+            //canvas = GameObject.Find("Canvas");
+            //MessagePanel = Instantiate(Resources.Load<GameObject>("Prefabs/PnlMessageProjectilesBoss"), new Vector2(0, 0), Quaternion.Euler(Vector2.zero), canvas.transform);
+        //    Maths.messageProjDéjaAfficher = true;
+        //} while (!Maths.messageProjDéjaAfficher);
 
         string obj = "PlateformesSupport";
         string obj1 = "PlateformeÉlévation";
@@ -121,7 +137,8 @@ public class ÉtageBoss : MonoBehaviour
     }
 
     public void Victoire()
-    {        
+    {
+        DataÉtage.Musique.PausePlay();
         DataÉtage.victoire = true;
         foreach(GameObject g in FindObjectsOfType<GameObject>())
         {
@@ -145,9 +162,11 @@ public class ÉtageBoss : MonoBehaviour
             Destroy(g);
         }
         Destroy(GameObject.FindGameObjectWithTag("Boss"));
+        Destroy(BarreDeVieBoss);
         Destroy(TxtVictoire);
         DataÉtage.victoire = false;
         DataÉtage.NouvelÉtage(true);
         Destroy(this);
+        Destroy(MessagePanel);
     }
 }

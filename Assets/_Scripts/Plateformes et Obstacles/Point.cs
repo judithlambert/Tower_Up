@@ -11,10 +11,13 @@ public class Point : MonoBehaviour
     const int NB_SOMMETS_PAR_TRIANGLE = 3;
     const int NB_DEGRÉS_ROTATION_PAR_SECONDE = 180;
     public const int VITESSE_TRANSLATION = 4;
-    const int TEMPS_DESTRUCTION = 2;
-    const int MAX_FONT_SIZE = 35;
+    ///const int TEMPS_DESTRUCTION = 2;
+    const int MAX_FONT_SIZE = 30;
 
     public const string String = "Point";
+
+    AudioClip PointClip;
+    AudioSource AudioSource;
 
     bool Multiplicateur;
     float Points;
@@ -43,6 +46,10 @@ public class Point : MonoBehaviour
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<MeshCollider>().convex = true;
         GetComponent<MeshCollider>().isTrigger = true;
+
+        AudioSource = gameObject.AddComponent<AudioSource>();
+        PointClip = multiplicateur? Resources.Load("Audio/Sound effect/Point2") as AudioClip: Resources.Load("Audio/Sound effect/Point") as AudioClip;
+        AudioSource.clip = PointClip;
 
         ComposanteTexte = new GameObject(name + " ComposanteTexte");
         Texte = ComposanteTexte.AddComponent<Text>();
@@ -174,9 +181,12 @@ public class Point : MonoBehaviour
             {
                 DataÉtage.UiScript.Points += (int)Points;
             }
-            Destroy(gameObject);
-            Destroy(ComposanteTexte,TEMPS_DESTRUCTION);
-            Destroy(this);
+            Destroy(gameObject,2);
+            Destroy(GetComponent<MeshCollider>());
+            Destroy(GetComponent<MeshRenderer>());
+            Destroy(GetComponent<MeshFilter>());
+            AudioSource.Play();
+            //Destroy(this);
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileBoss : Projectile
-{
+{  
     public void Initialisation(float diamètre, float vitesse, float tempsMourrir)
     {
         Debug.Log("initialisation");
