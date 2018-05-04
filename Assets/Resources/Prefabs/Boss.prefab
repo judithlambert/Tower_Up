@@ -1778,14 +1778,14 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1903,7 +1903,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31ebd608edec4e645a510671a5526874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShoutClip: {fileID: 8300000, guid: 2cefa73cbac23e44ebfbb6e94b39e31d, type: 3}
+  ShoutClip0: {fileID: 8300000, guid: 2cefa73cbac23e44ebfbb6e94b39e31d, type: 3}
+  ShoutClip1: {fileID: 8300000, guid: bb59b1ce89630a5439674d055eee095a, type: 3}
+  ShoutClip2: {fileID: 8300000, guid: b77abcf94947c94408f6569e67ac6629, type: 3}
   AudioSource: {fileID: 82447529439661820}
   isDead: 0
 --- !u!114 &114535818820383384

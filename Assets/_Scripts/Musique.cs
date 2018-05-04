@@ -7,6 +7,7 @@ public class Musique : MonoBehaviour
     [SerializeField] AudioSource AudioSource;
     [SerializeField] AudioClip ClipNiveaux;
     [SerializeField] AudioClip ClipBoss;
+    [SerializeField] AudioClip ClipVictoire;
 
     public void Niveaux()
     {
@@ -20,6 +21,13 @@ public class Musique : MonoBehaviour
         AudioSource.Play();
     }
 
+    public void Victoire()
+    {
+        AudioSource.clip = ClipVictoire;
+        AudioSource.Play();
+    }
+
+
     public void PausePlay()
     {
         if (AudioSource.isPlaying)
@@ -30,5 +38,10 @@ public class Musique : MonoBehaviour
         {
             AudioSource.UnPause();
         }
+    }
+
+    public void Play()
+    {
+        AudioSource.UnPause();
     }
 }

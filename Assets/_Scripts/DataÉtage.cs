@@ -210,6 +210,8 @@ public class DataÉtage : MonoBehaviour
         }
         else { TourGameObject.AddComponent<ÉtageBoss>(); ; }
         pause = false;
+        Ui.SetActive(true);
+        UiScript.Réinitialiser();
     }
 
     int cptNaming = 0;
@@ -242,16 +244,14 @@ public class DataÉtage : MonoBehaviour
 
     public static void NouvelÉtage(bool mêmeÉtage)
     {
-        Musique.PausePlay();
+        Musique.Play();
         //UiFinÉtage.GetComponentInChildren<Image>().gameObject.SetActive(false);
         //UiFinÉtage.GetComponentsInChildren<Image>().Where(x => x.name.Contains("Background")).First().enabled = false;
         UiFinÉtage.SetActive(false);
         PersonnageScript.Réinitialiser();
         if(!mêmeÉtage) { nbÉtage++; }
         Sauvegarde.Save();
-        LoadÉtage();
-        Ui.SetActive(true);
-        UiScript.Réinitialiser();
+        LoadÉtage();        
         nouvelÉtage = pause = false;
         étageEnCour = true;
         //PersonnageScript.AudioRecommencer();

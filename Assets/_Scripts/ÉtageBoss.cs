@@ -138,7 +138,7 @@ public class ÉtageBoss : MonoBehaviour
 
     public void Victoire()
     {
-        DataÉtage.Musique.PausePlay();
+        DataÉtage.Musique.Victoire();
         DataÉtage.victoire = true;
         foreach(GameObject g in FindObjectsOfType<GameObject>())
         {

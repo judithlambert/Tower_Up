@@ -16,8 +16,12 @@ public class Boss : MonoBehaviour
     const float ANGLE_VIS_À_VIS = 0.5f;
     const float INTERVALLE_APPARITION_PROJECTILE = 5;
 
-    [SerializeField] AudioClip ShoutClip;
+    [SerializeField] AudioClip ShoutClip0;
+    [SerializeField] AudioClip ShoutClip1;
+    [SerializeField] AudioClip ShoutClip2;
     [SerializeField] AudioSource AudioSource;
+    List<AudioClip> ShoutClip;
+
     //[SerializeField] AudioClip Victoire;
 
     public bool isDead = false;
@@ -47,7 +51,10 @@ public class Boss : MonoBehaviour
 
     private void Awake()
     {
-
+        ShoutClip = new List<AudioClip>();
+        ShoutClip.Add(ShoutClip0);
+        ShoutClip.Add(ShoutClip1);
+        ShoutClip.Add(ShoutClip2);
     }
 
     void Start()
@@ -170,7 +177,7 @@ public class Boss : MonoBehaviour
 
     public void AudioShout()
     {
-        AudioSource.clip = ShoutClip;
+        AudioSource.clip = ShoutClip[(int)Mathf.Floor(Random.Range(0, ShoutClip.Count))];
         AudioSource.Play();
     }
 }

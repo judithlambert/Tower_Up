@@ -1956,6 +1956,7 @@ MonoBehaviour:
   AudioSource: {fileID: 1842012836}
   ClipNiveaux: {fileID: 8300000, guid: 02be86c87c0f5ab47a6d623a1febab1b, type: 3}
   ClipBoss: {fileID: 8300000, guid: c726d3a3770c94245ad7d090fb5bf22a, type: 3}
+  ClipVictoire: {fileID: 8300000, guid: a47bd13eab2b4e5409463aabc1564fca, type: 3}
 --- !u!82 &1842012836
 AudioSource:
   m_ObjectHideFlags: 0
