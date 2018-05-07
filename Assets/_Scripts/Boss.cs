@@ -7,9 +7,9 @@ using UnityEngine.Animations;
 public class Boss : MonoBehaviour
 {
     float lastTimeShout;
-    const int VITESSE_ROTATION_BASE = 40; //degré par sec
-    const int VITESSE_ROTATION_MIN = 40; //degré par sec
-    const int VITESSE_ROTATION_MAX = 90;
+    const int VITESSE_ROTATION_BASE = 55; //degré par sec
+    const int VITESSE_ROTATION_MIN = 55; //degré par sec
+    const int VITESSE_ROTATION_MAX = 100;
     const float VITESSE_AVANCÉ_Z = 1; //unité par sec
     const float AVANCÉ_MIN = -4.8f;
     const float AVANCÉ_MAX = 1.7f;
@@ -26,7 +26,7 @@ public class Boss : MonoBehaviour
 
     public bool isDead = false;
 
-    public const float NbDeVieInitial = 1000, DommageParCoup = 5;
+    public const float NbDeVieInitial = 1500;
     float nbDeVie;
     public float NbDeVie { get { return nbDeVie; } private set { nbDeVie = value; if (nbDeVie <= 0) { nbDeVie = 0; Die(); } } }
 
