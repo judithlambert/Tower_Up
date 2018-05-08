@@ -1228,7 +1228,7 @@ Prefab:
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
       propertyPath: "TEST_\xC9TAGE"
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114004901279055452, guid: 5396bbf4bffbd884aba08a3e4e8ae452,
         type: 2}
