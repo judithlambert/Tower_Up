@@ -230,7 +230,7 @@ public class Personnage : MonoBehaviour
     public void Dommage(int dommage, Collision collision) // collision sert a fuckall??
     {
         Debug.Log("dommage");
-        StartCoroutine(FlashCouleur(Color.red));
+        if(DataÉtage.nbÉtage != DataÉtage.ÉTAGE_BOSS) { StartCoroutine(FlashCouleur(Color.red)); }       
         if (!(DataÉtage.difficulté == (int)DataÉtage.Difficulté.Exploration))
         {
             Vie -= dommage;

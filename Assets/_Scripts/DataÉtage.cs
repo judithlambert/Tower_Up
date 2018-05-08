@@ -19,7 +19,7 @@ public class DataÉtage : MonoBehaviour
                        DELTA_HAUTEUR = 2, //Hauteur entre 2 plateformes
                        LARGEUR_PLATEFORME = 3; //Largeur des objets
     const char SÉPARATEUR = ';';
-    const int ÉTAGE_BOSS = 5;
+    public const int ÉTAGE_BOSS = 5;
     const float DISTANCE_CAMERA_PERSONNAGE = 10; // ratio avec tour 
     public const int DIFFICULTÉ_DE_BASE = (int)Difficulté.Normale;
 
@@ -65,8 +65,8 @@ public class DataÉtage : MonoBehaviour
     private void Awake()
     {
         //// for testing
-        nbÉtage = TEST_ÉTAGE;
-        if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
+        //nbÉtage = TEST_ÉTAGE;
+        //if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
         //---
 
         Materials.Init();
