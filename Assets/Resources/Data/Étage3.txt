@@ -1,5 +1,9 @@
 PlateformeMobile 1
 270;320;1.5;0;0.5;-2;680
+Fleche 1
+0;1.5;90
+Fleche 2
+0;8;45
 Point 1
 0;1.5;1;10
 Point 1.1
@@ -72,6 +76,10 @@ Plateforme 5.3
 222.5;5;7;0;1
 Plateforme 5.4
 312.5;5;7;0;1
+Fleche 3
+305;12.5;90
+Fleche 4
+305;22;90
 Plateforme 6
 40;60;7.5;4;0.5
 Plateforme 6.1
@@ -152,6 +160,8 @@ Point 11.1
 297.5;20.3;0;70
 PlateformePics 12
 55;90;27.5;0;0.2;0.5
+Fleche 5
+65;29;-30
 PlateformePics 12.1
 70;90;25;0;0.2;0.5
 PlateformePics 12.2
@@ -170,6 +180,8 @@ Plateforme 13.2
 200;5;30;0;8
 Plateforme 13.3
 167.5;5;22;0;3
+Fleche 6
+170;23.5;45
 Point 13.3
 162.5;21;1;90
 Point 13.3
@@ -200,6 +212,8 @@ PlateformeMobile 14.2
 225;10;32;0;0.5;9;11;1
 PlateformeMobile 14.3
 235;10;32;0;0.5;-5;11;1
+Fleche
+240;33.5;0
 PlateformeMobile 14.4
 245;10;32;0;0.5;7;11;1
 PlateformeMobile 14.5
