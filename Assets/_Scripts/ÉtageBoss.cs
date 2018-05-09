@@ -26,6 +26,7 @@ public class ÉtageBoss : MonoBehaviour
     {
         //AudioSource.clip = ÉtageBossClip;
         //AudioSource.Play();
+        DataÉtage.PnlShooter.SetActive(true);
         DataÉtage.Musique.Boss();
         DataÉtage.TourGameObject.transform.position = new Vector3(0, DataÉtage.PlancherGameObject.transform.position.y - 2);
         Boss = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, DataÉtage.TourGameObject.transform.position.y, 0), Quaternion.Euler(Vector3.zero));

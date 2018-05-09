@@ -182,7 +182,7 @@ public class Personnage : MonoBehaviour
     {
         if (!DataÉtage.pause)
         {
-            Debug.Log(nbJumps.ToString());            
+            //Debug.Log(nbJumps.ToString());            
             InputMouvement();
             DéterminerVitesse();
             EffectuerDéplacement();
