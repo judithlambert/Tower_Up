@@ -6,6 +6,8 @@ using UnityEngine;
 
 public static class Maths
 {
+    const int CERCLE_EN_DEGRÉ = 360;
+
     // il est ici puisqu'il ne doit pas être reset
     static public bool messageProjDéjaAfficher;
 
@@ -70,4 +72,18 @@ public static class Maths
     {
         return nom + " : (" + vector.x + ", " + vector.y + ", " + vector.z + ")";
     }
+
+    public static T[,] CopieProfonde<T> (ref T[,] t)
+    {
+        T[,] c = new T[t.GetLength(0),t.GetLength(1)];
+        for(int i = 0; i < t.GetLength(0); ++i)
+        {
+            for (int j = 0; j < t.GetLength(1); ++j)
+            {
+                c[i, j] = t[i, j];
+            }
+        }
+        return c;
+    }
+
 }

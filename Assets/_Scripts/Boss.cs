@@ -22,8 +22,6 @@ public class Boss : MonoBehaviour
     [SerializeField] AudioSource AudioSource;
     List<AudioClip> ShoutClip;
 
-    //[SerializeField] AudioClip Victoire;
-
     public bool isDead = false;
 
     public const float NbDeVieInitial = 1500;

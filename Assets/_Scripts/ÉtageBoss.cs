@@ -1,90 +1,143 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ÉtageBoss : MonoBehaviour
 {
-    //[SerializeField] AudioSource AudioSource;
-    //[SerializeField] AudioClip VictoireClip;
+    public const int
+        NB_STRUCTURES = 3;
+    public const float
+        AMPLITUDE_STRUCTURE_BASSE = 20f,
+        AMPLITUDE_STRUCTURE_HAUTE = 10f,
+        HAUTEUR_STRUCTURE_BASSE = 2.5f,
+        HAUTEUR_STRUCTURE_HAUTE = 5f,
+        LARGEUR_PILIER_BAS = 0.8f,
+        LARGEUR_PILIER_HAUT = 0.6f,
+        ÉPAISSEUR_STRUCTURE = 0.5f,
+        INTERVALLE_APPARITION_PROJECTILE_2E = 1.5f,
+        INTERVALLE_APPARITION_PROJECTILE_3E = 2.5f,
+        HAUTEUR_ACTIVATION_PROJECTILES_2E = 7.5f,
+        HAUTEUR_ACTIVATION_PROJECTILES_3E = 5f,
+        DELTA_HAUTEUR_TOUR = -2f,
+        ESPACEMENT_AU_DESSUS_APEX = 2f,
+        ESPACEMENT_AUTOUR_PERSONNAGE = 0.6f;
+    public const string
+        PS = "PlateformeSupport",
+        PÉ = "PlateformeÉlévation",
+        PP = "PlateformePic",
+        B = "Basse",
+        H = "Haute";
 
-    const float INTERVALLE_APPARITION_PROJECTILE = 0.6f;
-    const float HAUTEUR_ACTIVATION_PROJECTILES = 7.5f;
-    float deltaTemps;
-    public List<Vector3> ListSommetsPics1e, ListSommetsPics2e, ListSommetsPics3e;
-    List<GameObject> ListGameObject = new List<GameObject>();
-    GameObject Boss, TxtVictoire;
+    /// <summary> 
+    /// NB_PICS, AMPLITUDE, HAUTEUR, INCLINAISON, ÉPAISSEUR, LARGEUR, RAYON_AJOUTÉ, HAUTEUR_PIC, ROTATION
+    /// </summary>
+    public int[,] Cercles { get { return Maths.CopieProfonde(ref cercles); } }
+    int[,] cercles = new int[,] { { 7, 3, 1, 0, 50, 1, 6, 2, 0 },
+                                  { 16, 7, 4, 0, 100, 2, 14, 4, 0 },
+                                  { 5, 7, 20, 0, 150, 2, 35, 8, 0 } };
+    /// <summary>
+    /// DIAMÈTRE, VITESSE, TEMPS_APPARITION, TEMPS_MOURRIR
+    /// </summary>
+    public float[,] Projectiles { get { return Maths.CopieProfonde(ref projectiles); } }
+    float[,] projectiles = new float[,] { { 1, 40, 3, 20 },
+                                          { 1.5f, 60, 3, 20 } };
 
-    public static GameObject BarreDeVieBoss;
+    float deltaTemps3e, deltaTemps2e, deltaAngleStructure, déphasageStructureHaute;
+    float[] cercle;
+    List<Vector3> ListApex1e, ListApex2e, ListApex3e;
+    List<GameObject> ListGameObject;
+    GameObject Boss, TxtVictoire, BarreDeVieBoss;
 
-    GameObject canvas;
-    static public GameObject MessagePanel;
+    public Vector3 PositionInitialeProjectilePersonnage
+    {
+        get { return (new Vector3(0, DataÉtage.PersonnageGameObject.transform.position.y, 0) - DataÉtage.PersonnageGameObject.transform.position).normalized * DataÉtage.PersonnageGameObject.transform.lossyScale.y * ESPACEMENT_AUTOUR_PERSONNAGE + DataÉtage.PersonnageGameObject.transform.position + new Vector3(0, DataÉtage.PersonnageGameObject.transform.lossyScale.y * ESPACEMENT_AUTOUR_PERSONNAGE, 0); }
+    }
+
+    private void Awake()
+    {
+        ListGameObject = new List<GameObject>();
+        deltaAngleStructure = 360 / NB_STRUCTURES;
+        déphasageStructureHaute = (deltaAngleStructure - AMPLITUDE_STRUCTURE_BASSE - AMPLITUDE_STRUCTURE_HAUTE) / 2 + AMPLITUDE_STRUCTURE_BASSE;
+    }
 
     void Start()
-    {
-        //AudioSource.clip = ÉtageBossClip;
-        //AudioSource.Play();
+    {       
         DataÉtage.Musique.Boss();
-        DataÉtage.TourGameObject.transform.position = new Vector3(0, DataÉtage.PlancherGameObject.transform.position.y - 2);
+        DataÉtage.TourGameObject.transform.position = new Vector3(0, DataÉtage.PlancherGameObject.transform.position.y + DELTA_HAUTEUR_TOUR);
         Boss = Instantiate(Resources.Load<GameObject>("Prefabs/Boss"), new Vector3(0, DataÉtage.TourGameObject.transform.position.y, 0), Quaternion.Euler(Vector3.zero));
         BarreDeVieBoss = Instantiate(Resources.Load<GameObject>("Prefabs/BarreDeVieBoss"), new Vector2(0, 0), Quaternion.Euler(Vector3.zero));
         BarreDeVieBoss.transform.SetParent(DataÉtage.Ui.transform);
-        //DataÉtage.BossScript = Boss.GetComponent<Boss>();
-        //Plane.transform.position = new Vector3(0, -250);
 
-        //do
-        //{
-            //canvas = GameObject.Find("Canvas");
-            //MessagePanel = Instantiate(Resources.Load<GameObject>("Prefabs/PnlMessageProjectilesBoss"), new Vector2(0, 0), Quaternion.Euler(Vector2.zero), canvas.transform);
-        //    Maths.messageProjDéjaAfficher = true;
-        //} while (!Maths.messageProjDéjaAfficher);
+        GénérerStructures();
+        GénérerPlateformePics();
+        GénérerListeApex();   
+    }
 
-        string obj = "PlateformesSupport";
-        string obj1 = "PlateformeÉlévation";
-        string obj2 = "PlateformePic";
-        for (int i = 0; i < 3; ++i)
+    void GénérerStructures()
+    {     
+        for (int i = 0; i < NB_STRUCTURES; ++i)
         {
-            ListGameObject.Add(new GameObject(obj + i));
-            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i, 20, 2 * DataÉtage.DELTA_HAUTEUR, 0, 2 * DataÉtage.DELTA_HAUTEUR, 0.8f, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-            ListGameObject.Add(new GameObject(obj1 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i, 20, 2.5f * DataÉtage.DELTA_HAUTEUR, 0, 0.5f * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+            GénérerStructuresBasses(i);
+            GénérerStructuresHautes(i);
+        }
+    }
 
-            ListGameObject.Add(new GameObject(obj + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i + 55, 10, 4.5f * DataÉtage.DELTA_HAUTEUR, 0, 4.5f * DataÉtage.DELTA_HAUTEUR, 0.6f, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-            ListGameObject.Add(new GameObject(obj + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i + 55, 10, 4.5f * DataÉtage.DELTA_HAUTEUR, 0, 4.5f * DataÉtage.DELTA_HAUTEUR, 0.6f, DataÉtage.RAYON_TOUR + 2.4f, 0, Materials.Get((int)NomMaterial.Plateforme));
-            ListGameObject.Add(new GameObject(obj1 + 3 + i));
-            ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(120 * i + 55, 10, 5 * DataÉtage.DELTA_HAUTEUR, 0, 0.5f * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
-        }
-        int nbPic = 7;
-        for (int i = 0; i < nbPic; ++i)
-        {
-            ListGameObject.Add(new GameObject(obj2 + " 1er " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().InitialisationPP(360 / nbPic * i, 3, 1, 0, 50, 1, DataÉtage.RAYON_TOUR + 6, 2, 0, Materials.Get((int)NomMaterial.Tour));
-        }
-        nbPic = 16;
-        for (int i = 0; i < nbPic; ++i)
-        {
-            ListGameObject.Add(new GameObject(obj2 + " 2e " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().InitialisationPP(360 / nbPic * i, 7, 4, 0, 100, 2, DataÉtage.RAYON_TOUR + 14, 4, 0, Materials.Get((int)NomMaterial.Plateforme));
-        }
-        nbPic = 5;
-        for (int i = 0; i < nbPic; ++i)
-        {
-            ListGameObject.Add(new GameObject(obj2 + " 3e " + i));
-            ListGameObject.Last().AddComponent<PlateformePics>().InitialisationPP(360 / nbPic * i, 7, 20, 0, 150, 2, DataÉtage.RAYON_TOUR + 35, 8, 0, Materials.Get((int)NomMaterial.Tour));
-        }
+    void GénérerStructuresBasses(int i)
+    {
+        //Support
+        ListGameObject.Add(new GameObject(PS + B + i));
+        ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(deltaAngleStructure * i, AMPLITUDE_STRUCTURE_BASSE, (HAUTEUR_STRUCTURE_BASSE - ÉPAISSEUR_STRUCTURE) * DataÉtage.DELTA_HAUTEUR, 0, (HAUTEUR_STRUCTURE_BASSE - ÉPAISSEUR_STRUCTURE) * DataÉtage.DELTA_HAUTEUR, LARGEUR_PILIER_BAS, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+        //Plateforme
+        ListGameObject.Add(new GameObject(PÉ + B + i));
+        ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(deltaAngleStructure * i, AMPLITUDE_STRUCTURE_BASSE, HAUTEUR_STRUCTURE_BASSE * DataÉtage.DELTA_HAUTEUR, 0, ÉPAISSEUR_STRUCTURE * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+    }
 
-        ListSommetsPics1e = new List<Vector3>();
-        ListSommetsPics2e = new List<Vector3>();
-        ListSommetsPics3e = new List<Vector3>();
-        foreach (GameObject g in Resources.FindObjectsOfTypeAll(typeof(GameObject)))
+    void GénérerStructuresHautes(int i)
+    {
+        //Support gauche
+        ListGameObject.Add(new GameObject(PS + H + i));
+        ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(deltaAngleStructure * i + déphasageStructureHaute, AMPLITUDE_STRUCTURE_HAUTE, (HAUTEUR_STRUCTURE_HAUTE - ÉPAISSEUR_STRUCTURE) * DataÉtage.DELTA_HAUTEUR, 0, (HAUTEUR_STRUCTURE_HAUTE - ÉPAISSEUR_STRUCTURE) * DataÉtage.DELTA_HAUTEUR, LARGEUR_PILIER_HAUT, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+        //Support droit
+        ListGameObject.Add(new GameObject(PS + H + i + "'"));
+        ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(deltaAngleStructure * i + déphasageStructureHaute, AMPLITUDE_STRUCTURE_HAUTE, (HAUTEUR_STRUCTURE_HAUTE - ÉPAISSEUR_STRUCTURE) * DataÉtage.DELTA_HAUTEUR, 0, (HAUTEUR_STRUCTURE_HAUTE - ÉPAISSEUR_STRUCTURE) * DataÉtage.DELTA_HAUTEUR, LARGEUR_PILIER_HAUT, DataÉtage.RAYON_TOUR + DataÉtage.LARGEUR_PLATEFORME - LARGEUR_PILIER_HAUT, 0, Materials.Get((int)NomMaterial.Plateforme));
+        //Plateforme
+        ListGameObject.Add(new GameObject(PÉ + H + i));
+        ListGameObject.Last().AddComponent<Plateforme>().InitialisationP(deltaAngleStructure * i + déphasageStructureHaute, AMPLITUDE_STRUCTURE_HAUTE, HAUTEUR_STRUCTURE_HAUTE * DataÉtage.DELTA_HAUTEUR, 0, ÉPAISSEUR_STRUCTURE * DataÉtage.DELTA_HAUTEUR, DataÉtage.LARGEUR_PLATEFORME, DataÉtage.RAYON_TOUR, 0, Materials.Get((int)NomMaterial.Plateforme));
+    }
+
+    void GénérerPlateformePics()
+    {
+        for(int i = 0; i < Cercles.GetLength(0); ++i)
         {
-            if (g.name.Contains("Pic 1er")) { ListSommetsPics1e.Add(g.GetComponent<PlateformePics>().SommetPic); }
-            else if (g.name.Contains("Pic 2e")) { ListSommetsPics2e.Add(g.GetComponent<PlateformePics>().SommetPic); }
-            else if (g.name.Contains("Pic 2e")) { ListSommetsPics3e.Add(g.GetComponent<PlateformePics>().SommetPic); }
+            cercle = new float[Cercles.GetLength(1)];
+            for(int j = 0; j < Cercles.GetLength(1); ++j)
+            {
+                cercle[j] = Cercles[i, j];
+            }
+            GénérerCercle(cercle, i + 1);
+        }   
+    }
+
+    void GénérerCercle(float[] cercle, int nièmeCercle)
+    {
+        for (int i = 0; i < cercle[0]; ++i)
+        {
+            ListGameObject.Add(new GameObject(PP + nièmeCercle + "e " + i));
+            ListGameObject.Last().AddComponent<PlateformePics>().InitialisationPP(360 / cercle[0] * i, cercle[1], cercle[2], cercle[3], cercle[4], cercle[5], DataÉtage.RAYON_TOUR + cercle[6], cercle[7], cercle[8], Materials.Get((int)NomMaterial.Tour));
+        }
+    }
+
+    void GénérerListeApex()
+    {
+        ListApex1e = new List<Vector3>();
+        ListApex2e = new List<Vector3>();
+        ListApex3e = new List<Vector3>();
+        foreach (GameObject g in Resources.FindObjectsOfTypeAll(typeof(GameObject)).Where(x=>x.name.Contains(PP)))
+        {
+            if (g.name.Contains("1e")) { ListApex1e.Add(g.GetComponent<PlateformePics>().SommetPic); }
+            else if (g.name.Contains("2e")) { ListApex2e.Add(g.GetComponent<PlateformePics>().SommetPic); }
+            else if (g.name.Contains("3e")) { ListApex3e.Add(g.GetComponent<PlateformePics>().SommetPic); }
         }
     }
 
@@ -92,81 +145,77 @@ public class ÉtageBoss : MonoBehaviour
     {
         if (!DataÉtage.pause && !DataÉtage.victoire)
         {
-            deltaTemps += Time.deltaTime;
-            if (deltaTemps >= INTERVALLE_APPARITION_PROJECTILE && DataÉtage.PersonnageGameObject.transform.position.y >= HAUTEUR_ACTIVATION_PROJECTILES)
-            {
-                CercleSeulAléatoire(ListSommetsPics2e);
-                deltaTemps = 0;
-            }
+            LancerProjectile();
             if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.L))
             {
-                Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileP"), (new Vector3(0, DataÉtage.PersonnageGameObject.transform.position.y, 0) - DataÉtage.PersonnageGameObject.transform.position).normalized * DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f + DataÉtage.PersonnageGameObject.transform.position + new Vector3(0, DataÉtage.PersonnageGameObject.transform.lossyScale.y * 0.6f, 0), Random.rotation);
+                Instantiate(Resources.Load<GameObject>("Prefabs/ProjectileP"), PositionInitialeProjectilePersonnage, Random.rotation);
             }
         }
     }
 
+    void LancerProjectile()
+    {
+        deltaTemps2e += Time.deltaTime;
+        deltaTemps3e += Time.deltaTime;
+        if (deltaTemps2e >= INTERVALLE_APPARITION_PROJECTILE_2E && DataÉtage.PersonnageGameObject.transform.position.y >= HAUTEUR_ACTIVATION_PROJECTILES_2E)
+        {
+            LancerProjectileAléatoire(ListApex2e);
+            deltaTemps2e = 0;
+        }
+        if (deltaTemps3e >= INTERVALLE_APPARITION_PROJECTILE_3E && DataÉtage.PersonnageGameObject.transform.position.y <= HAUTEUR_ACTIVATION_PROJECTILES_3E)
+        {
+            LancerProjectileSynchronisé(ListApex3e);
+            deltaTemps3e = 0;
+        }
+    }
 
-    void CercleSeulAléatoire(List<Vector3> list)
+    void LancerProjectileAléatoire(List<Vector3> apex)
     {
         bool instancié = false;
         while (!instancié)
         {
-            int index = Mathf.RoundToInt(Random.value * (list.Count - 1));
-            if (!Physics.CheckSphere(list[index] + new Vector3(0, 2, 0), 1))
+            int index = Mathf.RoundToInt(Random.value * (apex.Count - 1));
+            if (!Physics.CheckSphere(apex[index] + new Vector3(0, ESPACEMENT_AU_DESSUS_APEX, 0), 1))
             {
-                GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[index] + new Vector3(0, 2, 0), Quaternion.identity);
-                proj.AddComponent<Projectile>().Initialisation(1, 40, 3, 20);
-                //Projectile proj = new Projectile();
-                //proj.Initialisation(list[index] + new Vector3(0, 2, 0), 1, 50, 3, 20);
-                //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[index] + new Vector3(0, 2, 0), Quaternion.identity);
+                GameObject projectile = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), apex[index] + new Vector3(0, ESPACEMENT_AU_DESSUS_APEX, 0), Quaternion.identity);
+                projectile.AddComponent<Projectile>().Initialisation(Projectiles[0, 0], Projectiles[0, 1], Projectiles[0, 2], Projectiles[0, 3]);
                 instancié = true;
             }
         }    
     }
 
-    void CercleSeul(List<Vector3> list)
+    void LancerProjectileSynchronisé(List<Vector3> apex)
     {
-        for(int i = 0; i < list.Count; ++i)
+        for(int i = 0; i < apex.Count; ++i)
         {
-            GameObject proj = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[i] + new Vector3(0, 2, 0), Quaternion.identity);
-            proj.AddComponent<Projectile>().Initialisation(1, 40, 3, 20);
-            //Projectile proj = new Projectile();
-            //proj.Initialisation(list[i] + new Vector3(0, 2, 0), 1, 50, 3, 20);
-            //Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), list[i] + new Vector3(0, 2, 0), Quaternion.identity);
+            if (!Physics.CheckSphere(apex[i] + new Vector3(0, ESPACEMENT_AU_DESSUS_APEX, 0), 1))
+            {
+                GameObject projectile = Instantiate(Resources.Load<GameObject>("Prefabs/Projectile"), apex[i] + new Vector3(0, ESPACEMENT_AU_DESSUS_APEX, 0), Quaternion.identity);
+                projectile.AddComponent<Projectile>().Initialisation(Projectiles[1, 0], Projectiles[1, 1], Projectiles[1, 2], Projectiles[1, 3]);
+            }          
         }
     }
 
     public void Victoire()
     {
+        foreach (GameObject g in FindObjectsOfType<GameObject>().Where(x=>x.name.Contains("Projectile"))) { Destroy(g); }
+        foreach (Vector3 v in ListApex2e) { ListGameObject.Add(Instantiate(Resources.Load<GameObject>("Effects/ParticuleVictoire"), v, Quaternion.Euler(-90, 0, 0))); }
         DataÉtage.Musique.Victoire();
         DataÉtage.victoire = true;
-        foreach(GameObject g in FindObjectsOfType<GameObject>())
-        {
-            if (g.name.Contains("Projectile")) { Destroy(g); }
-        }
         DataÉtage.Ui.SetActive(false);
         DataÉtage.UiFinÉtage.SetActive(true);
-        TxtVictoire = Instantiate(Resources.Load<GameObject>("Prefabs/Victoire"),DataÉtage.UiFinÉtage.transform);
         DataÉtage.UiFinÉtage.GetComponentsInChildren<Button>().Where(x => x.name.Contains("Prochain")).First().interactable = false;
-
-        foreach (Vector3 p in ListSommetsPics2e)
-        {
-            ListGameObject.Add(Instantiate(Resources.Load<GameObject>("Effects/ParticuleVictoire"), p, Quaternion.Euler(-90,0,0)));
-        }
+        TxtVictoire = Instantiate(Resources.Load<GameObject>("Prefabs/Victoire"),DataÉtage.UiFinÉtage.transform);
     }
 
     public void Recommencer()
     {
-        foreach(GameObject g in ListGameObject)
-        {
-            Destroy(g);
-        }
+        foreach(GameObject g in ListGameObject) { Destroy(g);}
         Destroy(GameObject.FindGameObjectWithTag("Boss"));
         Destroy(BarreDeVieBoss);
         Destroy(TxtVictoire);
         DataÉtage.victoire = false;
         DataÉtage.NouvelÉtage(true);
         Destroy(this);
-        Destroy(MessagePanel);
     }
 }
