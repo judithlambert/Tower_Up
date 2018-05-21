@@ -21,12 +21,14 @@ public class Plateforme : MonoBehaviour
     public float Inclinaison { get; protected set; }
     public float Rotation { get; protected set; }
 
+    //MAILLAGE
     protected Vector3 Origine; // est toujours égal a DataÉtage.Origine (Vector3.zero)
     protected Mesh Maillage;
     protected Vector3[] Sommets;
     protected float DeltaAngle, DeltaTexture, DeltaÉlévation;
     protected int nbTranches, nbSommets, nbTriangles;
 
+    //COLLISION
     protected Vector3 SommetDroiteHautSupérieur, SommetDroiteHautIntérieur, SommetDroiteBasSupérieur, SommetDroiteBasIntérieur, SommetGaucheHautSupérieur, SommetGaucheHautIntérieur, SommetGaucheBasSupérieur, SommetGaucheBasIntérieur;
     protected float PositionDessus, PositionDessous;
 
@@ -34,7 +36,7 @@ public class Plateforme : MonoBehaviour
     {
         AngleDébut = angleDébut;
         Amplitude = amplitude;
-        Largeur = inclinaison == 0 ? largeur : largeur - largeur / 40;
+        Largeur = inclinaison == 0 ? largeur : largeur - largeur / 40; // si une plateforme a une inclinaison, nous diminuons la largeur pour qu'il n'y ai pas de "clipping"
         Épaisseur = épaisseur;
         Hauteur = hauteur;
         Inclinaison = inclinaison;
@@ -64,46 +66,38 @@ public class Plateforme : MonoBehaviour
         gameObject.AddComponent<MeshCollider>().sharedMesh = Maillage;
         GetComponent<Rigidbody>().isKinematic = true;
     }
+
     public void Positionnement()
     {
         transform.position = new Vector3(0, Hauteur, 0);
         transform.RotateAround(Vector3.zero, Vector3.down, AngleDébut);
         transform.Rotate(new Vector3(Rotation, 0, 0));
     }
+
     public void CréationPointCollision()
     {
-        PositionDessus = Hauteur;
-        PositionDessous = Hauteur - Épaisseur;
-        if (Rotation == 180)
-        {
-            PositionDessus = Hauteur - Épaisseur;
-            PositionDessous = Hauteur;
-        }
-
-        SommetGaucheBasIntérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false) + new Vector3(0,transform.position.y, 0);
-        SommetGaucheBasSupérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true) + new Vector3(0, transform.position.y, 0);
-        SommetGaucheHautIntérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, false) + new Vector3(0, transform.position.y, 0);
-        SommetGaucheHautSupérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, true) + new Vector3(0, transform.position.y, 0);
-        SommetDroiteBasIntérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, true, false) + new Vector3(0, transform.position.y, 0);
-        SommetDroiteBasSupérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, true, true) + new Vector3(0, transform.position.y, 0);
+        // position réel des points du mesh par rapport au World
+        SommetGaucheBasIntérieur  = Sommet(Mathf.Deg2Rad *  AngleDébut,              0,           true, false)  + new Vector3(0, transform.position.y, 0);
+        SommetGaucheBasSupérieur  = Sommet(Mathf.Deg2Rad *  AngleDébut,              0,           true, true)   + new Vector3(0, transform.position.y, 0);
+        SommetGaucheHautIntérieur = Sommet(Mathf.Deg2Rad *  AngleDébut,              0,           false, false) + new Vector3(0, transform.position.y, 0);
+        SommetGaucheHautSupérieur = Sommet(Mathf.Deg2Rad *  AngleDébut,              0,           false, true)  + new Vector3(0, transform.position.y, 0);
+        SommetDroiteBasIntérieur  = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, true, false)  + new Vector3(0, transform.position.y, 0);
+        SommetDroiteBasSupérieur  = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, true, true)   + new Vector3(0, transform.position.y, 0);
         SommetDroiteHautIntérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, false, false) + new Vector3(0, transform.position.y, 0);
-        SommetDroiteHautSupérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, false, true) + new Vector3(0, transform.position.y, 0);
-
-        //PositionDessus = SommetGaucheHautSuppérieur.y;
-        //PositionDessous = SommetGaucheBasInférieur.y;
+        SommetDroiteHautSupérieur = Sommet(Mathf.Deg2Rad * (AngleDébut + Amplitude), Inclinaison, false, true)  + new Vector3(0, transform.position.y, 0);
     }
 
     // MAILLAGE
     protected Vector3 Sommet(float angleAjouté, float inclinaisonAjouté, bool sommetDuDessous, bool sommetSuppérieur)
     {
-        return new Vector3((Mathf.Cos(angleAjouté)) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
-                            inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0),
-                           (Mathf.Sin(angleAjouté)) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
+        return new Vector3(Mathf.Cos(angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)),
+                           inclinaisonAjouté + (sommetDuDessous ? -Épaisseur : 0),
+                           Mathf.Sin(angleAjouté) * (Rayon + (sommetSuppérieur ? Largeur : 0)));
     }
 
     virtual protected void CalculerDonnéesDeBase()
     {
-        Origine = DataÉtage.Origine; // le decalage se ferait ici
+        Origine = DataÉtage.Origine;
         nbTranches = (int)Mathf.Ceil(Amplitude * NB_TUILES_PAR_CERCLE_COMPLET / 360);
         nbSommets = (nbTranches + 1) * 5 + NB_SOMMETS_BOUTS;
         nbTriangles = (nbTranches * 4 + NB_DE_BOUT) * NB_TRIANGLES_PAR_TUILE;
@@ -128,20 +122,17 @@ public class Plateforme : MonoBehaviour
         {
             float angleAjouté = DeltaAngle * n;
             float élévationAjouté = DeltaÉlévation * n;
-            Sommets[n] = Sommets[n + ((nbTranches + 1) * 4)] = Sommet(angleAjouté, élévationAjouté, false, true);
-            Sommets[(nbTranches + 1) + n] = Sommet(angleAjouté, élévationAjouté, false, false);
+            Sommets[n]                        = Sommets[n + ((nbTranches + 1) * 4)] = Sommet(angleAjouté, élévationAjouté, false, true);
+            Sommets[(nbTranches + 1) + n]     = Sommet(angleAjouté, élévationAjouté, false, false);
             Sommets[(nbTranches + 1) * 2 + n] = Sommet(angleAjouté, élévationAjouté, true, false);
             Sommets[(nbTranches + 1) * 3 + n] = Sommet(angleAjouté, élévationAjouté, true, true);
         }
-
-        Vector3 testerSommet = new Vector3(3, 3, 3);
 
         // Sommets des deux extrémités
         Sommets[nbSommets - 8] = Sommets[(nbTranches + 1) * 2]; // gauche bas inférieur
         Sommets[nbSommets - 7] = Sommets[(nbTranches + 1) * 3]; // gauche bas suppérieur
         Sommets[nbSommets - 6] = Sommets[nbTranches + 1];       // gauche haut inférieur
         Sommets[nbSommets - 5] = Sommets[0];                    // gauche haut suppérieur
-
         Sommets[nbSommets - 4] = Sommets[(nbTranches + 1) * 3 - 1]; // droit bas inférieur
         Sommets[nbSommets - 3] = Sommets[(nbTranches + 1) * 4 - 1]; // droit bas suppérieur
         Sommets[nbSommets - 2] = Sommets[(nbTranches + 1) *2 - 1];  // droit haut inférieur
@@ -206,17 +197,60 @@ public class Plateforme : MonoBehaviour
     }
 
     // COLLISION
+    public bool CollisionDessus(Collision collision)
+    {
+        bool auDessus = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointDessus(cp.point)) { auDessus = true; }
+        }
+        return auDessus;
+    }
+
+    public bool CollisionCôté(Collision collision, ref int côtéCollision)
+    {
+        bool surCôté = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointCôté(cp.point, ref côtéCollision)) { surCôté = true; }
+        }
+        return surCôté;
+    }
+
+    public bool CollisionDessusOuCôté(Collision collision)
+    {
+        bool dessusOuCoté = false;
+        int x = 0;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointDessus(cp.point) || IsPointCôté(cp.point, ref x)) { dessusOuCoté = true; }
+        }
+        return dessusOuCoté;
+    }
+
+    public bool CollisionDessous(Collision collision)
+    {
+        bool enDessous = false;
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            if (IsPointDessous(cp.point)) { enDessous = true; }
+        }
+        return enDessous;
+    }
+
     bool IsPointDessus(Vector3 point)
     {
         return (Maths.EstDansLeRange(point.y, SommetDroiteHautIntérieur.y, SommetGaucheHautIntérieur.y, INCERTITUDE_COLLISION));
     }
+
     bool IsPointDessous(Vector3 point)
     {
         return (Maths.EstDansLeRange(point.y, SommetDroiteBasIntérieur.y, SommetGaucheBasIntérieur.y, INCERTITUDE_COLLISION));
     }
+
     bool IsPointCôté(Vector3 point, ref int côtéCollision)
     {
-        bool c = false; // ne marche pas avec rotation
+        bool c = false; 
         if (Maths.EstDansLeRange(point.y, SommetDroiteBasIntérieur.y, SommetGaucheHautIntérieur.y, -INCERTITUDE_COLLISION))
         {
             if (Maths.EstDansLeRange(point.x, SommetGaucheBasIntérieur.x, SommetGaucheBasSupérieur.x, INCERTITUDE_COLLISION) &&
@@ -228,43 +262,5 @@ public class Plateforme : MonoBehaviour
         }
         if (Rotation == 180) { côtéCollision = -côtéCollision; }
         return c;
-    }
-
-    public bool CollisionDessus(Collision collision)
-    {
-        bool auDessus = false;
-        foreach (ContactPoint cp in collision.contacts)
-        {
-            if (IsPointDessus(cp.point)) { auDessus = true; }
-        }
-        return auDessus;
-    }
-    public bool CollisionCôté(Collision collision, ref int côtéCollision)
-    {
-        bool surCôté = false;
-        foreach (ContactPoint cp in collision.contacts)
-        {
-            if (IsPointCôté(cp.point, ref côtéCollision)) { surCôté = true; }
-        }
-        return surCôté;
-    }
-    public bool CollisionDessusOuCôté(Collision collision)
-    {
-        bool dessusOuCoté = false;
-        int x = 0;
-        foreach (ContactPoint cp in collision.contacts)
-        {
-            if (IsPointDessus(cp.point) || IsPointCôté(cp.point, ref x)) { dessusOuCoté = true; }
-        }
-        return dessusOuCoté;
-    }
-    public bool CollisionDessous(Collision collision)
-    {
-        bool enDessous = false;
-        foreach (ContactPoint cp in collision.contacts)
-        {
-            if (IsPointDessous(cp.point)) { enDessous = true; }
-        }
-        return enDessous;
     }
 }

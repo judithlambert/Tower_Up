@@ -63,9 +63,13 @@ public class PlateformePics : Plateforme
     public void CréationPointCollisionPics()
     {
         CréationPointCollision();
+        PositionDessus = Hauteur;
+        PositionDessous = Hauteur - Épaisseur;
         PositionPics = Hauteur + HauteurPic;
         if (Rotation == 180)
         {
+            PositionDessus = Hauteur - Épaisseur;
+            PositionDessous = Hauteur;
             PositionPics = Hauteur - Épaisseur - HauteurPic;
         }
     }
