@@ -79,7 +79,7 @@ public class Plateforme : MonoBehaviour
             PositionDessus = Hauteur - Épaisseur;
             PositionDessous = Hauteur;
         }
-
+        
         SommetGaucheBasIntérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, false) + new Vector3(0,transform.position.y, 0);
         SommetGaucheBasSupérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, true, true) + new Vector3(0, transform.position.y, 0);
         SommetGaucheHautIntérieur = Sommet(Mathf.Deg2Rad * AngleDébut, 0, false, false) + new Vector3(0, transform.position.y, 0);
