@@ -91,7 +91,7 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtageScript = UiFinÉtage.GetComponent<UIFinÉtage>();
         UiFinÉtage.SetActive(false);
         Caméra = Camera.main;
-        Caméra.gameObject.AddComponent<CameraControlleur>();
+        Caméra.gameObject.AddComponent<CameraControleur>();
         Musique = GameObject.FindGameObjectWithTag("Musique").GetComponent<Musique>();
         Musique.Niveaux();
 
