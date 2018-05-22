@@ -62,11 +62,13 @@ public class DataÉtage : MonoBehaviour
     public static int difficulté = DIFFICULTÉ_DE_BASE;
     public enum Difficulté { Exploration, Normale, Difficile };
 
+    static public GameObject PnlShooter;
+
     private void Awake()
     {
-        //// for testing
-        //nbÉtage = TEST_ÉTAGE;
-        //if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
+        // for testing
+        nbÉtage = TEST_ÉTAGE;
+        if (GODMOD) { difficulté = (int)Difficulté.Exploration; }
         //---
 
         Materials.Init();
@@ -89,10 +91,12 @@ public class DataÉtage : MonoBehaviour
         UiFinÉtageScript = UiFinÉtage.GetComponent<UIFinÉtage>();
         UiFinÉtage.SetActive(false);
         Caméra = Camera.main;
-        Caméra.gameObject.AddComponent<CameraControlleur>();
+        Caméra.gameObject.AddComponent<CameraControleur>();
         Musique = GameObject.FindGameObjectWithTag("Musique").GetComponent<Musique>();
         Musique.Niveaux();
 
+        PnlShooter = GameObject.Find("PnlShooter");
+        PnlShooter.SetActive(false);
         Sauvegarde.Save();
         LoadÉtage();
         étageEnCour = true;
@@ -101,7 +105,8 @@ public class DataÉtage : MonoBehaviour
     
     static public void LoadÉtage()
     {
-        if(nbÉtage != ÉTAGE_BOSS)
+
+        if (nbÉtage != ÉTAGE_BOSS)
         {
             étageReader = new StreamReader(CHEMIN_DATA_ÉTAGE + "Étage" + nbÉtage.ToString() + ".txt");
             do

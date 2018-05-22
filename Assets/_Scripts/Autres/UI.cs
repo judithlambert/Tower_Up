@@ -14,7 +14,6 @@ public class UI : MonoBehaviour
 
     static public Text FPSText;
 
-
     public string Score { get { return "SCORE : " + ((int)(Points * (1 + Multiplicateur / 100) /tempsPassé * 10)).ToString(); } }
 
     static public float tempsPassé = 0;
@@ -34,6 +33,7 @@ public class UI : MonoBehaviour
         scoreTxt = GetComponentsInChildren<Text>().Where(x => x.name == "Score").First();
         nbÉtageTxt = GetComponentsInChildren<Text>().Where(x => x.name == "NbÉtage").First();
         pointsUpdate = multiplicateurUpdate = true;
+        
     }
     int ancienNbÉtage;
 	void Update ()
@@ -52,6 +52,8 @@ public class UI : MonoBehaviour
 
         // minimiser son update
         nbÉtageTxt.text = "Étage " + DataÉtage.nbÉtage;
+
+
     }
 
     public void Réinitialiser()
